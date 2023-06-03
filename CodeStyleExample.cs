@@ -1,6 +1,6 @@
 //Questa classe e' stata realizzata grazie al contributo di Codemonkey
 
-//Various requirements
+//Various requirement
 [RequireComponent(typeof(Rigidbody))]
 
 //Class
