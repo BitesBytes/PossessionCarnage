@@ -1,4 +1,4 @@
-//Questa classe è stata realizzata grazie al contributo di Codemonkey
+//Questa classe e' stata realizzata grazie al contributo di Codemonkey
 
 //Various requirements
 [RequireComponent(typeof(Rigidbody))]
