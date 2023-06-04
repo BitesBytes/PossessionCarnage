@@ -13,7 +13,7 @@ public class CodeStyleExample
     public static CodeStyleExample Instance { get; private set; }
 
     //Events: PascalCase
-    public event EventHandler[<OnSomethingHappenedEventArgs>] OnSomethingHappened;
+    //public event EventHandler[<OnSomethingHappenedEventArgs>] OnSomethingHappened;
     //Other Event classes
     public class OnSomethingHappenedEventArgs: EventArgs
     {

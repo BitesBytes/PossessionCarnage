@@ -1,5 +1,6 @@
 //Questa classe e' stata realizzata grazie al contributo di Codemonkey
-
+using System;
+using UnityEngine.EventSystem;
 //Various requirement
 [RequireComponent(typeof(Rigidbody))]
 
