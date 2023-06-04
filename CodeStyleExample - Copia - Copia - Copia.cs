@@ -21,7 +21,7 @@ public class CodeStyleExample
     }
 
     //Serialized Fields: camelCase
-    [SerializeField] private int randomNum;
+    private int randomNum;
 
     //Private Fields: camelCase
     private float membervariable;
@@ -34,11 +34,11 @@ public class CodeStyleExample
     {
         Instance = this;
 
-        TestSomething(10f);
+        Cambialo(10f);
     }
 
     //Function Params: camelCase
-    private void TestSomething(float time)
+    private void Cambialo(float time)
     {
         //Do something...
         membervariable = time * Time.deltaTime;
