@@ -1,14 +1,12 @@
 //Questa classe e' stata realizzata grazie al contributo di Codemonkey
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 //Various requirement
 [RequireComponent(typeof(Rigidbody))]
 
 //Class
-public class CodeStyleExample
+public class CodeStyleExample : MonoBehaviour
 {
     //Contants: UpperCase SnakeCase
     public const int CONSTANT_FIELD = 56;
@@ -19,7 +17,7 @@ public class CodeStyleExample
     //Events: PascalCase
     public event EventHandler<OnSomethingHappenedEventArgs> OnSomethingHappened;
     //Other Event classes
-    public class OnSomethingHappenedEventArgs: EventArgs
+    public class OnSomethingHappenedEventArgs : EventArgs
     {
         public int randomNum;
     }
@@ -48,15 +46,14 @@ public class CodeStyleExample
     {
         //Do something...
         membervariable = time * Time.deltaTime;
-        if(membervariable > 0f)
+        if (membervariable > 0f)
         {
             //Do something else ...
         }
     }
 
-
     private void DoSomething()
     {
-        OnSomethingHappened?.Invoke(this, new OnSomethingHappenedEventArgs{ randomNum = 8 });
+        OnSomethingHappened?.Invoke(this, new OnSomethingHappenedEventArgs { randomNum = 8 });
     }
 }
