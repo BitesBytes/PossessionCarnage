@@ -34,11 +34,11 @@ public class CodeStyleExample
     {
         Instance = this;
 
-        DoSomething(10f);
+        TestSomething(10f);
     }
 
     //Function Params: camelCase
-    private void DoSomething(float time)
+    private void TestSomething(float time)
     {
         //Do something...
         membervariable = time * Time.deltaTime;
