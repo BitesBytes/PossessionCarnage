@@ -1,4 +1,8 @@
 //Questa classe e' stata realizzata grazie al contributo di Codemonkey
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
 
 //Various requirement
 [RequireComponent(typeof(Rigidbody))]
@@ -13,7 +17,7 @@ public class CodeStyleExample
     public static CodeStyleExample Instance { get; private set; }
 
     //Events: PascalCase
-    public event EventHandler[<OnSomethingHappenedEventArgs>] OnSomethingHappened;
+    public event EventHandler<OnSomethingHappenedEventArgs> OnSomethingHappened;
     //Other Event classes
     public class OnSomethingHappenedEventArgs: EventArgs
     {
@@ -35,6 +39,8 @@ public class CodeStyleExample
         Instance = this;
 
         DoSomething(10f);
+
+        DoSomething();
     }
 
     //Function Params: camelCase
@@ -46,5 +52,11 @@ public class CodeStyleExample
         {
             //Do something else ...
         }
+    }
+
+
+    private void DoSomething()
+    {
+        OnSomethingHappened?.Invoke(this, new OnSomethingHappenedEventArgs{ randomNum = 8 });
     }
 }
