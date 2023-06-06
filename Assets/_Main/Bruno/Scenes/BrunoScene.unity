@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 724372747}
   m_Layer: 0
   m_Name: debug-Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 994223200}
   m_Layer: 0
   m_Name: debug_MeleeAI
-  m_TagString: Untagged
+  m_TagString: meleeAI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -753,7 +753,7 @@ GameObject:
   - component: {fileID: 1626590798}
   m_Layer: 0
   m_Name: debug_RangedAI
-  m_TagString: Untagged
+  m_TagString: rangedAI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
