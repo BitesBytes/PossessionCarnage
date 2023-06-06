@@ -71,6 +71,15 @@ public class MeleeAI : Entity
         direction = (playerDebug.transform.position - this.transform.position).normalized;
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
         transform.LookAt(playerDebug.transform.position);
+
+        //calculate the distance beetween AI and player and if is less/equal to 1.5f which is the minimum distance display the debug.log
+
+        float dist = Vector3.Distance(this.transform.position, playerDebug.transform.position);
+
+        if(dist <= 1.5f) // I just set it for test purpose
+        {
+            FistsAttack();
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -82,10 +91,9 @@ public class MeleeAI : Entity
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void FistsAttack()
     {
-        //Debug.Log("Stop chasing Player");
-        //playerSeen = false;
+        Debug.Log("fists attack");
     }
 
 }

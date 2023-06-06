@@ -83,11 +83,21 @@ public class RangedAI : Entity
         direction.y = 0;
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
 
+        Debug.Log("chasing player");
+
+        DebugAttack();
+
         if(distance <= rangeToDriveAway)
         {
             direction = (this.transform.position - playerDebug.transform.position).normalized;
             direction.y = 0;
             rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+            Debug.Log("drivin away from the player");
         }
+    }
+
+    private void DebugAttack()
+    {
+        Debug.Log("I'm attacking you with a ranged attack");
     }
 }
