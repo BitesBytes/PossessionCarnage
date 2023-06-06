@@ -1,18 +1,15 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Entity : MonoBehaviour
 {
-
-    [SerializeField] private List<Transform> patrolingPoints;
-
-    protected enum STATE {PATROL, CHASE} // enum to add the behaiour state, more to add in the late development
+    protected enum STATE {PATROL, CHASE} // enum to add the behaiour state, chase STATE will come in the beta rel
     protected enum ATTACKTYPE {MELEE, RANGED} // the type of attack depending of the AI-type
-
-    protected float damage; // to add in late development
+    
+    protected Rigidbody rigidBody;
     protected Vector3 direction; // the movement direction
-    protected STATE behaviourState;
-    protected ATTACKTYPE attackType;
+    protected float damage; // to add in late development
+    protected float speed;
+
 
 
     // Start is called before the first frame update
@@ -27,22 +24,23 @@ public class Entity : MonoBehaviour
 
     }
 
-    protected STATE SwitchBehaviour()
+    protected STATE SwitchBehaviour(STATE behaviourState)
     {
         switch(behaviourState)
         {
             case STATE.PATROL:
+            Patroling();
             break;
             case STATE.CHASE:
+            Chase();
             break;
         }
 
         return behaviourState;
     }
 
+    protected virtual void Patroling(){}
 
-    private void Patroling()
-    {
+    protected virtual void Chase(){}
 
-    }
 }
