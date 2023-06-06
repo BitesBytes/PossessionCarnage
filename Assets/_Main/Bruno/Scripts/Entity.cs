@@ -3,7 +3,7 @@ using UnityEngine;
 public class Entity : MonoBehaviour
 {
     protected enum STATE {PATROL, CHASE} // enum to add the behaiour state, chase STATE will come in the beta rel
-    protected enum ATTACKTYPE {MELEE, RANGED} // the type of attack depending of the AI-type
+    protected enum ATTACKTYPE {SOFT, HEAVY, SPECIAL} // the type of attack depending of the AI-type
 
     protected DebugPlayer playerDebug = null;
     protected Rigidbody rigidBody;

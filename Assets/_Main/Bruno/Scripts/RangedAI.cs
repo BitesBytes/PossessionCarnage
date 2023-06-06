@@ -7,6 +7,7 @@ public class RangedAI : Entity
     private int index;
     private float distanceBeetweenPoints;
     private float patrolRange = 1f;
+    private float rangeToDriveAway = 8f; // this variable is used to set the max range that AI has before driving away from the player
 
     void Start()
     {
@@ -20,7 +21,26 @@ public class RangedAI : Entity
 
     void Update()
     {
-        SwitchBehaviour(STATE.PATROL);
+
+        if(!playerSeen)
+        {
+            SwitchBehaviour(STATE.PATROL);
+        }
+
+        if(playerSeen)
+        {
+            SwitchBehaviour(STATE.CHASE);
+        }
+
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            playerSeen = true;
+        }
     }
 
     protected override void Patroling()
@@ -52,6 +72,22 @@ public class RangedAI : Entity
 
     protected override void Chase()
     {
+        DriveAway();
+    }
 
+    private void DriveAway()
+    {
+        float distance = Vector3.Distance(this.transform.position, playerDebug.transform.position);
+
+        direction = (playerDebug.transform.position - this.transform.position).normalized;
+        direction.y = 0;
+        rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+
+        if(distance <= rangeToDriveAway)
+        {
+            direction = (this.transform.position - playerDebug.transform.position).normalized;
+            direction.y = 0;
+            rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+        }
     }
 }
