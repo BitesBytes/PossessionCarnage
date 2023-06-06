@@ -76,15 +76,15 @@ public class MeleeAI : Entity
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Chasing Player");
+            Debug.Log("Attack Mode on");
             playerSeen = true;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        Debug.Log("Stop chasing Player");
-        playerSeen = false;
+        //Debug.Log("Stop chasing Player");
+        //playerSeen = false;
     }
 
 }
