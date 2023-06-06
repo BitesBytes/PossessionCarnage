@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class DebugPlayer : MonoBehaviour
 {
+    
+    [SerializeField] private Vector3 cameraOffset;
     private float speed = 2f;
     private CharacterController controller;
     private Camera mainCamera;
     private Vector3 direction;
-    [SerializeField] private Vector3 cameraOffset;
-
 
     void Start()
     {
