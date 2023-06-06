@@ -70,6 +70,7 @@ public class MeleeAI : Entity
     {
         direction = (playerDebug.transform.position - this.transform.position).normalized;
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+        transform.LookAt(playerDebug.transform.position);
     }
 
     void OnTriggerEnter(Collider other)
