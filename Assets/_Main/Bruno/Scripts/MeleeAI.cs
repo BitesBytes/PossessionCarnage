@@ -13,6 +13,7 @@ public class MeleeAI : Entity
     // Start is called before the first frame update
     void Start()
     {
+        playerDebug = GameObject.FindWithTag("Player").GetComponent<DebugPlayer>();
         speed = 10f;
         damage = 0f;
         index = 0;
@@ -23,7 +24,15 @@ public class MeleeAI : Entity
     // Update is called once per frame
     void Update()
     {
-        SwitchBehaviour(STATE.PATROL);
+        if(!playerSeen)
+        {
+            SwitchBehaviour(STATE.PATROL);
+        }
+
+        if(playerSeen)
+        {
+            SwitchBehaviour(STATE.CHASE);
+        }
     }
 
     protected override void Patroling()
@@ -41,7 +50,6 @@ public class MeleeAI : Entity
     private void Move()
     {
         direction = (PatrolPoints[index].position - this.transform.position).normalized;
-
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
     }
 
@@ -55,6 +63,28 @@ public class MeleeAI : Entity
         }
 
         transform.LookAt(PatrolPoints[index].position);
+    }
+
+
+    protected override void Chase()
+    {
+        direction = (playerDebug.transform.position - this.transform.position).normalized;
+        rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Chasing Player");
+            playerSeen = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        Debug.Log("Stop chasing Player");
+        playerSeen = false;
     }
 
 }
