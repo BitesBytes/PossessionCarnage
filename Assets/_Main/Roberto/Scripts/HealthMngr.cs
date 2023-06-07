@@ -23,9 +23,9 @@ public class HealthMngr : MonoBehaviour
     }
     void Update()
     {
-        decreaseHealthOverTime();
+        //decreaseHealthOverTime();
 
-        //takeDmgAfterAwhile(10f, 4f);
+        takeDmgAfterAwhile(10f, 4f);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -54,7 +54,6 @@ public class HealthMngr : MonoBehaviour
 
     private void takeDmgAfterAwhile(float amount, float time)
     {
-        
         if (isCoolDown)
         {
             return;
@@ -68,6 +67,12 @@ public class HealthMngr : MonoBehaviour
     private void resetCoolDown()
     {
         isCoolDown = false;
+    }
+
+    private void TakeDmgAfterTime(float amount, float time)
+    {
+        time = Time.deltaTime;
+
     }
 
 }
