@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class RangedAI : Entity
 {
@@ -8,6 +9,7 @@ public class RangedAI : Entity
     private float distanceBeetweenPoints;
     private float patrolRange = 1f;
     private float rangeToDriveAway = 8f; // this variable is used to set the max range that AI has before driving away from the player
+    private float attackRange = 8.7f;
 
     void Start()
     {
@@ -24,7 +26,11 @@ public class RangedAI : Entity
 
         if(!playerSeen)
         {
-            SwitchBehaviour(STATE.PATROL);
+            if(!idle)
+            {
+                StartCoroutine(IdleToMove());
+                SwitchBehaviour(STATE.PATROL);
+            }
         }
 
         if(playerSeen)
@@ -83,9 +89,13 @@ public class RangedAI : Entity
         direction.y = 0;
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
 
-        Debug.Log("chasing player");
+        //Debug.Log("chasing player");
 
-        DebugAttack();
+        if(distance <= attackRange)
+        {
+            DebugAttack();
+        }
+
 
         if(distance <= rangeToDriveAway)
         {
@@ -99,5 +109,14 @@ public class RangedAI : Entity
     private void DebugAttack()
     {
         Debug.Log("I'm attacking you with a ranged attack");
+    }
+
+    //Scrivo in italiano, questa coroutine serve solo per "spezzare" il patrolling system cioè andrà a fermare entro tot secondi AI per poi farla ripartire
+    private IEnumerator IdleToMove()
+    {
+        yield return new WaitForSeconds(2);
+        idle = true;
+        yield return new WaitForSeconds(2);
+        idle = false;
     }
 }

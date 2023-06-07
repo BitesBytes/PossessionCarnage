@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class MeleeAI : Entity
 {
@@ -26,7 +27,11 @@ public class MeleeAI : Entity
     {
         if(!playerSeen)
         {
-            SwitchBehaviour(STATE.PATROL);
+            if(!idle)
+            {
+                StartCoroutine(IdleToMove());
+                SwitchBehaviour(STATE.PATROL);
+            }
         }
 
         if(playerSeen)
@@ -94,6 +99,15 @@ public class MeleeAI : Entity
     private void FistsAttack()
     {
         Debug.Log("fists attack");
+    }
+
+    //Scrivo in italiano, questa coroutine serve solo per "spezzare" il patrolling system cioè andrà a fermare entro tot secondi AI per poi farla ripartire
+    private IEnumerator IdleToMove()
+    {
+        yield return new WaitForSeconds(2);
+        idle = true;
+        yield return new WaitForSeconds(2);
+        idle = false;
     }
 
 }

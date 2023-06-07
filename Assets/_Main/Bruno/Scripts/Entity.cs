@@ -9,6 +9,7 @@ public class Entity : MonoBehaviour
     protected Rigidbody rigidBody;
     protected Vector3 direction; // the movement direction
     protected bool playerSeen;
+    protected bool idle;
     protected float damage; // to add in late development
     protected float speed;
 
