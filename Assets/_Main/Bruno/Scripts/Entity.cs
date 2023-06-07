@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     protected enum STATE {PATROL, CHASE} // enum to add the behaiour state, chase STATE will come in the beta rel
     protected enum ATTACKTYPE {SOFT, HEAVY, SPECIAL} // the type of attack depending of the AI-type
@@ -14,18 +14,6 @@ public class Entity : MonoBehaviour
     protected float speed;
 
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     protected STATE SwitchBehaviour(STATE behaviourState)
     {
@@ -42,8 +30,8 @@ public class Entity : MonoBehaviour
         return behaviourState;
     }
 
-    protected virtual void Patroling(){}
+    protected abstract void Patroling();
 
-    protected virtual void Chase(){}
+    protected abstract void Chase();
 
 }

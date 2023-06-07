@@ -11,7 +11,11 @@ public class RangedAI : Entity
     private float rangeToDriveAway = 8f; // this variable is used to set the max range that AI has before driving away from the player
     private float attackRange = 8.7f;
 
-    void Start()
+    private float timer;
+    private float maxTimer = 5f;
+    private bool timerGo = true;
+
+    private void Start()
     {
         playerDebug = GameObject.FindWithTag("Player").GetComponent<DebugPlayer>();
         rigidBody = GetComponent<Rigidbody>();
@@ -21,14 +25,26 @@ public class RangedAI : Entity
     }
 
 
-    void Update()
+    private void Update()
     {
+
+        if(timerGo)
+        {
+            timer += Time.deltaTime * 2.0f;
+        }
 
         if(!playerSeen)
         {
+
+            timer += Time.deltaTime * 2.0f;
+
+            if(timer >= maxTimer){ idle = true;}
+
+            if(timer <= 0){ idle = false; }
+
             if(!idle)
             {
-                StartCoroutine(IdleToMove());
+                //StartCoroutine(IdleToMove());
                 SwitchBehaviour(STATE.PATROL);
             }
         }
@@ -43,7 +59,7 @@ public class RangedAI : Entity
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player")) // il tag in fase definitiva non verrà utilizzato
         {
             playerSeen = true;
         }

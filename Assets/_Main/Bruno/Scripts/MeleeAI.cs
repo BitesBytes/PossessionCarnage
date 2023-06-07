@@ -12,7 +12,7 @@ public class MeleeAI : Entity
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         playerDebug = GameObject.FindWithTag("Player").GetComponent<DebugPlayer>();
         speed = 10f;
@@ -23,7 +23,7 @@ public class MeleeAI : Entity
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if(!playerSeen)
         {
