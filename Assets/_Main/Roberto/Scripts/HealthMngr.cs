@@ -16,16 +16,20 @@ public class HealthMngr : MonoBehaviour
     [SerializeField] private float currentHealth;
 
     private bool isCoolDown = false;
+    private float timeElapsed;
 
-    void Start()
+    private void Start()
     {
         CurrentHealth = maxHealth;
     }
-    void Update()
+    private void Update()
     {
         //decreaseHealthOverTime();
 
-        takeDmgAfterAwhile(10f, 4f);
+        //takeDmgAfterAwhile(10f, 4f);
+
+        timeElapsed += Time.deltaTime; 
+        TakeDmgAfterTime(20f, 4f);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -69,10 +73,13 @@ public class HealthMngr : MonoBehaviour
         isCoolDown = false;
     }
 
-    private void TakeDmgAfterTime(float amount, float time)
+    private void TakeDmgAfterTime(float amount, float timeLimit)
     {
-        time = Time.deltaTime;
-
+        if (timeElapsed >= timeLimit)
+        {
+            CurrentHealth -= amount;
+            timeElapsed = 0;
+        }
     }
 
 }

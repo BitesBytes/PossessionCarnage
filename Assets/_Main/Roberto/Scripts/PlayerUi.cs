@@ -9,7 +9,7 @@ public class PlayerUi : MonoBehaviour
 
     public Image HealthBar;
 
-    void Start()
+    private void Start()
     {
         //take the component by name in the scene
         HealthBar = GameObject.Find("HealthBar").GetComponent<Image>();
@@ -17,7 +17,7 @@ public class PlayerUi : MonoBehaviour
         //used for take reference of health
         healthMngr = FindAnyObjectByType<HealthMngr>();
     }
-    void Update()
+    private void Update()
     {
         HealthBar.fillAmount = healthMngr.CurrentHealth / 100f;
     }
