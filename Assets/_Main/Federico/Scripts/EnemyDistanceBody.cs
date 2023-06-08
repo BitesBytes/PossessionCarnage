@@ -6,6 +6,7 @@ public class EnemyDistanceBody : EnemyBody
 {
     public override void StartPossession()
     {
+
     }
     public override void StopPossession()
     {
