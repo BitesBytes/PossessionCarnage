@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Canvas settingsCanvas;
     [SerializeField] private Canvas loadCanvas;
 
+    private const string mainScene = "Assets/_Main/_Common/Scenes/MainScene.unity";
     private const string brunoScene = "Assets/_Main/Bruno/Scenes/BrunoScene.unity";
     private const string federicoScene = "Assets/_Main/Federico/Scenes/FedericoScene.unity";
     private const string simoneScene = "Assets/_Main/Simone/Scenes/SimoneScene.unity";
@@ -68,6 +69,11 @@ public class MainMenu : MonoBehaviour
     }
 
     //Load the our scenes
+
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(mainScene);
+    }
 
     public void LoadBrunoScene()
     {
