@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
 
-    private const string mainScene = "Assets/_Main/_Common/Scenes/MainScene.unity";
-    private const string brunoScene = "Assets/_Main/Bruno/Scenes/BrunoScene.unity";
-    private const string federicoScene = "Assets/_Main/Federico/Scenes/FedericoScene.unity";
-    private const string simoneScene = "Assets/_Main/Simone/Scenes/SimoneScene.unity";
-    private const string robertoScene = "Assets/_Main/Roberto/Scenes/RobertoScene.unity";
-    private const string massimilianoScene = "Assets/_Main/Massimiliano/Scenes/MassimilianoScene.unity";
+    private const string MAIN_SCENE = "Assets/_Main/_Common/Scenes/MainScene.unity";
+    private const string BRUNO_SCENE = "Assets/_Main/Bruno/Scenes/BrunoScene.unity";
+    private const string FEDERICO_SCENE = "Assets/_Main/Federico/Scenes/FedericoScene.unity";
+    private const string SIMONE_SCENE = "Assets/_Main/Simone/Scenes/SimoneScene.unity";
+    private const string ROBERTO_SCENE = "Assets/_Main/Roberto/Scenes/RobertoScene.unity";
+    private const string MASSIMILIANO_SCENE = "Assets/_Main/Massimiliano/Scenes/MassimilianoScene.unity";
 
-    
+
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private Canvas settingsCanvas;
     [SerializeField] private Canvas loadCanvas;
@@ -73,31 +73,31 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(mainScene);
+        SceneManager.LoadScene(MAIN_SCENE);
     }
 
     public void LoadBrunoScene()
     {
-        SceneManager.LoadScene(brunoScene);
+        SceneManager.LoadScene(BRUNO_SCENE);
     }
 
     public void LoadFedericoScene()
     {
-        SceneManager.LoadScene(federicoScene);
+        SceneManager.LoadScene(FEDERICO_SCENE);
     }
 
     public void LoadSimoneScene()
     {
-        SceneManager.LoadScene(simoneScene);
+        SceneManager.LoadScene(SIMONE_SCENE);
     }
 
     public void LoadRobertoScene()
     {
-        SceneManager.LoadScene(robertoScene);
+        SceneManager.LoadScene(ROBERTO_SCENE);
     }
 
     public void LoadMassimilianoScene()
     {
-        SceneManager.LoadScene(massimilianoScene);
+        SceneManager.LoadScene(MASSIMILIANO_SCENE);
     }
 }
