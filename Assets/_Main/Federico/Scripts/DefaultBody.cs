@@ -12,12 +12,6 @@ public class DefaultBody : PossessableEntity
     {
         gameObject.SetActive(false);
     }
-
-    public override void SetParent(Transform obj)
-    {
-        gameObject.transform.SetParent(obj);
-    }
-
     public override void UseAbility()
     {
         Debug.Log("DefaultBodyAbility");

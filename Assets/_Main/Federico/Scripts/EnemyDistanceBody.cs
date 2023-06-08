@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class EnemyDistanceBody : EnemyBody
 {
-    public override void SetParent(Transform obj)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void StartPossession()
     {
     }

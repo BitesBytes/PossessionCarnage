@@ -26,9 +26,4 @@ public class CameraManager : MonoBehaviour
 
         mainCamera.transform.position = owner.transform.position + cameraOffset;
     }
-
-    private void Update()
-    {
-
-    }
 }
