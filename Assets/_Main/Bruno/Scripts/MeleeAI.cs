@@ -9,6 +9,8 @@ public class MeleeAI : Entity
     private int index;
     private float distanceBeetweenPoints;
     private float patrolRange = 1f;
+    private float timer;
+    private float maxTimer = 3f;
 
 
     // Start is called before the first frame update
@@ -27,9 +29,14 @@ public class MeleeAI : Entity
     {
         if(!playerSeen)
         {
+
+            timer += Time.deltaTime * 1.0f;
+
+            if(timer >= maxTimer) { idle = !idle; timer = 0; }
+
             if(!idle)
             {
-                StartCoroutine(IdleToMove());
+                //StartCoroutine(IdleToMove());
                 SwitchBehaviour(STATE.PATROL);
             }
         }

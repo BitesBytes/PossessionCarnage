@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 public class RangedAI : Entity
 {
@@ -13,7 +12,6 @@ public class RangedAI : Entity
 
     private float timer;
     private float maxTimer = 5f;
-    private bool timerGo = true;
 
     private void Start()
     {
@@ -28,23 +26,16 @@ public class RangedAI : Entity
     private void Update()
     {
 
-        if(timerGo)
-        {
-            timer += Time.deltaTime * 2.0f;
-        }
 
         if(!playerSeen)
         {
 
             timer += Time.deltaTime * 2.0f;
 
-            if(timer >= maxTimer){ idle = true;}
-
-            if(timer <= 0){ idle = false; }
+            if(timer >= maxTimer){ idle = !idle; timer = 0;}
 
             if(!idle)
             {
-                //StartCoroutine(IdleToMove());
                 SwitchBehaviour(STATE.PATROL);
             }
         }
@@ -127,12 +118,4 @@ public class RangedAI : Entity
         Debug.Log("I'm attacking you with a ranged attack");
     }
 
-    //Scrivo in italiano, questa coroutine serve solo per "spezzare" il patrolling system cioè andrà a fermare entro tot secondi AI per poi farla ripartire
-    private IEnumerator IdleToMove()
-    {
-        yield return new WaitForSeconds(2);
-        idle = true;
-        yield return new WaitForSeconds(2);
-        idle = false;
-    }
 }
