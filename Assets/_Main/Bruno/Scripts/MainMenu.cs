@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        mainCanvas.gameObject.SetActive(true);
         settingsCanvas.gameObject.SetActive(false);
         loadCanvas.gameObject.SetActive(false);
     }
