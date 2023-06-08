@@ -14,17 +14,56 @@ public class MainMenu : MonoBehaviour
     private const string robertoScene = "Assets/_Main/Roberto/Scenes/RobertoScene.unity";
     private const string massimilianoScene = "Assets/_Main/Massimiliano/Scenes/MassimilianoScene.unity";
 
-    // Start is called before the first frame update
+
     void Start()
     {
         settingsCanvas.gameObject.SetActive(false);
         loadCanvas.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    //switch canvases
 
+    public void OpenMainMenu()
+    {
+        mainCanvas.gameObject.SetActive(true);
+        settingsCanvas.gameObject.SetActive(false);
+        loadCanvas.gameObject.SetActive(false);
+    }
+
+    public void CloseMainMenu()
+    {
+        mainCanvas.gameObject.SetActive(false);
+    }
+
+    public void OpenSettings()
+    {
+        mainCanvas.gameObject.SetActive(false);
+        settingsCanvas.gameObject.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        settingsCanvas.gameObject.SetActive(false);
+        mainCanvas.gameObject.SetActive(true);
+    }
+
+    public void OpenLoadPanel()
+    {
+        mainCanvas.gameObject.SetActive(false);
+        loadCanvas.gameObject.SetActive(true);
+    }
+
+    public void CloseLoadPanel()
+    {
+        loadCanvas.gameObject.SetActive(false);
+        mainCanvas.gameObject.SetActive(true);
+    }
+
+    //close the game
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     //Load the our scenes
