@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     private const string robertoScene = "Assets/_Main/Roberto/Scenes/RobertoScene.unity";
     private const string massimilianoScene = "Assets/_Main/Massimiliano/Scenes/MassimilianoScene.unity";
 
+    
     [SerializeField] private Canvas mainCanvas;
     [SerializeField] private Canvas settingsCanvas;
     [SerializeField] private Canvas loadCanvas;
