@@ -1,36 +1,53 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class Entity : MonoBehaviour
 {
-    protected enum STATE {PATROL, CHASE} // enum to add the behaiour state, chase STATE will come in the beta rel
-    protected enum ATTACKTYPE {SOFT, HEAVY, SPECIAL} // the type of attack depending of the AI-type
+    protected enum State
+    {
+        SEARCHING,
+        PATROL,
+        CHASE
+    }
 
-    protected DebugPlayer playerDebug = null;
+    protected enum AttackType
+    {
+        SOFT,
+        HEAVY,
+        SPECIAL
+    }
+
     protected Rigidbody rigidBody;
-    protected Vector3 direction; // the movement direction
+    protected Vector3 direction;
     protected bool playerSeen;
     protected bool idle;
-    protected float damage; // to add in late development
+    protected float damage;
     protected float speed;
+    protected State currentState;
+    protected DebugMax debugMax;
+    protected NavMeshAgent navMeshAgent;
 
-
-
-    protected STATE SwitchBehaviour(STATE behaviourState)
+    protected State SwitchBehaviour(State behaviourState)
     {
-        switch(behaviourState)
+        switch (behaviourState)
         {
-            case STATE.PATROL:
-            Patroling();
-            break;
-            case STATE.CHASE:
-            Chase();
-            break;
+            case State.SEARCHING:
+                currentState = State.SEARCHING;
+                break;
+            case State.PATROL:
+                currentState = State.PATROL;
+                Patrolling();
+                break;
+            case State.CHASE:
+                currentState = State.CHASE;
+                Chase();
+                break;
         }
 
         return behaviourState;
     }
 
-    protected abstract void Patroling();
+    protected abstract void Patrolling();
 
     protected abstract void Chase();
 

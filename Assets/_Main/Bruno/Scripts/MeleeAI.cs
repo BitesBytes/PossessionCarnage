@@ -1,62 +1,114 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class MeleeAI : Entity
 {
+    [SerializeField] private float searchPlayerRay = 10f;
+    [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private MeshCollider meshCollider;
 
-    public List<Transform> PatrolPoints;
     private int index;
     private float distanceBeetweenPoints;
     private float patrolRange = 1f;
     private float timer;
     private float maxTimer = 3f;
+    private float randomPointMaxDistance;
+    private Vector3 randomPatrolPosition;
+    private bool destinationReached;
+    private float navMeshBorderOffset;
 
+    public List<Transform> PatrolPoints;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+
+        randomPointMaxDistance = navMeshAgent.height * 2f;
+
+        destinationReached = true;
+
+        navMeshBorderOffset = 5f;
+    }
+
     private void Start()
     {
-        playerDebug = GameObject.FindWithTag("Player").GetComponent<DebugPlayer>();
+        SwitchBehaviour(State.SEARCHING);
+
         speed = 10f;
         damage = 0f;
         index = 0;
         rigidBody = GetComponent<Rigidbody>();
-        transform.LookAt(PatrolPoints[index].position);
+
+        Debug.Log(meshCollider.bounds.size);
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        if(!playerSeen)
+        debugMax = AIBehaviourManager.Instance.GetDebugMax();
+
+        if (debugMax != null)
         {
-
-            timer += Time.deltaTime * 1.0f;
-
-            if(timer >= maxTimer) { idle = !idle; timer = 0; }
-
-            if(!idle)
+            switch (currentState)
             {
-                //StartCoroutine(IdleToMove());
-                SwitchBehaviour(STATE.PATROL);
+                case State.SEARCHING:
+                    SearchForPlayer();
+                    break;
+                case State.PATROL:
+                    Patrolling();
+                    break;
+                case State.CHASE:
+                    Chase();
+                    break;
             }
         }
 
-        if(playerSeen)
-        {
-            SwitchBehaviour(STATE.CHASE);
-        }
+        //if (!playerSeen)
+        //{
+        //    timer += Time.deltaTime * 1.0f;
+
+        //    if (timer >= maxTimer) { idle = !idle; timer = 0; }
+
+        //    if (!idle)
+        //    {
+        //        SwitchBehaviour(State.PATROL);
+        //    }
+        //}
+
+        //if (playerSeen)
+        //{
+        //    SwitchBehaviour(State.CHASE);
+        //}
     }
 
-    protected override void Patroling()
+    private void SearchForPlayer()
     {
-        distanceBeetweenPoints = Vector3.Distance(this.transform.position, PatrolPoints[index].position);
-
-        if(distanceBeetweenPoints <= patrolRange)
+        if (!destinationReached && Vector3.Distance(transform.position, randomPatrolPosition) <= 0.05f)
         {
-            SwitchPoints();
+            destinationReached = true;
         }
 
-        Move();
+        if (destinationReached)
+        {
+            destinationReached = false;
+            randomPatrolPosition = new Vector3(Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
+
+            Debug.Log(randomPatrolPosition);
+        }
+
+        if (Vector3.Distance(AIBehaviourManager.Instance.GetDebugMax().transform.position, transform.position) <= searchPlayerRay)
+        {
+            //Player found!
+            SwitchBehaviour(State.CHASE);
+        }
+
+        navMeshAgent.SetDestination(randomPatrolPosition);
+    }
+
+    protected override void Patrolling()
+    {
+
     }
 
     private void Move()
@@ -65,56 +117,27 @@ public class MeleeAI : Entity
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
     }
 
-    private void SwitchPoints()
-    {
-        index++;
-
-        if(index >= PatrolPoints.Count)
-        {
-            index = 0;
-        }
-
-        transform.LookAt(PatrolPoints[index].position);
-    }
-
-
     protected override void Chase()
     {
-        direction = (playerDebug.transform.position - this.transform.position).normalized;
-        rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
-        transform.LookAt(playerDebug.transform.position);
+        navMeshAgent.SetDestination(debugMax.transform.position);
 
-        //calculate the distance beetween AI and player and if is less/equal to 1.5f which is the minimum distance display the debug.log
+        //direction = (debugMax.transform.position - this.transform.position).normalized;
+        //rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+        //transform.LookAt(debugMax.transform.position);
 
-        float dist = Vector3.Distance(this.transform.position, playerDebug.transform.position);
+        ////calculate the distance beetween AI and player and if is less/equal to 1.5f which is the minimum distance display the debug.log
 
-        if(dist <= 1.5f) // I just set it for test purpose
+        float dist = Vector3.Distance(this.transform.position, debugMax.transform.position);
+
+        if (dist <= attackRange)
         {
             FistsAttack();
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Attack Mode on");
-            playerSeen = true;
         }
     }
 
     private void FistsAttack()
     {
         Debug.Log("fists attack");
-    }
-
-    //Scrivo in italiano, questa coroutine serve solo per "spezzare" il patrolling system cioè andrà a fermare entro tot secondi AI per poi farla ripartire
-    private IEnumerator IdleToMove()
-    {
-        yield return new WaitForSeconds(2);
-        idle = true;
-        yield return new WaitForSeconds(2);
-        idle = false;
     }
 
 }

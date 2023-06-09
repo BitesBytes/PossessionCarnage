@@ -1,9 +1,10 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class RangedAI : Entity
 {
     [SerializeField] private List<Transform> patrolPoints;
+
     private int index;
     private float distanceBeetweenPoints;
     private float patrolRange = 1f;
@@ -15,52 +16,47 @@ public class RangedAI : Entity
 
     private void Start()
     {
-        playerDebug = GameObject.FindWithTag("Player").GetComponent<DebugPlayer>();
         rigidBody = GetComponent<Rigidbody>();
         damage = 0f;
         speed = 13.4f;
         index = 0;
     }
 
-
     private void Update()
     {
-
-
-        if(!playerSeen)
+        if (!playerSeen)
         {
 
             timer += Time.deltaTime * 2.0f;
 
-            if(timer >= maxTimer){ idle = !idle; timer = 0;}
+            if (timer >= maxTimer) { idle = !idle; timer = 0; }
 
-            if(!idle)
+            if (!idle)
             {
-                SwitchBehaviour(STATE.PATROL);
+                SwitchBehaviour(State.PATROL);
             }
         }
 
-        if(playerSeen)
+        if (playerSeen)
         {
-            SwitchBehaviour(STATE.CHASE);
+            SwitchBehaviour(State.CHASE);
         }
 
     }
 
-
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player")) // il tag in fase definitiva non verrà utilizzato
+        if (other.gameObject.CompareTag("Player")) // il tag in fase definitiva non verrà utilizzato
         {
             playerSeen = true;
         }
     }
 
-    protected override void Patroling()
+    protected override void Patrolling()
     {
         distanceBeetweenPoints = Vector3.Distance(this.transform.position, patrolPoints[index].position);
 
-        if(distanceBeetweenPoints <= patrolRange)
+        if (distanceBeetweenPoints <= patrolRange)
         {
             ChangeIndex();
         }
@@ -69,19 +65,17 @@ public class RangedAI : Entity
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
     }
 
-
     private void ChangeIndex()
     {
         index++;
 
-        if(index >= patrolPoints.Count)
+        if (index >= patrolPoints.Count)
         {
             index = 0;
         }
 
         transform.LookAt(patrolPoints[index].position);
     }
-
 
     protected override void Chase()
     {
@@ -90,27 +84,27 @@ public class RangedAI : Entity
 
     private void DriveAway()
     {
-        float distance = Vector3.Distance(this.transform.position, playerDebug.transform.position);
+        //float distance = Vector3.Distance(this.transform.position, playerDebug.transform.position);
 
-        direction = (playerDebug.transform.position - this.transform.position).normalized;
-        direction.y = 0;
-        rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+        //direction = (playerDebug.transform.position - this.transform.position).normalized;
+        //direction.y = 0;
+        //rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
 
-        //Debug.Log("chasing player");
+        ////Debug.Log("chasing player");
 
-        if(distance <= attackRange)
-        {
-            DebugAttack();
-        }
+        //if (distance <= attackRange)
+        //{
+        //    DebugAttack();
+        //}
 
 
-        if(distance <= rangeToDriveAway)
-        {
-            direction = (this.transform.position - playerDebug.transform.position).normalized;
-            direction.y = 0;
-            rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
-            Debug.Log("drivin away from the player");
-        }
+        //if (distance <= rangeToDriveAway)
+        //{
+        //    direction = (this.transform.position - playerDebug.transform.position).normalized;
+        //    direction.y = 0;
+        //    rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+        //    Debug.Log("drivin away from the player");
+        //}
     }
 
     private void DebugAttack()
