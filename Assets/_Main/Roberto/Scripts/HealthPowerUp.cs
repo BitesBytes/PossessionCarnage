@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthPowerUp : MonoBehaviour
 {
-    private HealthMngr healthManager;
+    private HealthSystem healthManager;
+
     public float HealAmount;
 
     private void Start()
     {
-        healthManager = FindAnyObjectByType<HealthMngr>();
+        healthManager = FindAnyObjectByType<HealthSystem>();
     }
 
     private void Update()
@@ -20,4 +19,3 @@ public class HealthPowerUp : MonoBehaviour
         }
     }
 }
-//sample code logic
