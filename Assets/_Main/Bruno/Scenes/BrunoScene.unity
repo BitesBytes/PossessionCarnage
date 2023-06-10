@@ -842,6 +842,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1842833889530975207, guid: c0f865d2eb157626bb4f24c940d9f649,
+        type: 3}
+      propertyPath: patrolPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1842833889530975207, guid: c0f865d2eb157626bb4f24c940d9f649,
+        type: 3}
+      propertyPath: patrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1030094668}
+    - target: {fileID: 1842833889530975207, guid: c0f865d2eb157626bb4f24c940d9f649,
+        type: 3}
+      propertyPath: patrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 1016611541}
+    - target: {fileID: 1842833889530975207, guid: c0f865d2eb157626bb4f24c940d9f649,
+        type: 3}
+      propertyPath: patrolPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 1375142046}
     - target: {fileID: 3326212036328628955, guid: c0f865d2eb157626bb4f24c940d9f649,
         type: 3}
       propertyPath: m_Name
@@ -1020,6 +1040,26 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 490898ad91de7e75582454ba1829dca3, type: 2}
+    - target: {fileID: 8574882314126360985, guid: d7794ba2eaf8357e5936d034123e580d,
+        type: 3}
+      propertyPath: PatrolPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8574882314126360985, guid: d7794ba2eaf8357e5936d034123e580d,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1893649073}
+    - target: {fileID: 8574882314126360985, guid: d7794ba2eaf8357e5936d034123e580d,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 204449117}
+    - target: {fileID: 8574882314126360985, guid: d7794ba2eaf8357e5936d034123e580d,
+        type: 3}
+      propertyPath: PatrolPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 492545305}
     - target: {fileID: 9097804192082470369, guid: d7794ba2eaf8357e5936d034123e580d,
         type: 3}
       propertyPath: m_Icon
@@ -1030,8 +1070,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: debug_MeleeAI
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8574882314126360985, guid: d7794ba2eaf8357e5936d034123e580d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9097804192082470369, guid: d7794ba2eaf8357e5936d034123e580d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4301836824369152522}
   m_SourcePrefab: {fileID: 100100000, guid: d7794ba2eaf8357e5936d034123e580d, type: 3}
+--- !u!1 &4301836824369152521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9097804192082470369, guid: d7794ba2eaf8357e5936d034123e580d,
+    type: 3}
+  m_PrefabInstance: {fileID: 4301836824369152520}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4301836824369152522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4301836824369152521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da31aadde93d7e8ffbda23ae13715795, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchPlayerRay: 10
+  attackRange: 1.5
+  PatrolPoints:
+  - {fileID: 1893649073}
+  - {fileID: 204449117}
+  - {fileID: 492545305}

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9046436060990178736}
   - component: {fileID: 2708630436128452324}
   - component: {fileID: 6012766263708761218}
-  - component: {fileID: 5552652458146199685}
+  - component: {fileID: 1842833889530975207}
   m_Layer: 0
   m_Name: debug_RangedAI
   m_TagString: rangedAI
@@ -135,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5552652458146199685
+--- !u!114 &1842833889530975207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3326212036328628955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 981575fd361bd491a9f32ab0857950e5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e0de61881dee039cbc28355f584c5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints: []
