@@ -1,37 +1,20 @@
+using System;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    public float CurrentHealth
+    public static event EventHandler OnHealthAmountChanged;
+    public event EventHandler OnHealthAmountMaxChanged;
+    public event EventHandler OnSetTimerSpeedChanged;
+
+    private float maxHealthAmount;
+    private float healthAmount;
+    private float timerSpeed;
+
+    public void DecreaseHealthOverTime()
     {
-        get
-        {
-            return currentHealth;
-        }
-
-        set
-        {
-            currentHealth = Mathf.Clamp(value, 0f, maxHealth);
-            if(CurrentHealth <= 0f)
-            {
-                Die();
-            }
-        }
-    }
-
-    [SerializeField] private float maxHealth = 1f;
-    [SerializeField] private float timerSpeed = 1f;
-
-    private float currentHealth;
-
-    private void Awake()
-    {
-        CurrentHealth = maxHealth;
-    }
-
-    private void DecreaseHealthOverTime()
-    {
-        CurrentHealth -= Time.deltaTime * timerSpeed;
+        float amount = Time.deltaTime * timerSpeed;
+        ChangeHealthAmount(-amount);
     }
 
     private void Die()
@@ -39,24 +22,39 @@ public class HealthSystem : MonoBehaviour
         //TODO
     }
 
-    public void ChangeHealth(float amount)
+    public void ChangeHealthAmount(float amount)
     {
-        CurrentHealth += amount;
+        healthAmount += amount;
+        healthAmount = Mathf.Clamp(healthAmount, 0, maxHealthAmount);
+
+        OnHealthAmountChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public void SetTimerSpeed(float timerSpeed)
     {
         this.timerSpeed = timerSpeed;
+
+        OnSetTimerSpeedChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SetMaxHealth(float maxHealth)
+    public void SetHealthAmountMax(float maxHealth)
     {
-        this.maxHealth = maxHealth;
+        this.maxHealthAmount = maxHealth;
+
+        OnHealthAmountMaxChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public float GetCurrentHealthNormalized()
     {
-        return CurrentHealth / maxHealth;
+        return healthAmount / maxHealthAmount;
+    }
+
+    public void Init(float amountMax, float timerSpeed)
+    {
+        SetHealthAmountMax(amountMax);
+        SetTimerSpeed(timerSpeed);
+
+        healthAmount = amountMax;
     }
 
     #region _OLD

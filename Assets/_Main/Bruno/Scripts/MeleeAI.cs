@@ -27,8 +27,6 @@ public class MeleeAI : Entity
 
         randomPointMaxDistance = navMeshAgent.height * 2f;
 
-        destinationReached = true;
-
         navMeshBorderOffset = 5f;
     }
 
@@ -40,8 +38,6 @@ public class MeleeAI : Entity
         damage = 0f;
         index = 0;
         rigidBody = GetComponent<Rigidbody>();
-
-        Debug.Log(meshCollider.bounds.size);
     }
 
     private void Update()
@@ -84,17 +80,11 @@ public class MeleeAI : Entity
 
     private void SearchForPlayer()
     {
-        if (!destinationReached && Vector3.Distance(transform.position, randomPatrolPosition) <= 0.05f)
-        {
-            destinationReached = true;
-        }
+        destinationReached = navMeshAgent.velocity == Vector3.zero;
 
         if (destinationReached)
         {
-            destinationReached = false;
             randomPatrolPosition = new Vector3(Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
-
-            Debug.Log(randomPatrolPosition);
         }
 
         if (Vector3.Distance(AIBehaviourManager.Instance.GetDebugMax().transform.position, transform.position) <= searchPlayerRay)

@@ -15,7 +15,7 @@ public class HealthPowerUp : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            healthManager.CurrentHealth += HealAmount;
+            //healthManager.CurrentHealth += HealAmount;
         }
     }
 }

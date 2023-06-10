@@ -1,46 +1,61 @@
 using UnityEngine;
 
-[RequireComponent(typeof(HealthSystem))]
 public class DebugMax : MonoBehaviour
 {
-    private HealthManager healthManager;
     private AIBehaviourManager aiBehaviourManager;
-    private Vector3 direction; //DEBUG
-    private CharacterController controller; //DEBUG
-    private float speed = 2f; //DEBUG
 
-    private void Awake()
-    {
-        controller = GetComponent<CharacterController>();
-    }
+    [SerializeField] private Character character1;
+    [SerializeField] private Character character2;
+
+    [SerializeField] private Character actualCharacter;
+
+    [SerializeField] private float speed = 5f;
+
+    private CharacterController controller;
 
     private void Start()
     {
-        healthManager = HealthManager.Instance;
         aiBehaviourManager = AIBehaviourManager.Instance;
 
         aiBehaviourManager.SetDebugMax(this);
+
+        actualCharacter = character1;
+
+        EventManager.OnPossessedCharacterChangedCall(actualCharacter);
+
+        controller = GetComponent<CharacterController>();
+
+        PlayerInputSystem.OnSpecialAbilityPerformed += PlayerInputSystem_OnSpecialAbilityPerformed;
+        PlayerInputSystem.OnLightAttackPerformed += PlayerInputSystem_OnLightAttackPerformed;
+        PlayerInputSystem.OnHeavyAttackPerformed += PlayerInputSystem_OnHeavyAttackPerformed;
     }
 
-    private void Update()
+    private void PlayerInputSystem_OnHeavyAttackPerformed()
     {
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.Space))
+        actualCharacter.GetAttackSystem().PerformAttack(AttackType.HEAVY);
+    }
+
+    private void PlayerInputSystem_OnLightAttackPerformed()
+    {
+        actualCharacter.GetAttackSystem().PerformAttack(AttackType.LIGHT);
+    }
+
+    private void PlayerInputSystem_OnSpecialAbilityPerformed()
+    {
+        if (actualCharacter == character1)
         {
-            healthManager.PossessedCharacterChanged(this.gameObject);
+            actualCharacter = character2;
+        }
+        else
+        {
+            actualCharacter = character1;
         }
 
-        Kinematics(); //DEBUG
+        EventManager.OnPossessedCharacterChangedCall(actualCharacter);
     }
 
-    //DEBUG
-    private void Kinematics()
+    private void FixedUpdate()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        direction = new Vector3(x, 0, z).normalized;
-
-        controller.Move(direction * Time.deltaTime * speed);
+        controller.Move(new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y) * Time.fixedDeltaTime * speed);
     }
 }

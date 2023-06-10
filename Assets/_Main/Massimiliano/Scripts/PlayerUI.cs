@@ -3,20 +3,28 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
-    private HealthManager healthManager;
-
-    [SerializeField] private Image HealthBar;
+    [SerializeField] private Image healthBar;
 
     private void Start()
     {
-        healthManager = HealthManager.Instance;
-
-        healthManager.OnPossessedCharacterChanged += HealthManager_OnPossessedCharacterChanged;
+        EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
+        HealthSystem.OnHealthAmountChanged += HealthSystem_OnHealthAmountChanged;
     }
 
-    private void HealthManager_OnPossessedCharacterChanged(object sender, HealthManager.OnPossessedCharacterChangedEventArgs e)
+    private void EventManager_OnPossessedCharacterChanged(Character character)
     {
-        HealthBar.fillAmount = e.healthSystem.GetCurrentHealthNormalized();
+        healthBar.fillAmount = character.GetHealthSystem().GetCurrentHealthNormalized();
     }
 
+    private void HealthSystem_OnHealthAmountChanged(object sender, System.EventArgs e)
+    {
+        HealthSystem currentCharacterHealthSystem = sender as HealthSystem;
+
+        healthBar.fillAmount = currentCharacterHealthSystem.GetCurrentHealthNormalized();
+    }
+
+    private void OnDestroy()
+    {
+        HealthSystem.OnHealthAmountChanged -= HealthSystem_OnHealthAmountChanged;
+    }
 }
