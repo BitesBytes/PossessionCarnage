@@ -11,14 +11,16 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private GameObject defaultBodyPrefab;
     [SerializeField] private Transform rayMuz;
+    [SerializeField] private float possessionEnergy;
 
     private bool isPossessing;
-    private Transform possessed;
-    private Transform def;
+    private Transform possessedParent;
+    private Transform defaultBodyParent;
 
+    private float maxPossEnergy = 100.0f;
     private float maxPossessionDistance = 5.0f;
-    private PossessableEntity possessedBody;
-    private PossessableEntity defaultBodyPoss;
+    private PossessableEntity possessedBodyComponent;
+    private PossessableEntity defaultBodyComponent;
 
     private GameObject possessedGameObject;
 
@@ -26,17 +28,33 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        possessionEnergy = maxPossEnergy;
+        possessedParent = transform.Find("Possessed");
+        defaultBodyParent = transform.Find("Default");
+
         possessedGameObject = Instantiate(defaultBodyPrefab);
-        possessed = transform.Find("Possessed");
-        def = transform.Find("Default");
+        defaultBodyComponent = defaultBodyPrefab.GetComponent<PossessableEntity>();
+        possessedBodyComponent = defaultBodyComponent;
 
-        defaultBodyPoss = defaultBodyPrefab.GetComponent<PossessableEntity>();
-        possessedBody = defaultBodyPoss;
-
-        possessedGameObject.transform.SetParent(def);
+        possessedGameObject.transform.SetParent(defaultBodyParent);
     }
     private void Update()
     {
+        if (isPossessing)
+        {
+            possessionEnergy -= Time.deltaTime * 10.0f;
+
+            if (possessionEnergy <= 0)
+            {
+                DePossess();
+            }
+        }
+        else
+        {
+            //possessionEnergy += Time.deltaTime * 10.0f;
+            possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);
+        }
+
         float mouseX = Input.GetAxis("Mouse X") * rotationSens;
 
         transform.Rotate(Vector3.up, mouseX);
@@ -48,7 +66,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            possessedBody.UseAbility();
+            possessedBodyComponent.UseAbility();
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -58,7 +76,6 @@ public class Player : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.E))
         {
             RaycastHit hit;
-
             if (Physics.Raycast(rayMuz.position, transform.forward, out hit))
             {
                 GameObject hitObject = hit.collider.transform.parent.transform.parent.gameObject;
@@ -100,19 +117,24 @@ public class Player : MonoBehaviour
         transform.rotation = obj.transform.rotation;
 
         isPossessing = true;
-        obj.transform.SetParent(possessed);
-        possessedBody = obj.GetComponent<PossessableEntity>();
+        obj.transform.SetParent(possessedParent);
+        possessedBodyComponent = obj.GetComponent<PossessableEntity>();
         possessedGameObject = obj;
-        def.gameObject.SetActive(false);
+        defaultBodyParent.gameObject.SetActive(false);
 
-        //Destroy(oldGO);
+
+        if (oldGO.transform.parent == possessedParent)
+        {
+            Destroy(oldGO);
+        }
     }
 
     private void DePossess()
     {
-        def.gameObject.SetActive(true);
-        possessedGameObject.SetActive(false);
-        possessedBody = defaultBodyPoss;
+        defaultBodyParent.gameObject.SetActive(true);
         isPossessing = false;
+
+        possessedBodyComponent = defaultBodyComponent;
+        possessedGameObject.SetActive(false);
     }
 }

@@ -6,11 +6,11 @@ public class DefaultBody : PossessableEntity
 {
     public override void StartPossession()
     {
-        gameObject.SetActive(true);
+        transform.parent.gameObject.SetActive(true);
     }
     public override void StopPossession()
     {
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
     public override void UseAbility()
     {
