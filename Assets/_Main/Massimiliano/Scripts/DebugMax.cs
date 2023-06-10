@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DebugMax : MonoBehaviour
 {
-    private AIBehaviourManager aiBehaviourManager;
+    private AISystem aiBehaviourManager;
 
     [SerializeField] private Character character1;
     [SerializeField] private Character character2;
@@ -15,7 +15,7 @@ public class DebugMax : MonoBehaviour
 
     private void Start()
     {
-        aiBehaviourManager = AIBehaviourManager.Instance;
+        aiBehaviourManager = AISystem.Instance;
 
         aiBehaviourManager.SetDebugMax(this);
 

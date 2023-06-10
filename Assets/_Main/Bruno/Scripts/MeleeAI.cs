@@ -42,7 +42,7 @@ public class MeleeAI : Entity
 
     private void Update()
     {
-        debugMax = AIBehaviourManager.Instance.GetDebugMax();
+        debugMax = AISystem.Instance.GetDebugMax();
 
         if (debugMax != null)
         {
@@ -87,7 +87,7 @@ public class MeleeAI : Entity
             randomPatrolPosition = new Vector3(Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
         }
 
-        if (Vector3.Distance(AIBehaviourManager.Instance.GetDebugMax().transform.position, transform.position) <= searchPlayerRay)
+        if (Vector3.Distance(AISystem.Instance.GetDebugMax().transform.position, transform.position) <= searchPlayerRay)
         {
             //Player found!
             SwitchBehaviour(State.CHASE);
