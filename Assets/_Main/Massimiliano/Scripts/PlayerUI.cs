@@ -25,6 +25,7 @@ public class PlayerUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
         HealthSystem.OnHealthAmountChanged -= HealthSystem_OnHealthAmountChanged;
     }
 }
