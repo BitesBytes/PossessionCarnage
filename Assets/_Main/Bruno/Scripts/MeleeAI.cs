@@ -42,7 +42,7 @@ public class MeleeAI : Entity
 
     private void Update()
     {
-        debugMax = AISystem.Instance.GetDebugMax();
+        //debugMax = AISystem.Instance.GetDebugMax();
 
         if (debugMax != null)
         {
@@ -87,11 +87,11 @@ public class MeleeAI : Entity
             randomPatrolPosition = new Vector3(Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
         }
 
-        if (Vector3.Distance(AISystem.Instance.GetDebugMax().transform.position, transform.position) <= searchPlayerRay)
-        {
-            //Player found!
-            SwitchBehaviour(State.CHASE);
-        }
+        //if (Vector3.Distance(AISystem.Instance.GetDebugMax().transform.position, transform.position) <= searchPlayerRay)
+        //{
+        //    //Player found!
+        //    SwitchBehaviour(State.CHASE);
+        //}
 
         navMeshAgent.SetDestination(randomPatrolPosition);
     }

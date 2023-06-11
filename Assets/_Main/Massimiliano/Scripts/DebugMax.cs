@@ -15,9 +15,9 @@ public class DebugMax : MonoBehaviour
 
     private void Start()
     {
-        aiBehaviourManager = AISystem.Instance;
+        //aiBehaviourManager = AISystem.Instance;
 
-        aiBehaviourManager.SetDebugMax(this);
+        //aiBehaviourManager.SetDebugMax(this);
 
         actualCharacter = character1;
 
