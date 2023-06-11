@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TreeEditor;
-using UnityEditor.SearchService;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -110,7 +104,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManagementSystem.ExitToMainMenu();
         }
