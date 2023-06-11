@@ -33,11 +33,13 @@ public class DebugMax : MonoBehaviour
     private void PlayerInputSystem_OnHeavyAttackPerformed()
     {
         actualCharacter.GetAttackSystem().PerformAttack(AttackType.HEAVY);
+        DebugText.SetDamageDebug(actualCharacter.GetCharacterType().HeavyAttackDamange); //DEBUG
     }
 
     private void PlayerInputSystem_OnLightAttackPerformed()
     {
         actualCharacter.GetAttackSystem().PerformAttack(AttackType.LIGHT);
+        DebugText.SetDamageDebug(actualCharacter.GetCharacterType().LightAttackDamange); //DEBUG
     }
 
     private void PlayerInputSystem_OnSpecialAbilityPerformed()
@@ -65,5 +67,10 @@ public class DebugMax : MonoBehaviour
         PlayerInputSystem.OnLightAttackPerformed -= PlayerInputSystem_OnLightAttackPerformed;
         PlayerInputSystem.OnHeavyAttackPerformed -= PlayerInputSystem_OnHeavyAttackPerformed;
         PlayerInputSystem.OnExitToMainMenuPerformed -= PlayerInputSystem_OnExitToMainMenuPerformed;
+    }
+
+    public Character GetActualCharacter()
+    {
+        return actualCharacter;
     }
 }

@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6896515004079768858}
   - component: {fileID: 4610251933348815405}
   m_Layer: 6
-  m_Name: HealPowerUp
+  m_Name: pfHealPowerUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

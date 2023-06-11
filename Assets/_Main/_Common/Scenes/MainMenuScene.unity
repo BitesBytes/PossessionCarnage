@@ -1572,6 +1572,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadTestSceneButton
       objectReference: {fileID: 0}
+    - target: {fileID: 4370665175930721977, guid: d0329f7d2e9d3ff4c8a0abd462dd43da,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4370665175930721979, guid: d0329f7d2e9d3ff4c8a0abd462dd43da,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2560,6 +2565,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Play Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 4370665175930721977, guid: d0329f7d2e9d3ff4c8a0abd462dd43da,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4370665175930721978, guid: d0329f7d2e9d3ff4c8a0abd462dd43da,
         type: 3}

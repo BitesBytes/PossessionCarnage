@@ -22,6 +22,11 @@ public class DebugPlayer : MonoBehaviour
         mainCamera.transform.position = this.transform.position + cameraOffset;
 
         Kinematics();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManagementSystem.ExitToMainMenu();
+        }
     }
 
     private void Kinematics()

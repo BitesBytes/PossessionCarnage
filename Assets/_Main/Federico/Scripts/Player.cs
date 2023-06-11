@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
 
         possessedGameObject.transform.SetParent(defaultBodyParent);
     }
+
     private void Update()
     {
         if (isPossessing)
@@ -107,6 +108,11 @@ public class Player : MonoBehaviour
                     DePossess();
                 }
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManagementSystem.ExitToMainMenu();
         }
     }
 

@@ -6,9 +6,9 @@ public static class SceneManagementSystem
     private const string BRUNO_SCENE = "Assets/_Main/Bruno/Scenes/BrunoScene.unity";
     private const string FEDERICO_SCENE = "Assets/_Main/Federico/Scenes/FedericoScene.unity";
     private const string SIMONE_SCENE = "Assets/_Main/Simone/Scenes/SimoneScene.unity";
-    private const string ROBERTO_SCENE = "Assets/_Main/Roberto/Scenes/RobertoScene.unity";
+    private const string ROBERTO_SCENE = "Assets/_Main/Roberto/Scenes/RobertoErcolino.unity";
     private const string MASSIMILIANO_SCENE = "Assets/_Main/Massimiliano/Scenes/MassimilianoScene.unity";
-    private const string MAIN_MENU_SCENE = "Assets/_Main/Massimiliano/Scenes/MainMenuScene.unity";
+    private const string MAIN_MENU_SCENE = "Assets/_Main/_Common/Scenes/MainMenuScene.unity";
 
     public static void PlayGame()
     {
