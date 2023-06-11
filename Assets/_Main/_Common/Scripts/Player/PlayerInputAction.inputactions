@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Possession",
+                    "type": "Value",
+                    "id": "94a4d6fa-6db3-4e63-bf01-e24ec775f4c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "SlowTap",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -148,6 +157,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ExitToMainMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9c7e8eef-37eb-4bfa-830d-41c06bdac312",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Possession",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

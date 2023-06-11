@@ -7,6 +7,8 @@ public static class PlayerInputSystem
     public static event onButtonPressed OnLightAttackPerformed;
     public static event onButtonPressed OnHeavyAttackPerformed;
     public static event onButtonPressed OnExitToMainMenuPerformed;
+    public static event onButtonPressed OnPossessionPerformed;
+    public static event onButtonPressed OnPossessionStarted;
 
     private static PlayerInputAction playerInputAction;
 
@@ -19,6 +21,8 @@ public static class PlayerInputSystem
         playerInputAction.Player.LightAttack.performed += LightAttack_performed;
         playerInputAction.Player.HeavyAttack.performed += HeavyAttack_performed;
         playerInputAction.Player.ExitToMainMenu.performed += ExitToMainMenu_performed;
+        playerInputAction.Player.Possession.performed += Possession_performed;
+        playerInputAction.Player.Possession.started += Possession_started;
     }
 
     private static void ExitToMainMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
@@ -39,6 +43,15 @@ public static class PlayerInputSystem
     private static void SpecialAbility_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnSpecialAbilityPerformed?.Invoke();
+    }
+    private static void Possession_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPossessionPerformed?.Invoke();
+    }
+
+    private static void Possession_started(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPossessionStarted?.Invoke();
     }
 
     public static Vector2 GetDirectionNormalized()

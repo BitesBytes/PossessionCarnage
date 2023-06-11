@@ -9,9 +9,9 @@ public class CameraManager : MonoBehaviour
     [SerializeField] private Vector3 cameraOffset;
     [SerializeField] private float distance;
     [SerializeField] private Quaternion cameraRotation;
+    [SerializeField] private GameObject owner;
 
     private Camera mainCamera;
-    private GameObject owner;
 
     private void Awake()
     {
@@ -22,8 +22,6 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         mainCamera.transform.rotation = cameraRotation;
-        owner = GameObject.FindGameObjectWithTag("Player");
-
         mainCamera.transform.position = owner.transform.position + cameraOffset;
     }
 }
