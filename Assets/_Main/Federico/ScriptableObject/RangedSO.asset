@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38ad5d9b678f3043ba10f1f0345ed7c, type: 3}
+  m_Name: RangedSO
+  m_EditorClassIdentifier: 
+  NameString: Ranged
+  Prefab: {fileID: 4571469557582458519, guid: df29f0e5333051344981b3a9e62a45de, type: 3}
+  HealthAmountMax: 100
+  HealthDecreaseTimerMax: 10
+  CharacterAttackType: 1
+  LightAttackCountdownMax: 1.5
+  LightAttackCountdownSpeed: 1
+  LightAttackDamange: 20
+  HeavyAttackCountdownMax: 3
+  HeavyAttackCountdownSpeed: 1
+  HeavyAttackDamange: 55
+  SpecialAttackCountdownMax: 8
+  SpecialAttackCountdownSpeed: 1
+  SpecialAttackDamange: 75
+  CharacterSpeed: 2
+  NavMeshBorderOffset: 5
+  SearchPlayerRay: 7
+  AttackRange: 1.5
+  DistanceToKeepFromPlayer: 4.5
+  MeshCollider: {fileID: 8526335384044768565, guid: 01c3f77b7af9b344594cd3ea03c1f29a,
+    type: 3}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(HealthSystem), typeof(AISystem), typeof(AISystem))]
+[RequireComponent(typeof(HealthSystem), typeof(AttackSystem), typeof(AISystem))]
 public class Character : MonoBehaviour
 {
     [SerializeField] private CharacterTypeSO characterType;

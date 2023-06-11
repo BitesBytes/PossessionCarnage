@@ -71,6 +71,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Possession"",
+                    ""type"": ""Value"",
+                    ""id"": ""94a4d6fa-6db3-4e63-bf01-e24ec775f4c1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""SlowTap"",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -172,6 +181,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""ExitToMainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c7e8eef-37eb-4bfa-830d-41c06bdac312"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Possession"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -185,6 +205,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_ExitToMainMenu = m_Player.FindAction("ExitToMainMenu", throwIfNotFound: true);
+        m_Player_Possession = m_Player.FindAction("Possession", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +272,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_ExitToMainMenu;
+    private readonly InputAction m_Player_Possession;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -260,6 +282,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @ExitToMainMenu => m_Wrapper.m_Player_ExitToMainMenu;
+        public InputAction @Possession => m_Wrapper.m_Player_Possession;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -284,6 +307,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @ExitToMainMenu.started += instance.OnExitToMainMenu;
             @ExitToMainMenu.performed += instance.OnExitToMainMenu;
             @ExitToMainMenu.canceled += instance.OnExitToMainMenu;
+            @Possession.started += instance.OnPossession;
+            @Possession.performed += instance.OnPossession;
+            @Possession.canceled += instance.OnPossession;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -303,6 +329,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @ExitToMainMenu.started -= instance.OnExitToMainMenu;
             @ExitToMainMenu.performed -= instance.OnExitToMainMenu;
             @ExitToMainMenu.canceled -= instance.OnExitToMainMenu;
+            @Possession.started -= instance.OnPossession;
+            @Possession.performed -= instance.OnPossession;
+            @Possession.canceled -= instance.OnPossession;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -327,5 +356,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnExitToMainMenu(InputAction.CallbackContext context);
+        void OnPossession(InputAction.CallbackContext context);
     }
 }
