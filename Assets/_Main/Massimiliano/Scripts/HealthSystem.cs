@@ -7,9 +7,9 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnHealthAmountMaxChanged;
     public event EventHandler OnSetTimerSpeedChanged;
 
+    private float timerSpeed;
     private float maxHealthAmount;
     private float healthAmount;
-    private float timerSpeed;
 
     public void DecreaseHealthOverTime()
     {
