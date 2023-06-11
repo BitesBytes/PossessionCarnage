@@ -522,5 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   searchPlayerRay: 10
   attackRange: 1.5
-  meshCollider: {fileID: 0}
-  PatrolPoints: []
+  PatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

@@ -20,12 +20,11 @@ public class DebugMelee : DebugEntity
 
     private void Start()
     {
-        SwitchBehaviour(State.SEARCHING);
-
         speed = 10f;
         damage = 0f;
         index = 0;
         rigidBody = GetComponent<Rigidbody>();
+        playerDebug = GameObject.FindWithTag("Player").GetComponent<DebugPlayer>();
     }
 
     private void Update()
@@ -77,6 +76,15 @@ public class DebugMelee : DebugEntity
     {
         direction = (PatrolPoints[index].position - this.transform.position).normalized;
         rigidBody.MovePosition(rigidBody.position + direction * speed * Time.deltaTime);
+    }
+
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player")) // il tag in fase definitiva non verrà utilizzato
+        {
+            playerSeen = true;
+        }
     }
 
     protected override void Chase()
