@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class DebugMax : MonoBehaviour
 {
-    private AIBehaviourManager aiBehaviourManager;
-
-    [SerializeField] private Character character1;
-    [SerializeField] private Character character2;
+    [SerializeField] private Character melee;
+    [SerializeField] private Character ranged;
 
     [SerializeField] private Character actualCharacter;
 
@@ -15,11 +13,7 @@ public class DebugMax : MonoBehaviour
 
     private void Start()
     {
-        aiBehaviourManager = AIBehaviourManager.Instance;
-
-        aiBehaviourManager.SetDebugMax(this);
-
-        actualCharacter = character1;
+        actualCharacter = melee;
 
         EventManager.OnPossessedCharacterChangedCall(actualCharacter);
 
@@ -28,6 +22,12 @@ public class DebugMax : MonoBehaviour
         PlayerInputSystem.OnSpecialAbilityPerformed += PlayerInputSystem_OnSpecialAbilityPerformed;
         PlayerInputSystem.OnLightAttackPerformed += PlayerInputSystem_OnLightAttackPerformed;
         PlayerInputSystem.OnHeavyAttackPerformed += PlayerInputSystem_OnHeavyAttackPerformed;
+        PlayerInputSystem.OnExitToMainMenuPerformed += PlayerInputSystem_OnExitToMainMenuPerformed;
+    }
+
+    private void PlayerInputSystem_OnExitToMainMenuPerformed()
+    {
+        SceneManagementSystem.ExitToMainMenu();
     }
 
     private void PlayerInputSystem_OnHeavyAttackPerformed()
@@ -42,13 +42,13 @@ public class DebugMax : MonoBehaviour
 
     private void PlayerInputSystem_OnSpecialAbilityPerformed()
     {
-        if (actualCharacter == character1)
+        if (actualCharacter == melee)
         {
-            actualCharacter = character2;
+            actualCharacter = ranged;
         }
         else
         {
-            actualCharacter = character1;
+            actualCharacter = melee;
         }
 
         EventManager.OnPossessedCharacterChangedCall(actualCharacter);
@@ -57,5 +57,13 @@ public class DebugMax : MonoBehaviour
     private void FixedUpdate()
     {
         controller.Move(new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y) * Time.fixedDeltaTime * speed);
+    }
+
+    private void OnDestroy()
+    {
+        PlayerInputSystem.OnSpecialAbilityPerformed -= PlayerInputSystem_OnSpecialAbilityPerformed;
+        PlayerInputSystem.OnLightAttackPerformed -= PlayerInputSystem_OnLightAttackPerformed;
+        PlayerInputSystem.OnHeavyAttackPerformed -= PlayerInputSystem_OnHeavyAttackPerformed;
+        PlayerInputSystem.OnExitToMainMenuPerformed -= PlayerInputSystem_OnExitToMainMenuPerformed;
     }
 }

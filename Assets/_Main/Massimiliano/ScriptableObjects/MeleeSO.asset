@@ -10,19 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b38ad5d9b678f3043ba10f1f0345ed7c, type: 3}
-  m_Name: Character2SO
+  m_Name: MeleeSO
   m_EditorClassIdentifier: 
-  NameString: Character 2
+  NameString: Melee
   Prefab: {fileID: 8792894934469629629, guid: 823fd03a8e706e846891e54689140e30, type: 3}
-  HealthAmountMax: 100
+  HealthAmountMax: 200
   HealthDecreaseTimerMax: 10
-  CharacterAttackType: 1
-  LightAttackCountdownMax: 1.5
+  CharacterAttackType: 0
+  LightAttackCountdownMax: 0.5
   LightAttackCountdownSpeed: 1
-  LightAttackDamange: 20
-  HeavyAttackCountdownMax: 3
+  LightAttackDamange: 10
+  HeavyAttackCountdownMax: 1.5
   HeavyAttackCountdownSpeed: 1
-  HeavyAttackDamange: 55
-  SpecialAttackCountdownMax: 8
+  HeavyAttackDamange: 25
+  SpecialAttackCountdownMax: 5
   SpecialAttackCountdownSpeed: 1
-  SpecialAttackDamange: 75
+  SpecialAttackDamange: 55
+  CharacterSpeed: 2
+  NavMeshBorderOffset: 5
+  SearchPlayerRay: 7
+  AttackRange: 1.5
+  DistanceToKeepFromPlayer: 0
+  MeshCollider: {fileID: 8526335384044768565, guid: 01c3f77b7af9b344594cd3ea03c1f29a,
+    type: 3}

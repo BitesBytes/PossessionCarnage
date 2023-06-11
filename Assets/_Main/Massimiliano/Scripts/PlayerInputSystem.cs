@@ -6,6 +6,7 @@ public static class PlayerInputSystem
     public static event onButtonPressed OnSpecialAbilityPerformed;
     public static event onButtonPressed OnLightAttackPerformed;
     public static event onButtonPressed OnHeavyAttackPerformed;
+    public static event onButtonPressed OnExitToMainMenuPerformed;
 
     private static PlayerInputAction playerInputAction;
 
@@ -17,6 +18,12 @@ public static class PlayerInputSystem
         playerInputAction.Player.SpecialAbility.performed += SpecialAbility_performed;
         playerInputAction.Player.LightAttack.performed += LightAttack_performed;
         playerInputAction.Player.HeavyAttack.performed += HeavyAttack_performed;
+        playerInputAction.Player.ExitToMainMenu.performed += ExitToMainMenu_performed;
+    }
+
+    private static void ExitToMainMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnExitToMainMenuPerformed?.Invoke();
     }
 
     private static void HeavyAttack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

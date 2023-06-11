@@ -22,4 +22,12 @@ public class CharacterTypeSO : ScriptableObject
     public float SpecialAttackCountdownMax = 5f;
     public float SpecialAttackCountdownSpeed = 1f;
     public float SpecialAttackDamange = 55f;
+
+    [Header("AI SYSTEM")]
+    public float CharacterSpeed = 2f;
+    public float NavMeshBorderOffset = 5f;
+    public float SearchPlayerRay = 7f;
+    public float AttackRange = 1.5f;
+    public float DistanceToKeepFromPlayer = 0f;
+    public MeshCollider MeshCollider;
 }
