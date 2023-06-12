@@ -4,12 +4,15 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 public class AISystem : MonoBehaviour
 {
+
     private enum State
     {
         SEARCHING,
         CHASE,
         GO_AWAY
     }
+
+    [SerializeField] private GameObject cube;
 
     private Character character;
     private NavMeshAgent navMeshAgent;
@@ -25,6 +28,9 @@ public class AISystem : MonoBehaviour
     private float distanceToKeepFromPlayer;
     private MeshCollider meshCollider;
 
+    //Debug
+
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -34,7 +40,8 @@ public class AISystem : MonoBehaviour
 
     private void Start()
     {
-        EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
+        // to enabled
+        //EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
     }
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
@@ -46,7 +53,7 @@ public class AISystem : MonoBehaviour
 
     private void Update()
     {
-        if (actualPlayer != null)
+        if (cube != null) //to replace in to actual player
         {
             switch (currentState)
             {
@@ -86,9 +93,11 @@ public class AISystem : MonoBehaviour
                 break;
             case State.CHASE:
                 destinationReached = false;
+                navMeshAgent.isStopped = false;
                 currentState = State.CHASE;
                 break;
             case State.GO_AWAY:
+                navMeshAgent.isStopped = true;
                 currentState = State.GO_AWAY;
                 break;
         }
@@ -103,7 +112,7 @@ public class AISystem : MonoBehaviour
             randomPatrolPosition = new Vector3(Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
         }
 
-        if (Vector3.Distance(actualPlayer.transform.position, transform.position) <= searchPlayerRay)
+        if (Vector3.Distance(cube.transform.position, transform.position) <= searchPlayerRay) // cube to replace actual player
         {
             SwitchBehaviour(State.CHASE);
         }
@@ -113,7 +122,7 @@ public class AISystem : MonoBehaviour
 
     private void Chase()
     {
-        float distanceFromPlayer = Vector3.Distance(this.transform.position, actualPlayer.transform.position);
+        float distanceFromPlayer = Vector3.Distance(this.transform.position, cube.transform.position); //cube to replace actualplayer
 
         destinationReached = distanceFromPlayer <= attackRange;
 
@@ -124,18 +133,33 @@ public class AISystem : MonoBehaviour
 
         if (destinationReached)
         {
+            navMeshAgent.isStopped = true;
             character.GetAttackSystem().PerformAttack(AttackType.LIGHT);
         }
         else
         {
-            navMeshAgent.SetDestination(actualPlayer.transform.position);
+            navMeshAgent.isStopped = false;
+            navMeshAgent.SetDestination(cube.transform.position); // replace with actual player
         }
     }
 
     private void GoAway()
     {
-        //TODO
-        Debug.Log($"{character.GetCharacterType().NameString} STA SCAPPANDO DAL PLAYER");
+        if(navMeshAgent.isStopped)
+        {
+            navMeshAgent.isStopped = false;
+        }
+
+        Vector3 driveAway = (this.transform.position - cube.transform.position).normalized;
+
+        navMeshAgent.SetDestination(driveAway);
+
+        float chaseDist = Vector3.Distance(this.transform.position, cube.transform.position); // actual player will replace cube
+
+        if(chaseDist >= distanceToKeepFromPlayer)
+        {
+            SwitchBehaviour(State.CHASE);
+        }
     }
 
     private void OnDestroy()
