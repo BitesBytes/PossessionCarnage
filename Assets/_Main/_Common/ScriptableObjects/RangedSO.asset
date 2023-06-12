@@ -29,7 +29,8 @@ MonoBehaviour:
   CharacterSpeed: 2
   NavMeshBorderOffset: 5
   SearchPlayerRay: 7
-  AttackRange: 1.5
-  DistanceToKeepFromPlayer: 4.5
+  AttackRange: 4.5
+  DistanceToKeepFromPlayer: 2
   MeshCollider: {fileID: 8526335384044768565, guid: 01c3f77b7af9b344594cd3ea03c1f29a,
     type: 3}
+  animator: {fileID: 0}
