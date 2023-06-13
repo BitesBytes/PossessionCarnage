@@ -49,6 +49,18 @@ public class HealthSystem : MonoBehaviour
         return healthAmount / maxHealthAmount;
     }
 
+    public bool IsNotMaxHealth()
+    {
+        if(healthAmount < maxHealthAmount)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void Init(float amountMax, float timerSpeed)
     {
         SetHealthAmountMax(amountMax);
