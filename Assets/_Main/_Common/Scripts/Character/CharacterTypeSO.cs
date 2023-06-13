@@ -30,9 +30,11 @@ public class CharacterTypeSO : ScriptableObject
     public float AttackRange = 1.5f;
     public float DistanceToKeepFromPlayer = 0f;
     public MeshCollider MeshCollider;
+    public float StunTimer = 0.5f;
+    public float ImpactForce = -3.9f;
 
     //Bruno was here
     [Header("AI Animation System")]
-    public Animator animator;
-    
+    public Animator Animator;
+
 }

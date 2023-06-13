@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 public class AISystem : MonoBehaviour
@@ -28,11 +29,18 @@ public class AISystem : MonoBehaviour
     private float distanceToKeepFromPlayer;
     private MeshCollider meshCollider;
 
-    //Debug
+    // stun system
+    private Rigidbody rigidBody;
+    private float stunTimer; // timer to move again after stun
+    private float stunTimerLimit = 1.5f;
+    private float impactForce;
+    private bool isStunned;
 
 
     private void Awake()
     {
+        rigidBody = GetComponent<Rigidbody>();
+
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         SwitchBehaviour(State.SEARCHING);
@@ -41,7 +49,7 @@ public class AISystem : MonoBehaviour
     private void Start()
     {
         // to enabled
-        //EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
+        // EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
     }
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
@@ -68,6 +76,27 @@ public class AISystem : MonoBehaviour
                     break;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            character.GetHealthSystem().ChangeHealthAmount(10f);
+        }
+
+        if(isStunned)
+        {
+            stunTimer += Time.deltaTime * 1.0f;
+
+            navMeshAgent.isStopped = true;
+
+            rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force);
+
+            if(stunTimer >= stunTimerLimit)
+            {
+                isStunned = false;
+                stunTimer = 0;
+                navMeshAgent.isStopped = false;
+            }
+        }
     }
 
     public void Init(Character character)
@@ -79,9 +108,20 @@ public class AISystem : MonoBehaviour
         attackRange = character.GetCharacterType().AttackRange;
         distanceToKeepFromPlayer = character.GetCharacterType().DistanceToKeepFromPlayer;
         meshCollider = character.GetCharacterType().MeshCollider;
+        stunTimer = character.GetCharacterType().StunTimer;
+        impactForce = character.GetCharacterType().ImpactForce;
 
         navMeshAgent.speed = character.GetCharacterType().CharacterSpeed;
+
+        //character.GetHealthSystem().OnHealthAmountChanged += HealthSystem_OnHealthAmountChanged;
+        HealthSystem.OnHealthAmountChanged += HealthSystem_OnHealthAmountChanged;
     }
+
+    private void HealthSystem_OnHealthAmountChanged(object sender, EventArgs e)
+    {
+        isStunned = true;
+    }
+
 
     private void SwitchBehaviour(State behaviourState)
     {
@@ -109,7 +149,7 @@ public class AISystem : MonoBehaviour
 
         if (destinationReached)
         {
-            randomPatrolPosition = new Vector3(Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
+            randomPatrolPosition = new Vector3(UnityEngine.Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, UnityEngine.Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
         }
 
         if (Vector3.Distance(cube.transform.position, transform.position) <= searchPlayerRay) // cube to replace actual player
