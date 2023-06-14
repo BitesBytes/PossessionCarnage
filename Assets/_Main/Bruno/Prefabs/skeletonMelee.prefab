@@ -364,6 +364,9 @@ GameObject:
   - component: {fileID: 3637251898341731684}
   - component: {fileID: 2610833962675171653}
   - component: {fileID: 5224624135873758495}
+  - component: {fileID: 6770933646642217758}
+  - component: {fileID: 2882392198961629369}
+  - component: {fileID: 1650124754985605897}
   m_Layer: 0
   m_Name: skeletonMelee
   m_TagString: Untagged
@@ -471,6 +474,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
+--- !u!114 &6770933646642217758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549225936967491234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f065ecf23717240ac64037cde67bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2882392198961629369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549225936967491234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21a4bda434d8b134e859be309931c45d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1650124754985605897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1549225936967491234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 236343a205f0cfd479de4ee27a0b9d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: {fileID: 11400000, guid: 0ea8ba298a105fe489158f1e04acffee, type: 2}
+  IsPlayer: 0
 --- !u!1 &1832794419918526025
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,8 +33,19 @@ public class CharacterTypeSO : ScriptableObject
     public float StunTimer = 0.5f;
     public float ImpactForce = -3.9f;
 
-    //Bruno was here
-    [Header("AI Animation System")]
-    public Animator Animator;
+
+
+    //best way to handle animations functions without writing 10k useless and repetitive classes imho (Bruno)
+
+    public void PlayBoolAnimation(Animator anim ,string name, bool condition)
+    {
+        anim.SetBool(name, condition);
+    }
+
+    public void PlayTriggerAnimation(Animator anim, string name)
+    {
+        anim.SetTrigger(name);
+    }
+
 
 }
