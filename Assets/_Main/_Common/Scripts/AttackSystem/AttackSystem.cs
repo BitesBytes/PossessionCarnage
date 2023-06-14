@@ -33,6 +33,11 @@ public class AttackSystem : MonoBehaviour
     private float heavyAttackCountdownSpeed;
     private float specialAttackCountdownSpeed;
 
+
+    //Debug (Bruno)
+    [SerializeField] private Animator animatorController;
+    [SerializeField] private BoxCollider hitbox;
+
     private void Update()
     {
         if (lightAttackCountdown > 0f)
@@ -71,9 +76,11 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
+                animatorController.SetBool("LightAttack", true);
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
+                animatorController.SetBool("HeavyAttack", true);
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
@@ -109,6 +116,7 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {lightAttackCountdown} per poter fare l'attacco LEGGERO!");
+            animatorController.SetBool("LightAttack", false);
         }
     }
 
@@ -123,6 +131,7 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {heavyAttackCountdown} per poter fare l'attacco PESANTE!");
+            animatorController.SetBool("HeavyAttack", false);
         }
     }
 
@@ -153,5 +162,19 @@ public class AttackSystem : MonoBehaviour
         this.lightAttackCountdownSpeed = lightAttackCountdownSpeed;
         this.heavyAttackCountdownSpeed = heavyAttackCountdownSpeed;
         this.specialAttackCountdownSpeed = specialAttackCountdownSpeed;
+    }
+
+    //Test (Bruno)
+
+    public void EnableHitBox()
+    {
+        hitbox.enabled = true;
+        Debug.Log("enabled");
+    }
+
+    public void DisableHitbox()
+    {
+        hitbox.enabled = false;
+        Debug.Log("disabled");
     }
 }

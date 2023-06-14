@@ -518,6 +518,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: skeletonMelee
       objectReference: {fileID: 0}
+    - target: {fileID: 2882392198961629369, guid: 1ddd2c05f1b4b40b1b5a038010ebe828,
+        type: 3}
+      propertyPath: hitbox
+      value: 
+      objectReference: {fileID: 2118894703}
+    - target: {fileID: 2882392198961629369, guid: 1ddd2c05f1b4b40b1b5a038010ebe828,
+        type: 3}
+      propertyPath: animatorController
+      value: 
+      objectReference: {fileID: 378752981}
     - target: {fileID: 4320280391068594490, guid: 1ddd2c05f1b4b40b1b5a038010ebe828,
         type: 3}
       propertyPath: m_Controller
@@ -656,3 +666,9 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!65 &2118894703 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 4505439373723619608, guid: 1ddd2c05f1b4b40b1b5a038010ebe828,
+    type: 3}
+  m_PrefabInstance: {fileID: 1196914427}
+  m_PrefabAsset: {fileID: 0}
