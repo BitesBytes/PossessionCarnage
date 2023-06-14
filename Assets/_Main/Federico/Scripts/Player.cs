@@ -173,6 +173,11 @@ public class Player : MonoBehaviour
         PlayerInputSystem.OnSpecialAbilityPerformed -= PlayerInputSystem_OnSpecialAbilityPerformed;
     }
 
+    public Character GetPossessedBodyComponent()
+    {
+        return possessedBodyComponent;
+    }
+
     private void OnDestroy()
     {
         PlayerInputSystem.OnPossessionStarted -= PlayerInputSystem_OnPossessionStarted;
