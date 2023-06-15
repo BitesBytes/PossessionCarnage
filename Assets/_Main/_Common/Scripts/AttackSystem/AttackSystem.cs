@@ -33,6 +33,8 @@ public class AttackSystem : MonoBehaviour
     private float heavyAttackCountdownSpeed;
     private float specialAttackCountdownSpeed;
 
+
+
     private void Update()
     {
         if (lightAttackCountdown > 0f)
@@ -154,4 +156,6 @@ public class AttackSystem : MonoBehaviour
         this.heavyAttackCountdownSpeed = heavyAttackCountdownSpeed;
         this.specialAttackCountdownSpeed = specialAttackCountdownSpeed;
     }
+
+    
 }
