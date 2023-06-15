@@ -38,7 +38,7 @@ public class AISystem : MonoBehaviour
 
     //Animations System (DEBUG PURPOSES)
     [SerializeField] private Animator animatorController;  // can't put it inside SO because it wants the all prefab in order to see the animator component
-
+    [SerializeField] private GameObject weapon; //test
 
 
     private void Awake()
@@ -92,6 +92,8 @@ public class AISystem : MonoBehaviour
 
             navMeshAgent.isStopped = true;
 
+            Debug.Log("stun");
+
             rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force);
 
             if(stunTimer >= stunTimerLimit)
@@ -124,6 +126,7 @@ public class AISystem : MonoBehaviour
     private void HealthSystem_OnHealthAmountChanged(object sender, EventArgs e)
     {
         isStunned = true;
+        Debug.Log("stun");
     }
 
 
@@ -226,6 +229,14 @@ public class AISystem : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
+    }
+
+
+    //Animation event
+
+    public void ShowWeapon()
+    {
+        weapon.SetActive(true);
     }
 
 }

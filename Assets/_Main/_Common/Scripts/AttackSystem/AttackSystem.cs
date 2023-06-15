@@ -84,6 +84,7 @@ public class AttackSystem : MonoBehaviour
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
+                animatorController.SetBool("SpecialAttack", true);
                 PerformSpecialAttack();
                 break;
         }
@@ -110,7 +111,7 @@ public class AttackSystem : MonoBehaviour
         if (lightAttackCountdown <= 0f)
         {
             lightAttackCountdown = lightAttackCountdownMax;
-
+            //animatorController.SetBool("LightAttack", true);
             Debug.Log(lightAttackDamange);
         }
         else
@@ -125,6 +126,8 @@ public class AttackSystem : MonoBehaviour
         if (heavyAttackCountdown <= 0f)
         {
             heavyAttackCountdown = heavyAttackCountdownMax;
+
+            //animatorController.SetBool("HeavyAttack", true);
 
             Debug.Log(heavyAttackDamange);
         }
@@ -146,6 +149,7 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {specialAttackCountdown} per poter fare l'attacco SPECIALE!");
+            animatorController.SetBool("SpecialAttack", false);
         }
     }
 

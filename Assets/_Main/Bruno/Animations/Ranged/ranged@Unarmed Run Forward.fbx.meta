@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d4d81f9e6cc3330af998f1e37b264ce6
+guid: f44ac22c6a4e33794b70abba136222a4
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,43 +31,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Withdrawing Sword
-      takeName: mixamo.com
-      internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 40
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.4545341
-        functionName: ShowWeapon
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -439,13 +403,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: skeletonMelee(Clone)
+    - name: ranged(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Armature
-      parentName: skeletonMelee(Clone)
+      parentName: ranged(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.000000037748947, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -744,8 +708,8 @@ ModelImporter:
       position: {x: -0, y: 0.07295751, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: Character_Skeleton_Soldier_02
-      parentName: skeletonMelee(Clone)
+    - name: Character_Skeleton_Knight
+      parentName: ranged(Clone)
       position: {x: -0, y: 1.6098233e-17, z: -1.2153828e-24}
       rotation: {x: -0.000000037748947, y: 0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -761,7 +725,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: cef9db0d2874185ddb87a283af722d72,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: fc394d70ea802a0afaa75a1eb45325af,
     type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3

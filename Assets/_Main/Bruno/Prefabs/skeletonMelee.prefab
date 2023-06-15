@@ -401,7 +401,7 @@ Animator:
   m_GameObject: {fileID: 1549225936967491234}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cef9db0d2874185ddb87a283af722d72, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c0a440e3c8512449a5a835a28703dc5, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cube: {fileID: 0}
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 4320280391068594490}
 --- !u!114 &6770933646642217758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,7 +499,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a4bda434d8b134e859be309931c45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitbox: {fileID: 0}
+  animatorController: {fileID: 4320280391068594490}
+  hitbox: {fileID: 4505439373723619608}
+  weapon: {fileID: 1160405534812809166}
 --- !u!114 &1650124754985605897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2318,7 +2320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 138024, guid: 6d137d44990918a48bfc447d3dda3796, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 138024, guid: 6d137d44990918a48bfc447d3dda3796, type: 3}
       propertyPath: m_StaticEditorFlags
