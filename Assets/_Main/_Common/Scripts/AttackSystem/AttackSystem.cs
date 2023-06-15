@@ -76,15 +76,15 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
-                animatorController.SetBool("LightAttack", true);
+                animatorController.SetBool("LightAttack", true); //test
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
-                animatorController.SetBool("HeavyAttack", true);
+                animatorController.SetBool("HeavyAttack", true); //test
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
-                animatorController.SetBool("SpecialAttack", true);
+                animatorController.SetBool("SpecialAttack", true); //test
                 PerformSpecialAttack();
                 break;
         }
@@ -95,12 +95,15 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
+                animatorController.SetBool("LightAttack", true); //test
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
+                animatorController.SetBool("LightAttack", true); //test
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
+                animatorController.SetBool("SpecialAttack", true); //test
                 PerformSpecialAttack();
                 break;
         }

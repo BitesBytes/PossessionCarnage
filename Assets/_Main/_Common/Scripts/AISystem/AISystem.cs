@@ -32,7 +32,7 @@ public class AISystem : MonoBehaviour
     // stun system
     private Rigidbody rigidBody;
     private float stunTimer; // timer to move again after stun
-    private float stunTimerLimit = 1.5f;
+    private float stunTimerLimit = 1.0f;
     private float impactForce;
     private bool isStunned;
 
@@ -96,10 +96,13 @@ public class AISystem : MonoBehaviour
 
             rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force);
 
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "Hurt", true);
+
             if(stunTimer >= stunTimerLimit)
             {
                 isStunned = false;
                 stunTimer = 0;
+                character.GetCharacterType().PlayBoolAnimation(animatorController, "Hurt", false);
                 navMeshAgent.isStopped = false;
             }
         }
@@ -216,7 +219,7 @@ public class AISystem : MonoBehaviour
 
         Vector3 driveAway = (this.transform.position - cube.transform.position).normalized;
 
-        character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", true);
+        //character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", true);
 
         navMeshAgent.SetDestination(driveAway);
 
@@ -225,7 +228,7 @@ public class AISystem : MonoBehaviour
         if(chaseDist >= distanceToKeepFromPlayer)
         {
             SwitchBehaviour(State.CHASE);
-            character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", false);
+            //character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", false);
         }
     }
 
