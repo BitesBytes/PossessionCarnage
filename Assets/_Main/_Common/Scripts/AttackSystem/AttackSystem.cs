@@ -34,6 +34,15 @@ public class AttackSystem : MonoBehaviour
     private float specialAttackCountdownSpeed;
 
 
+    //DEBUG
+    [SerializeField]
+    private ParticleSystem bullet;
+
+    [SerializeField]
+    private Transform spawn; // da posizionare accanto alla bocca dello scettro
+
+
+
 
     private void Update()
     {
@@ -89,9 +98,13 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
+                //DEBUG
+                bullet.Play();
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
+                //DEBUG
+                bullet.Play();
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
@@ -111,6 +124,8 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {lightAttackCountdown} per poter fare l'attacco LEGGERO!");
+            //DEBUG
+            bullet.Stop();
         }
     }
 
@@ -125,6 +140,8 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {heavyAttackCountdown} per poter fare l'attacco PESANTE!");
+            //DEBUG
+            bullet.Stop();
         }
     }
 
@@ -155,6 +172,8 @@ public class AttackSystem : MonoBehaviour
         this.lightAttackCountdownSpeed = lightAttackCountdownSpeed;
         this.heavyAttackCountdownSpeed = heavyAttackCountdownSpeed;
         this.specialAttackCountdownSpeed = specialAttackCountdownSpeed;
+
+
     }
 
     
