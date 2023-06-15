@@ -216,6 +216,8 @@ public class AISystem : MonoBehaviour
 
         Vector3 driveAway = (this.transform.position - cube.transform.position).normalized;
 
+        character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", true);
+
         navMeshAgent.SetDestination(driveAway);
 
         float chaseDist = Vector3.Distance(this.transform.position, cube.transform.position); // actual player will replace cube
@@ -223,6 +225,7 @@ public class AISystem : MonoBehaviour
         if(chaseDist >= distanceToKeepFromPlayer)
         {
             SwitchBehaviour(State.CHASE);
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", false);
         }
     }
 
