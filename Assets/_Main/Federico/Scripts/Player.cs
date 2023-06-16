@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
         possessionEnergy = maxPossEnergy;
 
         possessedGameObject = Instantiate(defaultBodyPrefab);
+        possessedGameObject.transform.position = transform.position;
         defaultBodyComponent = defaultBodyPrefab.GetComponent<Character>();
         possessedBodyComponent = defaultBodyComponent;
 
