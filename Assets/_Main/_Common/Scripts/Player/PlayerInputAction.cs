@@ -78,7 +78,16 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""id"": ""94a4d6fa-6db3-4e63-bf01-e24ec775f4c1"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""SlowTap"",
+                    ""interactions"": ""SlowTap(duration=0.01,pressPoint=0.01)"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""23cb3a14-afe9-47fe-a0b6-2d753a9daee8"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
                     ""initialStateCheck"": true
                 }
             ],
@@ -192,6 +201,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""Possession"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11e67d8b-fe66-4d05-b53c-84964ef699b4"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -206,6 +226,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_ExitToMainMenu = m_Player.FindAction("ExitToMainMenu", throwIfNotFound: true);
         m_Player_Possession = m_Player.FindAction("Possession", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +294,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_ExitToMainMenu;
     private readonly InputAction m_Player_Possession;
+    private readonly InputAction m_Player_MousePosition;
     public struct PlayerActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -283,6 +305,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @ExitToMainMenu => m_Wrapper.m_Player_ExitToMainMenu;
         public InputAction @Possession => m_Wrapper.m_Player_Possession;
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,6 +333,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Possession.started += instance.OnPossession;
             @Possession.performed += instance.OnPossession;
             @Possession.canceled += instance.OnPossession;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -332,6 +358,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @Possession.started -= instance.OnPossession;
             @Possession.performed -= instance.OnPossession;
             @Possession.canceled -= instance.OnPossession;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -357,5 +386,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnExitToMainMenu(InputAction.CallbackContext context);
         void OnPossession(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

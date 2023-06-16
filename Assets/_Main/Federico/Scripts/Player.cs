@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
         possessionEnergy = maxPossEnergy;
 
         possessedGameObject = Instantiate(defaultBodyPrefab);
+        possessedGameObject.transform.position = transform.position;
         defaultBodyComponent = defaultBodyPrefab.GetComponent<Character>();
         possessedBodyComponent = defaultBodyComponent;
 
@@ -61,10 +63,6 @@ public class Player : MonoBehaviour
         {
             possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
         }
-
-        float mouseX = Input.GetAxis("Mouse X") * rotationSens;
-
-        transform.Rotate(Vector3.up, mouseX);
     }
 
     private void PlayerInputSystem_OnPossessionPerformed()
@@ -131,9 +129,27 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movementDirection = Camera.main.transform.TransformDirection(new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y));
+        Vector3 movementDirection = new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y);
         movementDirection.y = 0f;
         controller.Move(movementDirection * speed * Time.deltaTime);
+
+        //Vector3 mouse = PlayerInputSystem.GetMousePosition();
+
+
+        //transform.LookAt(mouse, transform.up);
+
+        Vector2 mousePosition = PlayerInputSystem.GetMousePosition();
+
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.transform.position.y));
+
+        Vector3 directionToMouse = mouseWorldPosition - transform.position;
+        directionToMouse.y = 0f; // Assicurati che la direzione sia piatta (sul piano XZ)
+
+        if (directionToMouse != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(directionToMouse, Vector3.up);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10.0f * Time.deltaTime);
+        }
     }
 
     private void Possess(GameObject obj)

@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public delegate void onButtonPressed();
@@ -57,5 +58,10 @@ public static class PlayerInputSystem
     public static Vector2 GetDirectionNormalized()
     {
         return playerInputAction.Player.Move.ReadValue<Vector2>();
+    }
+
+    public static Vector2 GetMousePosition()
+    {
+        return playerInputAction.Player.MousePosition.ReadValue<Vector2>();
     }
 }
