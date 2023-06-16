@@ -38,6 +38,11 @@ public class AttackSystem : MonoBehaviour
     [SerializeField] private Animator animatorController;
     [SerializeField] private BoxCollider hitbox;
 
+    //Debug Attack
+    [SerializeField] private Transform bulletSpawn;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private GameObject rangedDebug; //MEGA Debug
+
     private void Update()
     {
         if (lightAttackCountdown > 0f)
@@ -116,6 +121,8 @@ public class AttackSystem : MonoBehaviour
             lightAttackCountdown = lightAttackCountdownMax;
             //animatorController.SetBool("LightAttack", true);
             Debug.Log(lightAttackDamange);
+            GameObject g = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            g.GetComponent<MagicBullet>().RangedDebug = rangedDebug; // mega debug
         }
         else
         {
