@@ -32,9 +32,13 @@ public class AISystem : MonoBehaviour
     // stun system
     private Rigidbody rigidBody;
     private float stunTimer; // timer to move again after stun
-    private float stunTimerLimit = 1.5f;
+    private float stunTimerLimit = 1.0f;
     private float impactForce;
     private bool isStunned;
+
+    //Animations System (DEBUG PURPOSES)
+    [SerializeField] private Animator animatorController;  // can't put it inside SO because it wants the all prefab in order to see the animator component
+    [SerializeField] private GameObject weapon; //test
 
 
     private void Awake()
@@ -88,12 +92,17 @@ public class AISystem : MonoBehaviour
 
             navMeshAgent.isStopped = true;
 
+            Debug.Log("stun");
+
             rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force);
+
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "Hurt", true);
 
             if(stunTimer >= stunTimerLimit)
             {
                 isStunned = false;
                 stunTimer = 0;
+                character.GetCharacterType().PlayBoolAnimation(animatorController, "Hurt", false);
                 navMeshAgent.isStopped = false;
             }
         }
@@ -120,6 +129,7 @@ public class AISystem : MonoBehaviour
     private void HealthSystem_OnHealthAmountChanged(object sender, EventArgs e)
     {
         isStunned = true;
+        Debug.Log("stun");
     }
 
 
@@ -154,7 +164,18 @@ public class AISystem : MonoBehaviour
 
         if (Vector3.Distance(cube.transform.position, transform.position) <= searchPlayerRay) // cube to replace actual player
         {
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "SeenPlayer", true);
             SwitchBehaviour(State.CHASE);
+        }
+
+        if(navMeshAgent.velocity == Vector3.zero) // go idle (no animations yet TO-DO later) i don't think we need that since it's always in movement
+        {
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunning", false);
+        }
+
+        if(navMeshAgent.velocity != Vector3.zero)
+        {
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunning", true);
         }
 
         navMeshAgent.SetDestination(randomPatrolPosition);
@@ -165,6 +186,12 @@ public class AISystem : MonoBehaviour
         float distanceFromPlayer = Vector3.Distance(this.transform.position, cube.transform.position); //cube to replace actualplayer
 
         destinationReached = distanceFromPlayer <= attackRange;
+
+        if(navMeshAgent.velocity != Vector3.zero)
+        {
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "SeenPlayer", false);
+            character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunning", true);
+        }
 
         if (distanceToKeepFromPlayer != 0f && distanceFromPlayer <= distanceToKeepFromPlayer)
         {
@@ -192,6 +219,8 @@ public class AISystem : MonoBehaviour
 
         Vector3 driveAway = (this.transform.position - cube.transform.position).normalized;
 
+        //character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", true);
+
         navMeshAgent.SetDestination(driveAway);
 
         float chaseDist = Vector3.Distance(this.transform.position, cube.transform.position); // actual player will replace cube
@@ -199,12 +228,21 @@ public class AISystem : MonoBehaviour
         if(chaseDist >= distanceToKeepFromPlayer)
         {
             SwitchBehaviour(State.CHASE);
+            //character.GetCharacterType().PlayBoolAnimation(animatorController, "isRunningBackward", false);
         }
     }
 
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
+    }
+
+
+    //Animation event
+
+    public void ShowWeapon()
+    {
+        weapon.SetActive(true);
     }
 
 }
