@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class EnergyPickup : BasePickup
 {
-    [SerializeField] private GameObject fxObject;
-    [SerializeField] private float energyAmount;
-
     protected override void OnTriggerEnter(Collider other)
     {
-        throw new System.NotImplementedException();
-    }
+        if (!isCollected)
+        {
+            //TODO
+            //Player player = other.gameObject.GetComponent<Player>();
 
-    protected override void Update()
-    {
-        throw new System.NotImplementedException();
+            //if (player != null)
+            //{
+            //    if (player.GetHealthSystem().IsNotMaxHealth())
+            //    {
+            //        character.GetHealthSystem().ChangeHealthAmount(pickup.HealthAmount);
+            //        visual.SetActive(false);
+            //        visualFX.SetActive(true);
+            //
+            //        isCollected = true;
+            //
+            //        movementEffectBehaviour.enabled = false;
+            //    }
+            //}
+        }
     }
 }

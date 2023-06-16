@@ -2,14 +2,18 @@ using UnityEngine;
 
 public class PickupMovementEffect : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float rotationSpeed = 15f;
+    [SerializeField] private PickupSO pickup;
+
+    private float moveSpeed;
+    private float rotationSpeed;
 
     private float startY;
 
     private void Awake()
     {
         startY = transform.position.y;
+        moveSpeed = pickup.MoveSpeed;
+        rotationSpeed = pickup.RotationSpeed;
     }
 
     private void Update()
