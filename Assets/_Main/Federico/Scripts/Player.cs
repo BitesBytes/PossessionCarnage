@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private float maxPossEnergy;
     private float maxPossessionDistance;
     private Character possessedBodyComponent;
-    private Character defaultBodyComponent;     
+    private Character defaultBodyComponent;
 
     private GameObject possessedGameObject;
 
@@ -71,7 +71,6 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(rayMuz.position, transform.forward, out hit))
         {
             GameObject hitObject = hit.collider.transform.parent.transform.parent.gameObject;
-
             if (Vector3.Distance(hitObject.transform.position, transform.position) <= maxPossessionDistance)
             {
                 Debug.Log("Hai Colpito: " + hitObject);
@@ -131,12 +130,15 @@ public class Player : MonoBehaviour
     {
         Vector3 movementDirection = new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y);
         movementDirection.y = 0f;
-        controller.Move(movementDirection * speed * Time.deltaTime);
 
-        //Vector3 mouse = PlayerInputSystem.GetMousePosition();
-
-
-        //transform.LookAt(mouse, transform.up);
+        if (movementDirection.z == 1 || movementDirection.z == -1)
+        {
+            controller.Move(transform.forward * movementDirection.z * speed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            controller.Move(movementDirection * speed * Time.fixedDeltaTime);
+        }
 
         Vector2 mousePosition = PlayerInputSystem.GetMousePosition();
 

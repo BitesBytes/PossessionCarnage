@@ -154,6 +154,7 @@ GameObject:
   - component: {fileID: 993184517301430623}
   - component: {fileID: 7885721461229956600}
   - component: {fileID: 7551858128317766422}
+  - component: {fileID: 6933185776643687898}
   m_Layer: 0
   m_Name: pfCharacter
   m_TagString: Untagged
@@ -242,6 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a4bda434d8b134e859be309931c45d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animatorController: {fileID: 0}
+  hitbox: {fileID: 0}
 --- !u!114 &7885721461229956600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae51be6848dc8d48a239e1bf7538d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cube: {fileID: 0}
+  animatorController: {fileID: 0}
+  weapon: {fileID: 0}
 --- !u!195 &7551858128317766422
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -276,3 +282,26 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &6933185776643687898
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6572480775236539576}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

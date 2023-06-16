@@ -78,7 +78,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""id"": ""94a4d6fa-6db3-4e63-bf01-e24ec775f4c1"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""SlowTap(duration=0.01,pressPoint=0.01)"",
+                    ""interactions"": ""SlowTap"",
                     ""initialStateCheck"": true
                 },
                 {
