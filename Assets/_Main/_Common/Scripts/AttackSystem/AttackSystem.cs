@@ -15,6 +15,8 @@ public enum AttackType
 
 public class AttackSystem : MonoBehaviour
 {
+    private Animator animator;
+
     private CharacterAttackType characterAttackType;
     private AttackType attackType;
 
@@ -33,9 +35,6 @@ public class AttackSystem : MonoBehaviour
     private float heavyAttackCountdownSpeed;
     private float specialAttackCountdownSpeed;
 
-
-    //Debug (Bruno)
-    [SerializeField] private Animator animatorController;
     [SerializeField] private BoxCollider hitbox;
 
     //Debug Attack
@@ -81,15 +80,15 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
-                animatorController.SetBool("LightAttack", true); //test
+                animator.SetBool("LightAttack", true);
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
-                animatorController.SetBool("HeavyAttack", true); //test
+                animator.SetBool("HeavyAttack", true);
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
-                animatorController.SetBool("SpecialAttack", true); //test
+                animator.SetBool("SpecialAttack", true);
                 PerformSpecialAttack();
                 break;
         }
@@ -100,15 +99,15 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
-                animatorController.SetBool("LightAttack", true); //test
+                animator.SetBool("LightAttack", true);
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
-                animatorController.SetBool("LightAttack", true); //test
+                animator.SetBool("LightAttack", true);
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
-                animatorController.SetBool("SpecialAttack", true); //test
+                animator.SetBool("SpecialAttack", true);
                 PerformSpecialAttack();
                 break;
         }
@@ -119,7 +118,6 @@ public class AttackSystem : MonoBehaviour
         if (lightAttackCountdown <= 0f)
         {
             lightAttackCountdown = lightAttackCountdownMax;
-            //animatorController.SetBool("LightAttack", true);
             Debug.Log(lightAttackDamange);
             GameObject g = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
             g.GetComponent<MagicBullet>().RangedDebug = rangedDebug; // mega debug
@@ -127,7 +125,7 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {lightAttackCountdown} per poter fare l'attacco LEGGERO!");
-            animatorController.SetBool("LightAttack", false);
+            animator.SetBool("LightAttack", false);
         }
     }
 
@@ -144,7 +142,7 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {heavyAttackCountdown} per poter fare l'attacco PESANTE!");
-            animatorController.SetBool("HeavyAttack", false);
+            animator.SetBool("HeavyAttack", false);
         }
     }
 
@@ -159,12 +157,14 @@ public class AttackSystem : MonoBehaviour
         else
         {
             Debug.Log($"Devi attendere ancora {specialAttackCountdown} per poter fare l'attacco SPECIALE!");
-            animatorController.SetBool("SpecialAttack", false);
+            animator.SetBool("SpecialAttack", false);
         }
     }
 
-    public void Init(CharacterAttackType characterAttackType, float lightAttackCountdownMax, float lightAttackDamange, float heavyAttackCountdownMax, float heavyAttackDamange, float specialAttackCountdownMax, float specialAttackDamange, float lightAttackCountdownSpeed, float heavyAttackCountdownSpeed, float specialAttackCountdownSpeed)
+    public void Init(Animator animator, CharacterAttackType characterAttackType, float lightAttackCountdownMax, float lightAttackDamange, float heavyAttackCountdownMax, float heavyAttackDamange, float specialAttackCountdownMax, float specialAttackDamange, float lightAttackCountdownSpeed, float heavyAttackCountdownSpeed, float specialAttackCountdownSpeed)
     {
+        this.animator = animator;
+
         this.characterAttackType = characterAttackType;
 
         this.lightAttackCountdownMax = lightAttackCountdownMax;
@@ -178,17 +178,13 @@ public class AttackSystem : MonoBehaviour
         this.specialAttackCountdownSpeed = specialAttackCountdownSpeed;
     }
 
-    //Test (Bruno)
-
     public void EnableHitBox()
     {
         hitbox.enabled = true;
-        Debug.Log("enabled");
     }
 
     public void DisableHitbox()
     {
         hitbox.enabled = false;
-        Debug.Log("disabled");
     }
 }

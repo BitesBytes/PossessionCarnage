@@ -1,4 +1,5 @@
 public delegate void onPossessedCharacterChanged(Character character);
+
 public static class EventManager
 {
     public static event onPossessedCharacterChanged OnPossessedCharacterChanged;

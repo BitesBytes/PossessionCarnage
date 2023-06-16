@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 5538394315552470838}
+  player: {fileID: 2569038611854960184, guid: b36f035630247fb47a50d3e9c57f4cd7, type: 3}
 --- !u!1 &5841420994578795637
 GameObject:
   m_ObjectHideFlags: 0

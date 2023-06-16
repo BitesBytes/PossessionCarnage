@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    public static event EventHandler OnHealthAmountChanged;
+    public event EventHandler<OnHealthAmountChangedEventArgs> OnHealthAmountChanged;
+    public class OnHealthAmountChangedEventArgs : EventArgs
+    {
+        public float amount;
+    }
     public event EventHandler OnHealthAmountMaxChanged;
     public event EventHandler OnSetTimerSpeedChanged;
 
@@ -25,9 +29,9 @@ public class HealthSystem : MonoBehaviour
     public void ChangeHealthAmount(float amount)
     {
         healthAmount += amount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, maxHealthAmount);
+        healthAmount = Mathf.Clamp(healthAmount, 0f, maxHealthAmount);
 
-        OnHealthAmountChanged?.Invoke(this, EventArgs.Empty);
+        OnHealthAmountChanged?.Invoke(this, new OnHealthAmountChangedEventArgs { amount = amount });
     }
 
     public void SetTimerSpeed(float timerSpeed)
@@ -61,17 +65,4 @@ public class HealthSystem : MonoBehaviour
 
         healthAmount = amountMax;
     }
-
-    #region _OLD
-    //REFACTORING
-    //private float timeElapsed;
-    //private void TakeDamageAfterTime(float amount, float timeLimit)
-    //{
-    //    if (timeElapsed >= timeLimit)
-    //    {
-    //        CurrentHealth -= amount;
-    //        timeElapsed = 0;
-    //    }
-    //}
-    #endregion
 }

@@ -24,28 +24,13 @@ public class CharacterTypeSO : ScriptableObject
     public float SpecialAttackDamange = 55f;
 
     [Header("AI SYSTEM")]
+    public MeshCollider MeshCollider;
     public float CharacterSpeed = 2f;
     public float NavMeshBorderOffset = 5f;
     public float SearchPlayerRay = 7f;
     public float AttackRange = 1.5f;
     public float DistanceToKeepFromPlayer = 0f;
-    public MeshCollider MeshCollider;
-    public float StunTimer = 0.5f;
+    public float StunTimerMax = 0.5f;
     public float ImpactForce = -3.9f;
-
-
-
-    //best way to handle animations functions without writing 10k useless and repetitive classes imho (Bruno)
-
-    public void PlayBoolAnimation(Animator anim ,string name, bool condition)
-    {
-        anim.SetBool(name, condition);
-    }
-
-    public void PlayTriggerAnimation(Animator anim, string name)
-    {
-        anim.SetTrigger(name);
-    }
-
 
 }

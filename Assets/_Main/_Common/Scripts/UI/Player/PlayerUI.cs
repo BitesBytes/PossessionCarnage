@@ -4,28 +4,54 @@ using UnityEngine.UI;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private Image healthBar;
+    [SerializeField] private Player player;
+
+    private Character actualCharacter;
 
     private void Start()
     {
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
-        HealthSystem.OnHealthAmountChanged += HealthSystem_OnHealthAmountChanged;
+        player.GetHealthSystem().OnHealthAmountChanged += PlayerHealthSystem_OnHealthAmountChanged;
+    }
+
+    private void PlayerHealthSystem_OnHealthAmountChanged(object sender, HealthSystem.OnHealthAmountChangedEventArgs e)
+    {
+        healthBar.fillAmount = player.GetHealthSystem().GetCurrentHealthNormalized();
     }
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
     {
-        healthBar.fillAmount = character.GetHealthSystem().GetCurrentHealthNormalized();
+        if (actualCharacter != null)
+        {
+            actualCharacter.GetHealthSystem().OnHealthAmountChanged -= ActualCharacterHealthSystem_OnHealthAmountChanged;
+        }
+
+        actualCharacter = character;
+
+        if (actualCharacter != null)
+        {
+            healthBar.fillAmount = actualCharacter.GetHealthSystem().GetCurrentHealthNormalized();
+            actualCharacter.GetHealthSystem().OnHealthAmountChanged += ActualCharacterHealthSystem_OnHealthAmountChanged;
+        }
+        else
+        {
+            healthBar.fillAmount = player.GetHealthSystem().GetCurrentHealthNormalized();
+        }
     }
 
-    private void HealthSystem_OnHealthAmountChanged(object sender, System.EventArgs e)
+    private void ActualCharacterHealthSystem_OnHealthAmountChanged(object sender, HealthSystem.OnHealthAmountChangedEventArgs e)
     {
-        HealthSystem currentCharacterHealthSystem = sender as HealthSystem;
-
-        healthBar.fillAmount = currentCharacterHealthSystem.GetCurrentHealthNormalized();
+        throw new System.NotImplementedException();
     }
 
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
-        HealthSystem.OnHealthAmountChanged -= HealthSystem_OnHealthAmountChanged;
+        player.GetHealthSystem().OnHealthAmountChanged -= PlayerHealthSystem_OnHealthAmountChanged;
+
+        if (actualCharacter != null)
+        {
+            actualCharacter.GetHealthSystem().OnHealthAmountChanged -= ActualCharacterHealthSystem_OnHealthAmountChanged;
+        }
     }
 }

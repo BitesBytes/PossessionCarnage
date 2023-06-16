@@ -9732,6 +9732,7 @@ GameObject:
   - component: {fileID: 4801612562953916738}
   - component: {fileID: 2569038611854960184}
   - component: {fileID: 2836444373062712492}
+  - component: {fileID: 2862334098639433102}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -9755,7 +9756,7 @@ Transform:
   - {fileID: 8242197752919024733}
   - {fileID: 3765974349245787377}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2569038611854960184
 MonoBehaviour:
@@ -9770,7 +9771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowmoTimeSpeed: 0.75
-  speed: 2
+  speed: 1.25
   defaultBodyPrefab: {fileID: 7882709715281903489, guid: 72f545e56a26aca428e8c96cc48a0067,
     type: 3}
   rayMuz: {fileID: 7387713453510193983}
@@ -9804,3 +9805,15 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2862334098639433102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7651620713743817017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f065ecf23717240ac64037cde67bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

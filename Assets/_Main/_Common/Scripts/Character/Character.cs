@@ -4,12 +4,17 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     [SerializeField] private CharacterTypeSO characterType;
+    [SerializeField] private GameObject weapon;
 
     private HealthSystem healthSystem;
+    private Animator animator;
     private AttackSystem attackSystem;
     private AISystem aiSystem;
 
-    public bool IsPlayer;
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -17,7 +22,7 @@ public class Character : MonoBehaviour
         healthSystem.Init(characterType.HealthAmountMax, characterType.HealthDecreaseTimerMax);
 
         attackSystem = GetComponent<AttackSystem>();
-        attackSystem.Init(characterType.CharacterAttackType, characterType.LightAttackCountdownMax, characterType.LightAttackDamange, characterType.HeavyAttackCountdownMax, characterType.HeavyAttackDamange, characterType.SpecialAttackCountdownMax, characterType.SpecialAttackDamange, characterType.LightAttackCountdownSpeed, characterType.HeavyAttackCountdownSpeed, characterType.SpecialAttackCountdownSpeed);
+        attackSystem.Init(animator, characterType.CharacterAttackType, characterType.LightAttackCountdownMax, characterType.LightAttackDamange, characterType.HeavyAttackCountdownMax, characterType.HeavyAttackDamange, characterType.SpecialAttackCountdownMax, characterType.SpecialAttackDamange, characterType.LightAttackCountdownSpeed, characterType.HeavyAttackCountdownSpeed, characterType.SpecialAttackCountdownSpeed);
 
         aiSystem = GetComponent<AISystem>();
         aiSystem.Init(this);
@@ -27,26 +32,13 @@ public class Character : MonoBehaviour
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
     {
-        if(character != this)
-        {
-            IsPlayer = false;
-        }
-        else
-        {
-            IsPlayer = true;
-        }
-    }
-
-    private void Update()
-    {
-        if (IsPlayer)
-        {
-            healthSystem.DecreaseHealthOverTime();
-            aiSystem.enabled = false;
-        }
-        else
+        if(character == null || character != this)
         {
             aiSystem.enabled = true;
+        }
+        else
+        {
+            aiSystem.enabled = false;
         }
     }
 
@@ -68,6 +60,16 @@ public class Character : MonoBehaviour
     public CharacterTypeSO GetCharacterType()
     {
         return characterType;
+    }
+
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+
+    public GameObject GetWeapon()
+    {
+        return weapon;
     }
 
     private void OnDestroy()

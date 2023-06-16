@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(HealthSystem))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float slowmoTimeSpeed = 0.75f;
@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
 
     private float rotationSens;
 
+    private HealthSystem healthSystem;
+    private float healtAmountMax;
+    private float healthDecreaseTimerMax;
+
     private void Awake()
     {
         maxPossEnergy = 100.0f;
@@ -38,6 +42,12 @@ public class Player : MonoBehaviour
         possessedBodyComponent = defaultBodyComponent;
 
         possessedGameObject.transform.SetParent(defaultBodyParent);
+
+        healtAmountMax = 100f;
+        healthDecreaseTimerMax = 1.5f;
+
+        healthSystem = GetComponent<HealthSystem>();
+        healthSystem.Init(healtAmountMax, healthDecreaseTimerMax);
     }
     private void Start()
     {
@@ -62,6 +72,7 @@ public class Player : MonoBehaviour
         else
         {
             possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
+            healthSystem.DecreaseHealthOverTime();
         }
     }
 
@@ -172,6 +183,8 @@ public class Player : MonoBehaviour
 
         EventManager.OnPossessedCharacterChangedCall(possessedBodyComponent);
 
+        healthSystem.enabled = false;
+
         if (oldGO.transform.parent == possessedParent)
         {
             Destroy(oldGO);
@@ -189,11 +202,20 @@ public class Player : MonoBehaviour
         PlayerInputSystem.OnLightAttackPerformed -= PlayerInputSystem_OnLightAttackPerformed;
         PlayerInputSystem.OnHeavyAttackPerformed -= PlayerInputSystem_OnHeavyAttackPerformed;
         PlayerInputSystem.OnSpecialAbilityPerformed -= PlayerInputSystem_OnSpecialAbilityPerformed;
+
+        EventManager.OnPossessedCharacterChangedCall(null);
+
+        healthSystem.enabled = true;
     }
 
     public Character GetPossessedBodyComponent()
     {
         return possessedBodyComponent;
+    }
+
+    public HealthSystem GetHealthSystem()
+    {
+        return healthSystem;
     }
 
     private void OnDestroy()
