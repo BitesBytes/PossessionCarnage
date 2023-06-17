@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(HealthSystem))]
 public class Player : MonoBehaviour
@@ -36,12 +37,13 @@ public class Player : MonoBehaviour
 
         possessionEnergy = maxPossEnergy;
 
-        possessedGameObject = Instantiate(defaultBodyPrefab);
-        possessedGameObject.transform.position = transform.position;
+        possessedGameObject = Instantiate(defaultBodyPrefab, new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),transform.rotation, defaultBodyParent);
+        //possessedGameObject.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        //possessedGameObject.transform.position = transform.position;
         defaultBodyComponent = defaultBodyPrefab.GetComponent<Character>();
         possessedBodyComponent = defaultBodyComponent;
 
-        possessedGameObject.transform.SetParent(defaultBodyParent);
+        //possessedGameObject.transform.SetParent(defaultBodyParent);
 
         healtAmountMax = 100f;
         healthDecreaseTimerMax = 1.5f;
@@ -139,17 +141,24 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movementDirection = new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y);
-        movementDirection.y = 0f;
+        //Vector3 movementDirection = new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y);
+        float inputHorizontal = PlayerInputSystem.GetDirectionNormalized().x;
+        float inputVertical = PlayerInputSystem.GetDirectionNormalized().y;
 
-        if (movementDirection.z == 1 || movementDirection.z == -1)
-        {
-            controller.Move(transform.forward * movementDirection.z * speed * Time.fixedDeltaTime);
-        }
-        else
-        {
-            controller.Move(movementDirection * speed * Time.fixedDeltaTime);
-        }
+        Vector3 movementDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        movementDirection.y = 0f;
+        movementDirection.Normalize();
+
+        //if (movementDirection.z == 1 || movementDirection.z == -1)
+        //{
+        //    controller.Move(transform.forward * movementDirection.z * speed * Time.fixedDeltaTime);
+        //}
+        //else
+        //{
+        //    controller.Move(movementDirection * speed * Time.fixedDeltaTime);
+        //}
+
+        controller.Move(movementDirection * speed * Time.fixedDeltaTime);
 
         Vector2 mousePosition = PlayerInputSystem.GetMousePosition();
 
