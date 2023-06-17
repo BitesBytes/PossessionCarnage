@@ -13,6 +13,7 @@ public enum AttackType
     SPECIAL
 }
 
+[RequireComponent(typeof(Rigidbody))]
 public class AttackSystem : MonoBehaviour
 {
     private Animator animator;
@@ -34,6 +35,8 @@ public class AttackSystem : MonoBehaviour
     private float lightAttackCountdownSpeed;
     private float heavyAttackCountdownSpeed;
     private float specialAttackCountdownSpeed;
+
+    private float actualDamage;
 
     [SerializeField] private BoxCollider hitbox;
 
@@ -115,49 +118,38 @@ public class AttackSystem : MonoBehaviour
 
     private void PerformLightAttack()
     {
+        actualDamage = lightAttackDamange;
+
         if (lightAttackCountdown <= 0f)
         {
             lightAttackCountdown = lightAttackCountdownMax;
-            Debug.Log(lightAttackDamange);
-            GameObject g = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
-            g.GetComponent<MagicBullet>().RangedDebug = rangedDebug; // mega debug
-        }
-        else
-        {
-            Debug.Log($"Devi attendere ancora {lightAttackCountdown} per poter fare l'attacco LEGGERO!");
-            animator.SetBool("LightAttack", false);
+
+            animator.SetBool("LightAttack", true);
+            //Debug.Log(lightAttackDamange);
+            //GameObject g = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+            //g.GetComponent<MagicBullet>().RangedDebug = rangedDebug; // mega debug
         }
     }
 
     private void PerformHeavyAttack()
     {
+        actualDamage = heavyAttackDamange;
+
         if (heavyAttackCountdown <= 0f)
         {
             heavyAttackCountdown = heavyAttackCountdownMax;
 
-            //animatorController.SetBool("HeavyAttack", true);
-
-            Debug.Log(heavyAttackDamange);
-        }
-        else
-        {
-            Debug.Log($"Devi attendere ancora {heavyAttackCountdown} per poter fare l'attacco PESANTE!");
-            animator.SetBool("HeavyAttack", false);
+            animator.SetBool("HeavyAttack", true);
         }
     }
 
     private void PerformSpecialAttack()
     {
+        actualDamage = specialAttackDamange;
+
         if (specialAttackCountdown <= 0f)
         {
             specialAttackCountdown = specialAttackCountdownMax;
-
-            Debug.Log(specialAttackDamange);
-        }
-        else
-        {
-            Debug.Log($"Devi attendere ancora {specialAttackCountdown} per poter fare l'attacco SPECIALE!");
-            animator.SetBool("SpecialAttack", false);
         }
     }
 
@@ -186,5 +178,10 @@ public class AttackSystem : MonoBehaviour
     public void DisableHitbox()
     {
         hitbox.enabled = false;
+    }
+
+    public float GetActualDamage()
+    {
+        return actualDamage;
     }
 }

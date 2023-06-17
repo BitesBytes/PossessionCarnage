@@ -32,18 +32,14 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         maxPossEnergy = 100.0f;
-        maxPossessionDistance = 5.0f;
-        rotationSens = 2.0f;
+        maxPossessionDistance = 7.5f;
+        rotationSens = 10.0f;
 
         possessionEnergy = maxPossEnergy;
 
         possessedGameObject = Instantiate(defaultBodyPrefab, new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),transform.rotation, defaultBodyParent);
-        //possessedGameObject.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
-        //possessedGameObject.transform.position = transform.position;
         defaultBodyComponent = defaultBodyPrefab.GetComponent<Character>();
         possessedBodyComponent = defaultBodyComponent;
-
-        //possessedGameObject.transform.SetParent(defaultBodyParent);
 
         healtAmountMax = 100f;
         healthDecreaseTimerMax = 1.5f;
@@ -80,10 +76,9 @@ public class Player : MonoBehaviour
 
     private void PlayerInputSystem_OnPossessionPerformed()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(rayMuz.position, transform.forward, out hit))
+        if (Physics.Raycast(rayMuz.position, transform.forward, out RaycastHit hit))
         {
-            GameObject hitObject = hit.collider.transform.parent.transform.parent.gameObject;
+            GameObject hitObject = hit.collider.gameObject;
             if (Vector3.Distance(hitObject.transform.position, transform.position) <= maxPossessionDistance)
             {
                 Debug.Log("Hai Colpito: " + hitObject);
@@ -141,22 +136,12 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Vector3 movementDirection = new Vector3(PlayerInputSystem.GetDirectionNormalized().x, 0f, PlayerInputSystem.GetDirectionNormalized().y);
         float inputHorizontal = PlayerInputSystem.GetDirectionNormalized().x;
         float inputVertical = PlayerInputSystem.GetDirectionNormalized().y;
 
-        Vector3 movementDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
+        Vector3 movementDirection = new Vector3(inputHorizontal, 0f, inputVertical);
         movementDirection.y = 0f;
         movementDirection.Normalize();
-
-        //if (movementDirection.z == 1 || movementDirection.z == -1)
-        //{
-        //    controller.Move(transform.forward * movementDirection.z * speed * Time.fixedDeltaTime);
-        //}
-        //else
-        //{
-        //    controller.Move(movementDirection * speed * Time.fixedDeltaTime);
-        //}
 
         controller.Move(movementDirection * speed * Time.fixedDeltaTime);
 
@@ -170,7 +155,7 @@ public class Player : MonoBehaviour
         if (directionToMouse != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(directionToMouse, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 10.0f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSens * Time.deltaTime);
         }
     }
 

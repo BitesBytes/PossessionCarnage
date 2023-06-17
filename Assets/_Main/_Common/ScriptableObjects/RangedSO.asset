@@ -26,12 +26,13 @@ MonoBehaviour:
   SpecialAttackCountdownMax: 8
   SpecialAttackCountdownSpeed: 1
   SpecialAttackDamange: 75
+  MeshCollider: {fileID: 8526335384044768565, guid: 01c3f77b7af9b344594cd3ea03c1f29a,
+    type: 3}
   CharacterSpeed: 2
   NavMeshBorderOffset: 5
   SearchPlayerRay: 7
   AttackRange: 4.7
   DistanceToKeepFromPlayer: 3.5
-  MeshCollider: {fileID: 8526335384044768565, guid: 01c3f77b7af9b344594cd3ea03c1f29a,
-    type: 3}
-  StunTimer: 0.5
+  StunTimerMax: 0.5
   ImpactForce: -3.9
+  IdleTimer: 3

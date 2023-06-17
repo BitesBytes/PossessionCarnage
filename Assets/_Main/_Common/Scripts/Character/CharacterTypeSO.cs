@@ -32,5 +32,6 @@ public class CharacterTypeSO : ScriptableObject
     public float DistanceToKeepFromPlayer = 0f;
     public float StunTimerMax = 0.5f;
     public float ImpactForce = -3.9f;
+    public float IdleTimer = 3f;
 
 }

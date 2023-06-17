@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(Animator))]
+[RequireComponent(typeof(NavMeshAgent), typeof(SphereCollider), typeof(Animator))]
 public class AISystem : MonoBehaviour
 {
     private enum State
@@ -9,16 +9,20 @@ public class AISystem : MonoBehaviour
         SEARCHING,
         CHASE,
         GO_AWAY,
-        STUNNED
+        STUNNED,
+        IDLE,
+        ATTACK
     }
 
     private Character character;
     private NavMeshAgent navMeshAgent;
-    private Character actualPlayer;
+    private Player player;
     private Rigidbody rigidBody;
     private MeshCollider meshCollider;
+    private SphereCollider sphereCollider;
 
     private State currentState;
+    private State previousState;
 
     private bool destinationReached;
     private Vector3 randomPatrolPosition;
@@ -30,13 +34,15 @@ public class AISystem : MonoBehaviour
     private float stunTimer;
     private float impactForce;
 
+    private float idleTimer;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
-
         navMeshAgent = GetComponent<NavMeshAgent>();
+        sphereCollider = GetComponent<SphereCollider>();
 
-        SwitchBehaviour(State.SEARCHING);
+        sphereCollider.isTrigger = true;
     }
 
     private void Start()
@@ -46,31 +52,49 @@ public class AISystem : MonoBehaviour
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
     {
-        actualPlayer = character;
-
         SwitchBehaviour(State.SEARCHING);
     }
 
     private void Update()
     {
-        if (actualPlayer != null)
+        if (player == null)
         {
-            switch (currentState)
-            {
-                case State.SEARCHING:
-                    SearchForPlayer();
-                    break;
-                case State.CHASE:
-                    Chase();
-                    break;
-                case State.GO_AWAY:
-                    GoAway();
-                    break;
-                case State.STUNNED:
-                    Stunned();
-                    break;
-            }
+            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "SeenPlayer", false);
+            SwitchBehaviour(State.SEARCHING);
         }
+        else
+        {
+            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "SeenPlayer", true);
+        }
+
+        AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "isRunning", destinationReached);
+
+        switch (currentState)
+        {
+            case State.SEARCHING:
+                SearchForPlayer();
+                break;
+            case State.CHASE:
+                Chase();
+                break;
+            case State.GO_AWAY:
+                GoAway();
+                break;
+            case State.STUNNED:
+                Stunned();
+                break;
+            case State.IDLE:
+                Idle();
+                break;
+            case State.ATTACK:
+                Attack();
+                break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        player = other.GetComponent<Player>();
     }
 
     public void Init(Character character)
@@ -87,6 +111,10 @@ public class AISystem : MonoBehaviour
         navMeshAgent.speed = character.GetCharacterType().CharacterSpeed;
 
         character.GetHealthSystem().OnHealthAmountChanged += HealthSystem_OnHealthAmountChanged;
+
+        sphereCollider.radius = searchPlayerRay;
+
+        SwitchBehaviour(State.SEARCHING);
     }
 
     private void HealthSystem_OnHealthAmountChanged(object sender, HealthSystem.OnHealthAmountChangedEventArgs e)
@@ -103,6 +131,7 @@ public class AISystem : MonoBehaviour
         {
             case State.SEARCHING:
                 destinationReached = false;
+                AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "Hurt", false);
                 currentState = State.SEARCHING;
                 break;
             case State.CHASE:
@@ -113,6 +142,7 @@ public class AISystem : MonoBehaviour
                 break;
             case State.GO_AWAY:
                 navMeshAgent.isStopped = true;
+                AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "Hurt", false);
                 currentState = State.GO_AWAY;
                 break;
             case State.STUNNED:
@@ -122,11 +152,30 @@ public class AISystem : MonoBehaviour
                 stunTimer = character.GetCharacterType().StunTimerMax;
                 currentState = State.STUNNED;
                 break;
+            case State.IDLE:
+                destinationReached = true;
+                navMeshAgent.isStopped = true;
+                idleTimer = character.GetCharacterType().IdleTimer;
+                currentState = State.IDLE;
+                break;
+            case State.ATTACK:
+                destinationReached = true;
+                navMeshAgent.isStopped = true;
+                AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "Hurt", false);
+                currentState = State.ATTACK;
+                break;
         }
     }
 
     private void SearchForPlayer()
     {
+        previousState = State.SEARCHING;
+
+        if (player != null)
+        {
+            SwitchBehaviour(State.IDLE);
+        }
+
         destinationReached = navMeshAgent.velocity == Vector3.zero;
 
         if (destinationReached)
@@ -134,36 +183,16 @@ public class AISystem : MonoBehaviour
             randomPatrolPosition = new Vector3(UnityEngine.Random.Range(navMeshBorderOffset, meshCollider.bounds.size.x - navMeshBorderOffset), 0f, UnityEngine.Random.Range(navMeshBorderOffset, meshCollider.bounds.size.z - navMeshBorderOffset));
         }
 
-        if (Vector3.Distance(actualPlayer.transform.position, transform.position) <= searchPlayerRay)
-        {
-            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "SeenPlayer", true);
-            SwitchBehaviour(State.CHASE);
-        }
-
-        if (navMeshAgent.velocity == Vector3.zero)
-        {
-            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "isRunning", false);
-        }
-
-        if (navMeshAgent.velocity != Vector3.zero)
-        {
-            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "isRunning", true);
-        }
-
         navMeshAgent.SetDestination(randomPatrolPosition);
     }
 
     private void Chase()
     {
-        float distanceFromPlayer = Vector3.Distance(this.transform.position, actualPlayer.transform.position);
+        previousState = State.CHASE;
+
+        float distanceFromPlayer = Vector3.Distance(this.transform.position, player.transform.position);
 
         destinationReached = distanceFromPlayer <= attackRange;
-
-        if (navMeshAgent.velocity != Vector3.zero)
-        {
-            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "SeenPlayer", false);
-            AnimatorUtils.PlayBoolAnimation(character.GetAnimator(), "isRunning", true);
-        }
 
         if (distanceToKeepFromPlayer != 0f && distanceFromPlayer <= distanceToKeepFromPlayer)
         {
@@ -173,27 +202,29 @@ public class AISystem : MonoBehaviour
         if (destinationReached)
         {
             navMeshAgent.isStopped = true;
-            character.GetAttackSystem().PerformAttack(AttackType.LIGHT);
+            SwitchBehaviour(State.ATTACK);
         }
         else
         {
             navMeshAgent.isStopped = false;
-            navMeshAgent.SetDestination(actualPlayer.transform.position);
+            navMeshAgent.SetDestination(player.transform.position);
         }
     }
 
     private void GoAway()
     {
+        previousState = State.GO_AWAY;
+
         if (navMeshAgent.isStopped)
         {
             navMeshAgent.isStopped = false;
         }
 
-        Vector3 driveAway = (this.transform.position - actualPlayer.transform.position).normalized;
+        Vector3 driveAway = (this.transform.position - player.transform.position).normalized;
 
         navMeshAgent.SetDestination(driveAway);
 
-        float chaseDist = Vector3.Distance(this.transform.position, actualPlayer.transform.position);
+        float chaseDist = Vector3.Distance(this.transform.position, player.transform.position);
 
         if (chaseDist >= distanceToKeepFromPlayer)
         {
@@ -203,16 +234,60 @@ public class AISystem : MonoBehaviour
 
     private void Stunned()
     {
+        previousState = State.STUNNED;
+
         stunTimer -= Time.deltaTime;
         if (stunTimer <= 0f)
         {
-            SwitchBehaviour(State.CHASE);
+            SwitchBehaviour(State.IDLE);
         }
+    }
+
+    private void Idle()
+    {
+        idleTimer -= Time.deltaTime;
+        if(idleTimer <= 0f)
+        {
+            switch (previousState)
+            {
+                case State.SEARCHING:
+                    SwitchBehaviour(State.CHASE);
+                    break;
+                case State.CHASE:
+                    SwitchBehaviour(State.CHASE);
+                    break;
+                case State.GO_AWAY:
+                    SwitchBehaviour(State.SEARCHING);
+                    break;
+                case State.STUNNED:
+                    SwitchBehaviour(State.CHASE);
+                    break;
+                case State.IDLE:
+                    SwitchBehaviour(State.SEARCHING);
+                    break;
+                case State.ATTACK:
+                    SwitchBehaviour(State.CHASE);
+                    break;
+            }
+        }
+    }
+
+    private void Attack()
+    {
+        previousState = State.ATTACK;
+
+        character.GetAttackSystem().PerformAttack(AttackType.LIGHT);
+
+        SwitchBehaviour(State.IDLE);
     }
 
     public void ShowWeapon()
     {
         character.GetWeapon().SetActive(true);
+    }
+    public void HideWeapon()
+    {
+        character.GetWeapon().SetActive(false);
     }
 
     private void OnDestroy()
