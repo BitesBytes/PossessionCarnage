@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(HealthSystem))]
+[RequireComponent(typeof(HealthSystem), typeof(CapsuleCollider))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float slowmoTimeSpeed = 0.75f;
@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     private float healtAmountMax;
     private float healthDecreaseTimerMax;
 
+    private CapsuleCollider capsuleCollider;
+
     private void Awake()
     {
         maxPossEnergy = 100.0f;
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.Init(healtAmountMax, healthDecreaseTimerMax);
     }
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -71,6 +74,16 @@ public class Player : MonoBehaviour
         {
             possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
             healthSystem.DecreaseHealthOverTime();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Character otherCharacter = other.gameObject.GetComponent<Character>();
+
+        if (otherCharacter != null)
+        {
+            healthSystem.ChangeHealthAmount(-otherCharacter.GetAttackSystem().GetActualDamage());
         }
     }
 

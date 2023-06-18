@@ -9603,10 +9603,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4860254326897693247}
-  - component: {fileID: 8566174426355346447}
   - component: {fileID: 5107247612462150848}
+  - component: {fileID: 6607235375547099232}
+  - component: {fileID: 8566174426355346447}
   - component: {fileID: 6871114024269483346}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
@@ -9630,27 +9631,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8566174426355346447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4784099334338229785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a6c8c2cf97622248b36cf334a6fcd55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slowmoTimeSpeed: 0.75
-  speed: 1.25
-  defaultBodyPrefab: {fileID: 7882709715281903489, guid: 72f545e56a26aca428e8c96cc48a0067,
-    type: 3}
-  rayMuz: {fileID: 1625865191412558696}
-  possessionEnergy: 0
-  possessedParent: {fileID: 9216154552485905080}
-  defaultBodyParent: {fileID: 4243694306475341414}
-  possEnergyDecrementSpeed: 0
 --- !u!143 &5107247612462150848
 CharacterController:
   m_ObjectHideFlags: 0
@@ -9677,6 +9657,50 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &6607235375547099232
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784099334338229785}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8566174426355346447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4784099334338229785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6c8c2cf97622248b36cf334a6fcd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowmoTimeSpeed: 0.75
+  speed: 1.25
+  defaultBodyPrefab: {fileID: 7882709715281903489, guid: 72f545e56a26aca428e8c96cc48a0067,
+    type: 3}
+  rayMuz: {fileID: 1625865191412558696}
+  possessionEnergy: 0
+  possessedParent: {fileID: 9216154552485905080}
+  defaultBodyParent: {fileID: 4243694306475341414}
+  possEnergyDecrementSpeed: 0
 --- !u!114 &6871114024269483346
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,4 +35,4 @@ MonoBehaviour:
   DistanceToKeepFromPlayer: 0
   StunTimerMax: 0.5
   ImpactForce: -3.9
-  IdleTimer: 3
+  IdleTimer: 1

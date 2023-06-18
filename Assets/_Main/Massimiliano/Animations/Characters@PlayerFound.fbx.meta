@@ -1,692 +1,14 @@
 fileFormatVersion: 2
-guid: b6ef2f4d0154b2747860a3332fa05f97
+guid: c7722f0b693321349bf0cef834192a69
 ModelImporter:
   serializedVersion: 22200
-  internalIDToNameTable:
-  - first:
-      1: 100000
-    second: Ankle_L
-  - first:
-      1: 100002
-    second: Ankle_R
-  - first:
-      1: 100004
-    second: Ball_L
-  - first:
-      1: 100006
-    second: Ball_R
-  - first:
-      1: 100008
-    second: Character_Ghost_01
-  - first:
-      1: 100010
-    second: Character_Ghost_02
-  - first:
-      1: 100012
-    second: Character_Goblin_Female
-  - first:
-      1: 100014
-    second: Character_Goblin_Male
-  - first:
-      1: 100016
-    second: Character_Goblin_Shaman
-  - first:
-      1: 100018
-    second: Character_Goblin_WarChief
-  - first:
-      1: 100020
-    second: Character_Goblin_Warrior_Female
-  - first:
-      1: 100022
-    second: Character_Goblin_Warrior_Male
-  - first:
-      1: 100024
-    second: Character_Hero_Knight_Female
-  - first:
-      1: 100026
-    second: Character_Hero_Knight_Male
-  - first:
-      1: 100028
-    second: Character_Rock_Golem
-  - first:
-      1: 100030
-    second: Character_Skeleton_Knight
-  - first:
-      1: 100032
-    second: Character_Skeleton_Slave_01
-  - first:
-      1: 100034
-    second: Character_Skeleton_Soldier_01
-  - first:
-      1: 100036
-    second: Character_Skeleton_Soldier_02
-  - first:
-      1: 100038
-    second: Character_Tormented_Soul
-  - first:
-      1: 100040
-    second: //RootNode
-  - first:
-      1: 100042
-    second: Clavicle_L
-  - first:
-      1: 100044
-    second: Clavicle_R
-  - first:
-      1: 100046
-    second: Elbow_L
-  - first:
-      1: 100048
-    second: Elbow_R
-  - first:
-      1: 100050
-    second: Eyebrows
-  - first:
-      1: 100052
-    second: Eyes
-  - first:
-      1: 100054
-    second: Finger_01
-  - first:
-      1: 100056
-    second: Finger_01 1
-  - first:
-      1: 100058
-    second: Finger_02
-  - first:
-      1: 100060
-    second: Finger_02 1
-  - first:
-      1: 100062
-    second: Finger_03
-  - first:
-      1: 100064
-    second: Finger_03 1
-  - first:
-      1: 100066
-    second: Finger_04
-  - first:
-      1: 100068
-    second: Finger_04 1
-  - first:
-      1: 100070
-    second: Hand_L
-  - first:
-      1: 100072
-    second: Hand_R
-  - first:
-      1: 100074
-    second: Head
-  - first:
-      1: 100076
-    second: Hips
-  - first:
-      1: 100078
-    second: IndexFinger_01
-  - first:
-      1: 100080
-    second: IndexFinger_01 1
-  - first:
-      1: 100082
-    second: IndexFinger_02
-  - first:
-      1: 100084
-    second: IndexFinger_02 1
-  - first:
-      1: 100086
-    second: IndexFinger_03
-  - first:
-      1: 100088
-    second: IndexFinger_03 1
-  - first:
-      1: 100090
-    second: IndexFinger_04
-  - first:
-      1: 100092
-    second: IndexFinger_04 1
-  - first:
-      1: 100094
-    second: LowerLeg_L
-  - first:
-      1: 100096
-    second: LowerLeg_R
-  - first:
-      1: 100098
-    second: Neck
-  - first:
-      1: 100100
-    second: Root
-  - first:
-      1: 100102
-    second: Shoulder_L
-  - first:
-      1: 100104
-    second: Shoulder_R
-  - first:
-      1: 100106
-    second: SM_Item_Bag_Large
-  - first:
-      1: 100108
-    second: SM_Item_Bags
-  - first:
-      1: 100110
-    second: SM_Item_Bones
-  - first:
-      1: 100112
-    second: SM_Item_Goblin_Hair
-  - first:
-      1: 100114
-    second: SM_Item_Goblin_WarBanner
-  - first:
-      1: 100116
-    second: SM_Item_Horn
-  - first:
-      1: 100118
-    second: SM_Item_Mask_01
-  - first:
-      1: 100120
-    second: SM_Item_Mask_02
-  - first:
-      1: 100122
-    second: SM_Item_Shield
-  - first:
-      1: 100124
-    second: SM_Item_Shrooms
-  - first:
-      1: 100126
-    second: SM_Item_Shrunken_Head
-  - first:
-      1: 100128
-    second: SM_Item_Sword
-  - first:
-      1: 100130
-    second: Spine_01
-  - first:
-      1: 100132
-    second: Spine_02
-  - first:
-      1: 100134
-    second: Spine_03
-  - first:
-      1: 100136
-    second: Thumb_01
-  - first:
-      1: 100138
-    second: Thumb_01 1
-  - first:
-      1: 100140
-    second: Thumb_02
-  - first:
-      1: 100142
-    second: Thumb_02 1
-  - first:
-      1: 100144
-    second: Thumb_03
-  - first:
-      1: 100146
-    second: Thumb_03 1
-  - first:
-      1: 100148
-    second: Toes_L
-  - first:
-      1: 100150
-    second: Toes_R
-  - first:
-      1: 100152
-    second: UpperLeg_L
-  - first:
-      1: 100154
-    second: UpperLeg_R
-  - first:
-      4: 400000
-    second: Ankle_L
-  - first:
-      4: 400002
-    second: Ankle_R
-  - first:
-      4: 400004
-    second: Ball_L
-  - first:
-      4: 400006
-    second: Ball_R
-  - first:
-      4: 400008
-    second: Character_Ghost_01
-  - first:
-      4: 400010
-    second: Character_Ghost_02
-  - first:
-      4: 400012
-    second: Character_Goblin_Female
-  - first:
-      4: 400014
-    second: Character_Goblin_Male
-  - first:
-      4: 400016
-    second: Character_Goblin_Shaman
-  - first:
-      4: 400018
-    second: Character_Goblin_WarChief
-  - first:
-      4: 400020
-    second: Character_Goblin_Warrior_Female
-  - first:
-      4: 400022
-    second: Character_Goblin_Warrior_Male
-  - first:
-      4: 400024
-    second: Character_Hero_Knight_Female
-  - first:
-      4: 400026
-    second: Character_Hero_Knight_Male
-  - first:
-      4: 400028
-    second: Character_Rock_Golem
-  - first:
-      4: 400030
-    second: Character_Skeleton_Knight
-  - first:
-      4: 400032
-    second: Character_Skeleton_Slave_01
-  - first:
-      4: 400034
-    second: Character_Skeleton_Soldier_01
-  - first:
-      4: 400036
-    second: Character_Skeleton_Soldier_02
-  - first:
-      4: 400038
-    second: Character_Tormented_Soul
-  - first:
-      4: 400040
-    second: //RootNode
-  - first:
-      4: 400042
-    second: Clavicle_L
-  - first:
-      4: 400044
-    second: Clavicle_R
-  - first:
-      4: 400046
-    second: Elbow_L
-  - first:
-      4: 400048
-    second: Elbow_R
-  - first:
-      4: 400050
-    second: Eyebrows
-  - first:
-      4: 400052
-    second: Eyes
-  - first:
-      4: 400054
-    second: Finger_01
-  - first:
-      4: 400056
-    second: Finger_01 1
-  - first:
-      4: 400058
-    second: Finger_02
-  - first:
-      4: 400060
-    second: Finger_02 1
-  - first:
-      4: 400062
-    second: Finger_03
-  - first:
-      4: 400064
-    second: Finger_03 1
-  - first:
-      4: 400066
-    second: Finger_04
-  - first:
-      4: 400068
-    second: Finger_04 1
-  - first:
-      4: 400070
-    second: Hand_L
-  - first:
-      4: 400072
-    second: Hand_R
-  - first:
-      4: 400074
-    second: Head
-  - first:
-      4: 400076
-    second: Hips
-  - first:
-      4: 400078
-    second: IndexFinger_01
-  - first:
-      4: 400080
-    second: IndexFinger_01 1
-  - first:
-      4: 400082
-    second: IndexFinger_02
-  - first:
-      4: 400084
-    second: IndexFinger_02 1
-  - first:
-      4: 400086
-    second: IndexFinger_03
-  - first:
-      4: 400088
-    second: IndexFinger_03 1
-  - first:
-      4: 400090
-    second: IndexFinger_04
-  - first:
-      4: 400092
-    second: IndexFinger_04 1
-  - first:
-      4: 400094
-    second: LowerLeg_L
-  - first:
-      4: 400096
-    second: LowerLeg_R
-  - first:
-      4: 400098
-    second: Neck
-  - first:
-      4: 400100
-    second: Root
-  - first:
-      4: 400102
-    second: Shoulder_L
-  - first:
-      4: 400104
-    second: Shoulder_R
-  - first:
-      4: 400106
-    second: SM_Item_Bag_Large
-  - first:
-      4: 400108
-    second: SM_Item_Bags
-  - first:
-      4: 400110
-    second: SM_Item_Bones
-  - first:
-      4: 400112
-    second: SM_Item_Goblin_Hair
-  - first:
-      4: 400114
-    second: SM_Item_Goblin_WarBanner
-  - first:
-      4: 400116
-    second: SM_Item_Horn
-  - first:
-      4: 400118
-    second: SM_Item_Mask_01
-  - first:
-      4: 400120
-    second: SM_Item_Mask_02
-  - first:
-      4: 400122
-    second: SM_Item_Shield
-  - first:
-      4: 400124
-    second: SM_Item_Shrooms
-  - first:
-      4: 400126
-    second: SM_Item_Shrunken_Head
-  - first:
-      4: 400128
-    second: SM_Item_Sword
-  - first:
-      4: 400130
-    second: Spine_01
-  - first:
-      4: 400132
-    second: Spine_02
-  - first:
-      4: 400134
-    second: Spine_03
-  - first:
-      4: 400136
-    second: Thumb_01
-  - first:
-      4: 400138
-    second: Thumb_01 1
-  - first:
-      4: 400140
-    second: Thumb_02
-  - first:
-      4: 400142
-    second: Thumb_02 1
-  - first:
-      4: 400144
-    second: Thumb_03
-  - first:
-      4: 400146
-    second: Thumb_03 1
-  - first:
-      4: 400148
-    second: Toes_L
-  - first:
-      4: 400150
-    second: Toes_R
-  - first:
-      4: 400152
-    second: UpperLeg_L
-  - first:
-      4: 400154
-    second: UpperLeg_R
-  - first:
-      23: 2300000
-    second: SM_Item_Bag_Large
-  - first:
-      23: 2300002
-    second: SM_Item_Bags
-  - first:
-      23: 2300004
-    second: SM_Item_Bones
-  - first:
-      23: 2300006
-    second: SM_Item_Goblin_Hair
-  - first:
-      23: 2300008
-    second: SM_Item_Goblin_WarBanner
-  - first:
-      23: 2300010
-    second: SM_Item_Horn
-  - first:
-      23: 2300012
-    second: SM_Item_Mask_01
-  - first:
-      23: 2300014
-    second: SM_Item_Mask_02
-  - first:
-      23: 2300016
-    second: SM_Item_Shield
-  - first:
-      23: 2300018
-    second: SM_Item_Shrooms
-  - first:
-      23: 2300020
-    second: SM_Item_Shrunken_Head
-  - first:
-      23: 2300022
-    second: SM_Item_Sword
-  - first:
-      33: 3300000
-    second: SM_Item_Bag_Large
-  - first:
-      33: 3300002
-    second: SM_Item_Bags
-  - first:
-      33: 3300004
-    second: SM_Item_Bones
-  - first:
-      33: 3300006
-    second: SM_Item_Goblin_Hair
-  - first:
-      33: 3300008
-    second: SM_Item_Goblin_WarBanner
-  - first:
-      33: 3300010
-    second: SM_Item_Horn
-  - first:
-      33: 3300012
-    second: SM_Item_Mask_01
-  - first:
-      33: 3300014
-    second: SM_Item_Mask_02
-  - first:
-      33: 3300016
-    second: SM_Item_Shield
-  - first:
-      33: 3300018
-    second: SM_Item_Shrooms
-  - first:
-      33: 3300020
-    second: SM_Item_Shrunken_Head
-  - first:
-      33: 3300022
-    second: SM_Item_Sword
-  - first:
-      43: 4300000
-    second: SM_Item_Goblin_Hair
-  - first:
-      43: 4300002
-    second: SM_Item_Mask_01
-  - first:
-      43: 4300004
-    second: SM_Item_Mask_02
-  - first:
-      43: 4300006
-    second: SM_Item_Goblin_WarBanner
-  - first:
-      43: 4300008
-    second: SM_Item_Sword
-  - first:
-      43: 4300010
-    second: SM_Item_Shield
-  - first:
-      43: 4300012
-    second: SM_Item_Shrunken_Head
-  - first:
-      43: 4300014
-    second: SM_Item_Bags
-  - first:
-      43: 4300016
-    second: SM_Item_Shrooms
-  - first:
-      43: 4300018
-    second: SM_Item_Horn
-  - first:
-      43: 4300020
-    second: SM_Item_Bones
-  - first:
-      43: 4300022
-    second: SM_Item_Bag_Large
-  - first:
-      43: 4300024
-    second: Character_Goblin_Warrior_Female
-  - first:
-      43: 4300026
-    second: Character_Skeleton_Knight
-  - first:
-      43: 4300028
-    second: Character_Goblin_Female
-  - first:
-      43: 4300030
-    second: Character_Hero_Knight_Female
-  - first:
-      43: 4300032
-    second: Character_Ghost_02
-  - first:
-      43: 4300034
-    second: Character_Goblin_Warrior_Male
-  - first:
-      43: 4300036
-    second: Character_Rock_Golem
-  - first:
-      43: 4300038
-    second: Character_Goblin_Shaman
-  - first:
-      43: 4300040
-    second: Character_Ghost_01
-  - first:
-      43: 4300042
-    second: Character_Tormented_Soul
-  - first:
-      43: 4300044
-    second: Character_Skeleton_Soldier_02
-  - first:
-      43: 4300046
-    second: Character_Goblin_Male
-  - first:
-      43: 4300048
-    second: Character_Hero_Knight_Male
-  - first:
-      43: 4300050
-    second: Character_Skeleton_Slave_01
-  - first:
-      43: 4300052
-    second: Character_Goblin_WarChief
-  - first:
-      43: 4300054
-    second: Character_Skeleton_Soldier_01
-  - first:
-      74: 7400000
-    second: Take 001
-  - first:
-      95: 9500000
-    second: //RootNode
-  - first:
-      137: 13700000
-    second: Character_Ghost_01
-  - first:
-      137: 13700002
-    second: Character_Ghost_02
-  - first:
-      137: 13700004
-    second: Character_Goblin_Female
-  - first:
-      137: 13700006
-    second: Character_Goblin_Male
-  - first:
-      137: 13700008
-    second: Character_Goblin_Shaman
-  - first:
-      137: 13700010
-    second: Character_Goblin_WarChief
-  - first:
-      137: 13700012
-    second: Character_Goblin_Warrior_Female
-  - first:
-      137: 13700014
-    second: Character_Goblin_Warrior_Male
-  - first:
-      137: 13700016
-    second: Character_Hero_Knight_Female
-  - first:
-      137: 13700018
-    second: Character_Hero_Knight_Male
-  - first:
-      137: 13700020
-    second: Character_Rock_Golem
-  - first:
-      137: 13700022
-    second: Character_Skeleton_Knight
-  - first:
-      137: 13700024
-    second: Character_Skeleton_Slave_01
-  - first:
-      137: 13700026
-    second: Character_Skeleton_Soldier_01
-  - first:
-      137: 13700028
-    second: Character_Skeleton_Soldier_02
-  - first:
-      137: 13700030
-    second: Character_Tormented_Soul
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 0
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -695,7 +17,11 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
+      copied configuration does not match position in animation file:\n\t'UpperLeg_L'
+      : position error = 10982.589844 mm\n\t'LowerLeg_L' : position error = 39682.531250
+      mm\n\t'Ankle_L' : position error = 37477.726562 mm\n\t'Ball_L' : position error
+      = 11213.813477 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -711,14 +37,14 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
-      takeName: Take 001
-      internalID: 7400000
-      firstFrame: 1
-      lastFrame: 24
+      name: PlayerFound
+      takeName: mixamo.com
+      internalID: -203655887218126122
+      firstFrame: 0
+      lastFrame: 84
       wrapMode: 0
       orientationOffsetY: 0
-      level: 0
+      level: -1
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
@@ -738,7 +64,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0.9
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -747,18 +73,18 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importPhysicalCameras: 0
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0
-    nodeNameCollisionStrategy: 0
-    fileIdsGeneration: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
-    weldVertices: 0
+    weldVertices: 1
     bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 0
@@ -770,19 +96,19 @@ ModelImporter:
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
-    secondaryUVMarginMethod: 0
+    secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
-    normalSmoothAngle: 5
-    normalImportMode: 1
-    tangentImportMode: 3
-    normalCalculationMode: 0
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
-    blendShapeNormalImportMode: 1
+    normalSmoothAngle: 60
+    normalImportMode: 2
+    tangentImportMode: 2
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 2
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
@@ -1512,14 +838,15 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: b6ef2f4d0154b2747860a3332fa05f97,
+    type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 1
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  avatarSetup: 2
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

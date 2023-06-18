@@ -3,21 +3,21 @@ using UnityEngine;
 public enum CharacterAttackType
 {
     MELEE,
-    RANGED
+    RANGED,
+    LAST
 }
 
 public enum AttackType
 {
     LIGHT,
     HEAVY,
-    SPECIAL
+    SPECIAL,
+    LAST
 }
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(SphereCollider))]
 public class AttackSystem : MonoBehaviour
 {
-    private Animator animator;
-
     private CharacterAttackType characterAttackType;
     private AttackType attackType;
 
@@ -38,12 +38,20 @@ public class AttackSystem : MonoBehaviour
 
     private float actualDamage;
 
-    [SerializeField] private BoxCollider hitbox;
+    private SphereCollider hitSphereCollider;
 
-    //Debug Attack
-    [SerializeField] private Transform bulletSpawn;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private GameObject rangedDebug; //MEGA Debug
+    ////Debug Attack
+    //[SerializeField] private Transform bulletSpawn;
+    //[SerializeField] private GameObject bulletPrefab;
+    //[SerializeField] private GameObject rangedDebug; //MEGA Debug
+
+    private void Awake()
+    {
+        hitSphereCollider = GetComponent<SphereCollider>();
+
+        hitSphereCollider.enabled = false;
+        hitSphereCollider.isTrigger = true;
+    }
 
     private void Update()
     {
@@ -83,15 +91,12 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
-                animator.SetBool("LightAttack", true);
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
-                animator.SetBool("HeavyAttack", true);
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
-                animator.SetBool("SpecialAttack", true);
                 PerformSpecialAttack();
                 break;
         }
@@ -102,15 +107,12 @@ public class AttackSystem : MonoBehaviour
         switch (attackType)
         {
             case AttackType.LIGHT:
-                animator.SetBool("LightAttack", true);
                 PerformLightAttack();
                 break;
             case AttackType.HEAVY:
-                animator.SetBool("LightAttack", true);
                 PerformHeavyAttack();
                 break;
             case AttackType.SPECIAL:
-                animator.SetBool("SpecialAttack", true);
                 PerformSpecialAttack();
                 break;
         }
@@ -124,7 +126,8 @@ public class AttackSystem : MonoBehaviour
         {
             lightAttackCountdown = lightAttackCountdownMax;
 
-            animator.SetBool("LightAttack", true);
+            AnimatorSystem.DoLightAttack();
+
             //Debug.Log(lightAttackDamange);
             //GameObject g = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
             //g.GetComponent<MagicBullet>().RangedDebug = rangedDebug; // mega debug
@@ -139,7 +142,7 @@ public class AttackSystem : MonoBehaviour
         {
             heavyAttackCountdown = heavyAttackCountdownMax;
 
-            animator.SetBool("HeavyAttack", true);
+            AnimatorSystem.DoHeavyAttack();
         }
     }
 
@@ -150,13 +153,13 @@ public class AttackSystem : MonoBehaviour
         if (specialAttackCountdown <= 0f)
         {
             specialAttackCountdown = specialAttackCountdownMax;
+
+            AnimatorSystem.DoSpecialAttack();
         }
     }
 
-    public void Init(Animator animator, CharacterAttackType characterAttackType, float lightAttackCountdownMax, float lightAttackDamange, float heavyAttackCountdownMax, float heavyAttackDamange, float specialAttackCountdownMax, float specialAttackDamange, float lightAttackCountdownSpeed, float heavyAttackCountdownSpeed, float specialAttackCountdownSpeed)
+    public void Init(CharacterAttackType characterAttackType, float lightAttackCountdownMax, float lightAttackDamange, float heavyAttackCountdownMax, float heavyAttackDamange, float specialAttackCountdownMax, float specialAttackDamange, float lightAttackCountdownSpeed, float heavyAttackCountdownSpeed, float specialAttackCountdownSpeed)
     {
-        this.animator = animator;
-
         this.characterAttackType = characterAttackType;
 
         this.lightAttackCountdownMax = lightAttackCountdownMax;
@@ -170,18 +173,18 @@ public class AttackSystem : MonoBehaviour
         this.specialAttackCountdownSpeed = specialAttackCountdownSpeed;
     }
 
-    public void EnableHitBox()
-    {
-        hitbox.enabled = true;
-    }
-
-    public void DisableHitbox()
-    {
-        hitbox.enabled = false;
-    }
-
     public float GetActualDamage()
     {
         return actualDamage;
+    }
+
+    public void EnableHitSphere()
+    {
+        hitSphereCollider.enabled = true;
+    }
+
+    public void DisableHitSphere()
+    {
+        hitSphereCollider.enabled = false;
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/CharacterType")]
@@ -24,7 +25,6 @@ public class CharacterTypeSO : ScriptableObject
     public float SpecialAttackDamange = 55f;
 
     [Header("AI SYSTEM")]
-    public MeshCollider MeshCollider;
     public float CharacterSpeed = 2f;
     public float NavMeshBorderOffset = 5f;
     public float SearchPlayerRay = 7f;
@@ -32,6 +32,6 @@ public class CharacterTypeSO : ScriptableObject
     public float DistanceToKeepFromPlayer = 0f;
     public float StunTimerMax = 0.5f;
     public float ImpactForce = -3.9f;
-    public float IdleTimer = 3f;
+    public float IdleTimer = 1f;
 
 }

@@ -150,7 +150,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""a57281d3-f08d-445a-9aeb-df69403819cb"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
