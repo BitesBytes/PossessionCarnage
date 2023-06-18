@@ -8,16 +8,21 @@ public class Character : MonoBehaviour
     private HealthSystem healthSystem;
     private AttackSystem attackSystem;
     private AISystem aiSystem;
+    private Animator animator;
+
+    private void Awake()
+    {
+        healthSystem = GetComponent<HealthSystem>();
+        attackSystem = GetComponent<AttackSystem>();
+        aiSystem = GetComponent<AISystem>();
+        animator = GetComponent<Animator>();
+    }
 
     private void Start()
     {
-        healthSystem = GetComponent<HealthSystem>();
+        
         healthSystem.Init(characterType.HealthAmountMax, characterType.HealthDecreaseTimerMax);
-
-        attackSystem = GetComponent<AttackSystem>();
-        attackSystem.Init(characterType.CharacterAttackType, characterType.LightAttackCountdownMax, characterType.LightAttackDamange, characterType.HeavyAttackCountdownMax, characterType.HeavyAttackDamange, characterType.SpecialAttackCountdownMax, characterType.SpecialAttackDamange, characterType.LightAttackCountdownSpeed, characterType.HeavyAttackCountdownSpeed, characterType.SpecialAttackCountdownSpeed);
-
-        aiSystem = GetComponent<AISystem>();
+        attackSystem.Init(animator, characterType.CharacterAttackType, characterType.LightAttackCountdownMax, characterType.LightAttackDamange, characterType.HeavyAttackCountdownMax, characterType.HeavyAttackDamange, characterType.SpecialAttackCountdownMax, characterType.SpecialAttackDamange, characterType.LightAttackCountdownSpeed, characterType.HeavyAttackCountdownSpeed, characterType.SpecialAttackCountdownSpeed);
         aiSystem.Init(this);
 
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
@@ -53,6 +58,11 @@ public class Character : MonoBehaviour
     public CharacterTypeSO GetCharacterType()
     {
         return characterType;
+    }
+
+    public Animator GetAnimator()
+    {
+        return animator;
     }
 
     private void OnDestroy()

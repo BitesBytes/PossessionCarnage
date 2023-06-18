@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public enum CharacterAttackType
 {
@@ -39,6 +40,8 @@ public class AttackSystem : MonoBehaviour
     private float actualDamage;
 
     private SphereCollider hitSphereCollider;
+
+    private Animator animator;
 
     ////Debug Attack
     //[SerializeField] private Transform bulletSpawn;
@@ -126,7 +129,7 @@ public class AttackSystem : MonoBehaviour
         {
             lightAttackCountdown = lightAttackCountdownMax;
 
-            AnimatorSystem.DoLightAttack();
+            AnimatorSystem.DoLightAttack(animator);
 
             //Debug.Log(lightAttackDamange);
             //GameObject g = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
@@ -142,7 +145,7 @@ public class AttackSystem : MonoBehaviour
         {
             heavyAttackCountdown = heavyAttackCountdownMax;
 
-            AnimatorSystem.DoHeavyAttack();
+            AnimatorSystem.DoHeavyAttack(animator);
         }
     }
 
@@ -154,12 +157,14 @@ public class AttackSystem : MonoBehaviour
         {
             specialAttackCountdown = specialAttackCountdownMax;
 
-            AnimatorSystem.DoSpecialAttack();
+            AnimatorSystem.DoSpecialAttack(animator);
         }
     }
 
-    public void Init(CharacterAttackType characterAttackType, float lightAttackCountdownMax, float lightAttackDamange, float heavyAttackCountdownMax, float heavyAttackDamange, float specialAttackCountdownMax, float specialAttackDamange, float lightAttackCountdownSpeed, float heavyAttackCountdownSpeed, float specialAttackCountdownSpeed)
+    public void Init(Animator animator, CharacterAttackType characterAttackType, float lightAttackCountdownMax, float lightAttackDamange, float heavyAttackCountdownMax, float heavyAttackDamange, float specialAttackCountdownMax, float specialAttackDamange, float lightAttackCountdownSpeed, float heavyAttackCountdownSpeed, float specialAttackCountdownSpeed)
     {
+        this.animator = animator;
+
         this.characterAttackType = characterAttackType;
 
         this.lightAttackCountdownMax = lightAttackCountdownMax;

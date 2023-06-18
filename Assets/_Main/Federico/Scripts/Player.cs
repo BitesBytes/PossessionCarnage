@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(HealthSystem), typeof(CapsuleCollider))]
+[RequireComponent(typeof(HealthSystem), typeof(Animator))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private float slowmoTimeSpeed = 0.75f;
@@ -29,7 +29,8 @@ public class Player : MonoBehaviour
     private float healtAmountMax;
     private float healthDecreaseTimerMax;
 
-    private CapsuleCollider capsuleCollider;
+    private Animator animator;
+    private Rigidbody rb;
 
     private void Awake()
     {
@@ -39,20 +40,21 @@ public class Player : MonoBehaviour
 
         possessionEnergy = maxPossEnergy;
 
-        possessedGameObject = Instantiate(defaultBodyPrefab, new Vector3(transform.position.x, transform.position.y - 1, transform.position.z),transform.rotation, defaultBodyParent);
-        defaultBodyComponent = defaultBodyPrefab.GetComponent<Character>();
+        possessedGameObject = Instantiate(defaultBodyPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation, defaultBodyParent);
         possessedBodyComponent = defaultBodyComponent;
 
         healtAmountMax = 100f;
         healthDecreaseTimerMax = 1.5f;
 
         healthSystem = GetComponent<HealthSystem>();
-        healthSystem.Init(healtAmountMax, healthDecreaseTimerMax);
+        animator = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
+        healthSystem.Init(healtAmountMax, healthDecreaseTimerMax);
 
         PlayerInputSystem.OnPossessionStarted += PlayerInputSystem_OnPossessionStarted;
         PlayerInputSystem.OnPossessionPerformed += PlayerInputSystem_OnPossessionPerformed;
@@ -77,36 +79,76 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Character otherCharacter = other.gameObject.GetComponent<Character>();
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Character otherCharacter = other.gameObject.GetComponent<Character>();
 
-        if (otherCharacter != null)
-        {
-            healthSystem.ChangeHealthAmount(-otherCharacter.GetAttackSystem().GetActualDamage());
-        }
-    }
+    //    if (otherCharacter != null)
+    //    {
+    //        healthSystem.ChangeHealthAmount(-otherCharacter.GetAttackSystem().GetActualDamage());
+    //    }
+    //}
 
     private void PlayerInputSystem_OnPossessionPerformed()
     {
+        //Physics.SphereCast(rayMuz.position, 7f, transform.forward, out RaycastHit raycastHit);
+
+        //if(raycastHit.collider != null)
+        //{
+        //    if(raycastHit.collider.GetComponent<Character>())
+        //    {
+        //        GameObject hitObject = raycastHit.collider.gameObject;
+        //        if (Vector3.Distance(hitObject.transform.position, transform.position) <= maxPossessionDistance)
+        //        {
+        //            Debug.Log("Hai Colpito: " + hitObject);
+
+        //            if (hitObject.GetComponent<Character>() != null)
+        //            {
+        //                Possess(hitObject);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Debug.Log("Outrange");
+        //            if (isPossessing)
+        //            {
+        //                DePossess();
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("Non Hai colpito nulla");
+
+        //        if (isPossessing)
+        //        {
+        //            DePossess();
+        //        }
+        //    }
+        //}
+
         if (Physics.Raycast(rayMuz.position, transform.forward, out RaycastHit hit))
         {
-            GameObject hitObject = hit.collider.gameObject;
-            if (Vector3.Distance(hitObject.transform.position, transform.position) <= maxPossessionDistance)
+            if(hit.collider != null)
             {
-                Debug.Log("Hai Colpito: " + hitObject);
+                GameObject hitObject = hit.collider.gameObject;
 
-                if (hitObject.GetComponent<Character>() != null)
+                if (Vector3.Distance(hitObject.transform.position, transform.position) <= maxPossessionDistance)
                 {
-                    Possess(hitObject);
+                    Debug.Log("Hai Colpito: " + hitObject);
+
+                    if (hitObject.GetComponent<Character>() != null)
+                    {
+                        Possess(hitObject);
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("Outrange");
-                if (isPossessing)
+                else
                 {
-                    DePossess();
+                    Debug.Log("Outrange");
+                    if (isPossessing)
+                    {
+                        DePossess();
+                    }
                 }
             }
         }
@@ -156,7 +198,8 @@ public class Player : MonoBehaviour
         movementDirection.y = 0f;
         movementDirection.Normalize();
 
-        controller.Move(movementDirection * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movementDirection * speed * Time.fixedDeltaTime);
+        //controller.Move(movementDirection * speed * Time.fixedDeltaTime);
 
         Vector2 mousePosition = PlayerInputSystem.GetMousePosition();
 
@@ -164,23 +207,29 @@ public class Player : MonoBehaviour
 
         Vector3 directionToMouse = mouseWorldPosition - transform.position;
         directionToMouse.y = 0f; // Assicurati che la direzione sia piatta (sul piano XZ)
+        directionToMouse.Normalize();
 
         if (directionToMouse != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(directionToMouse, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSens * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSens * Time.fixedDeltaTime);
         }
     }
 
     private void Possess(GameObject obj)
     {
         GameObject oldGO = possessedGameObject;
+
+        possessedBodyComponent = obj.GetComponent<Character>();
+
+        possessedBodyComponent.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        possessedBodyComponent.gameObject.GetComponent<Animator>().enabled = false;
+        Destroy(possessedBodyComponent.gameObject.GetComponent<Rigidbody>());
+
         transform.position = obj.transform.position;
         transform.rotation = obj.transform.rotation;
 
-        isPossessing = true;
         obj.transform.SetParent(possessedParent);
-        possessedBodyComponent = obj.GetComponent<Character>();
         possessedGameObject = obj;
         defaultBodyParent.gameObject.SetActive(false);
 
@@ -190,7 +239,11 @@ public class Player : MonoBehaviour
 
         EventManager.OnPossessedCharacterChangedCall(possessedBodyComponent);
 
+        possessedBodyComponent.GetAISystem().DisalbeAI();
+
         healthSystem.enabled = false;
+
+        isPossessing = true;
 
         if (oldGO.transform.parent == possessedParent)
         {

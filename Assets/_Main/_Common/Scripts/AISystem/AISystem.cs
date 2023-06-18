@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody), typeof(AnimatorSystem))]
+[RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class AISystem : MonoBehaviour
 {
     private const string PLAYER_LAYER = "Player";
@@ -15,7 +15,8 @@ public class AISystem : MonoBehaviour
         IDLE,
         PATROL,
         CHASE,
-        ATTACK
+        ATTACK,
+        EXPLOSION
     }
 
     private Character character;
@@ -67,25 +68,31 @@ public class AISystem : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
+        if (navMeshAgent.isActiveAndEnabled)
         {
-            SearchPlayer();
-        }
+            if (player == null)
+            {
+                SearchPlayer();
+            }
 
-        switch (currentState)
-        {
-            case State.IDLE:
-                Idle();
-                break;
-            case State.PATROL:
-                Patrolling();
-                break;
-            case State.CHASE:
-                Chasing();
-                break;
-            case State.ATTACK:
-                Attacking();
-                break;
+            switch (currentState)
+            {
+                case State.IDLE:
+                    Idle();
+                    break;
+                case State.PATROL:
+                    Patrolling();
+                    break;
+                case State.CHASE:
+                    Chasing();
+                    break;
+                case State.ATTACK:
+                    Attacking();
+                    break;
+                case State.EXPLOSION:
+                    Exploding();
+                    break;
+            }
         }
     }
 
@@ -154,31 +161,37 @@ public class AISystem : MonoBehaviour
 
     private void SwitchBehaviour(State behaviourState)
     {
-        switch (behaviourState)
+        if (navMeshAgent.isActiveAndEnabled)
         {
-            case State.IDLE:
-                navMeshAgent.isStopped = true;
-                idleTimer = character.GetCharacterType().IdleTimer;
-                currentState = State.IDLE;
-                break;
-            case State.PATROL:
-                navMeshAgent.isStopped = false;
-                if (player == null)
-                {
-                    actualPatrolPointIndex = 0;
-                    navMeshAgent.SetDestination(usedPatrolPoints[actualPatrolPointIndex].position);
-                }
-                currentState = State.PATROL;
-                break;
-            case State.CHASE:
-                navMeshAgent.isStopped = false;
-                currentState = State.CHASE;
-                break;
-            case State.ATTACK:
-                navMeshAgent.isStopped = true;
-                attackPerformed = false;
-                currentState = State.ATTACK;
-                break;
+            switch (behaviourState)
+            {
+                case State.IDLE:
+                    navMeshAgent.isStopped = true;
+                    idleTimer = character.GetCharacterType().IdleTimer;
+                    currentState = State.IDLE;
+                    break;
+                case State.PATROL:
+                    navMeshAgent.isStopped = false;
+                    if (player == null)
+                    {
+                        actualPatrolPointIndex = 0;
+                        navMeshAgent.SetDestination(usedPatrolPoints[actualPatrolPointIndex].position);
+                    }
+                    currentState = State.PATROL;
+                    break;
+                case State.CHASE:
+                    navMeshAgent.isStopped = false;
+                    currentState = State.CHASE;
+                    break;
+                case State.ATTACK:
+                    navMeshAgent.isStopped = true;
+                    attackPerformed = false;
+                    currentState = State.ATTACK;
+                    break;
+                case State.EXPLOSION:
+                    currentState = State.EXPLOSION;
+                    break;
+            }
         }
     }
 
@@ -186,7 +199,7 @@ public class AISystem : MonoBehaviour
     {
         previousState = State.PATROL;
 
-        AnimatorSystem.IsWalking(navMeshAgent.velocity != Vector3.zero);
+        AnimatorSystem.IsWalking(character.GetAnimator(), navMeshAgent.velocity != Vector3.zero);
 
         if (player != null)
         {
@@ -216,7 +229,7 @@ public class AISystem : MonoBehaviour
         {
             previousState = State.CHASE;
 
-            AnimatorSystem.IsWalking(navMeshAgent.velocity != Vector3.zero);
+            AnimatorSystem.IsWalking(character.GetAnimator(), navMeshAgent.velocity != Vector3.zero);
 
             navMeshAgent.SetDestination(player.transform.position);
 
@@ -244,7 +257,7 @@ public class AISystem : MonoBehaviour
             character.GetAttackSystem().PerformAttack((AttackType)UnityEngine.Random.Range(0, (int)AttackType.LAST));
         }
 
-        if (AnimatorSystem.IsAnimationFinished())
+        if (AnimatorSystem.IsAnimationFinished(character.GetAnimator()))
         {
             SwitchBehaviour(State.IDLE);
         }
@@ -259,6 +272,20 @@ public class AISystem : MonoBehaviour
         {
             SwitchBehaviour(State.PATROL);
         }
+    }
+
+    private void Exploding()
+    {
+        enabled = false;
+        //TODO
+    }
+
+    public void DisalbeAI()
+    {
+        navMeshAgent.isStopped = true;
+        destinationReached = true;
+        AnimatorSystem.IsWalking(character.GetAnimator(), false);
+        SwitchBehaviour(State.EXPLOSION);
     }
 
     private void OnDestroy()

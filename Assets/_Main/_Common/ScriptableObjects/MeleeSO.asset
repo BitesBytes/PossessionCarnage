@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MeleeSO
   m_EditorClassIdentifier: 
   NameString: Melee
-  Prefab: {fileID: 8792894934469629629, guid: 823fd03a8e706e846891e54689140e30, type: 3}
+  Prefab: {fileID: 1541411011293506218, guid: a09d509c9fe38864d9098629081900ad, type: 3}
   HealthAmountMax: 200
   HealthDecreaseTimerMax: 10
   CharacterAttackType: 0
@@ -26,8 +26,6 @@ MonoBehaviour:
   SpecialAttackCountdownMax: 5
   SpecialAttackCountdownSpeed: 1
   SpecialAttackDamange: 55
-  MeshCollider: {fileID: 8526335384044768565, guid: 01c3f77b7af9b344594cd3ea03c1f29a,
-    type: 3}
   CharacterSpeed: 2
   NavMeshBorderOffset: 5
   SearchPlayerRay: 7

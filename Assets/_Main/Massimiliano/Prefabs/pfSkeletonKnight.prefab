@@ -269,10 +269,9 @@ GameObject:
   - component: {fileID: 5426092854230637423}
   - component: {fileID: 4187034593641821734}
   - component: {fileID: 2744591166529902996}
-  - component: {fileID: 6005452267724506610}
   - component: {fileID: 6512929895807071321}
   m_Layer: 7
-  m_Name: Character_Skeleton_Knight
+  m_Name: pfSkeletonKnight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,7 +292,7 @@ Transform:
   - {fileID: 2973342539827093267}
   - {fileID: 1985362388273752672}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3605815953471734738
 Animator:
@@ -306,7 +305,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b6ef2f4d0154b2747860a3332fa05f97, type: 3}
   m_Controller: {fileID: 9100000, guid: 2606521b06e10004c9f67b9e736a59ea, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -422,7 +421,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae51be6848dc8d48a239e1bf7538d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomPatrolPoints: []
+  randomPatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   notRandomPatrolPoints: []
 --- !u!114 &2744591166529902996
 MonoBehaviour:
@@ -437,18 +451,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterType: {fileID: 11400000, guid: 0ea8ba298a105fe489158f1e04acffee, type: 2}
---- !u!114 &6005452267724506610
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068663950261365355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67d5c08bda7cae740a889d1f30251890, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &6512929895807071321
 CapsuleCollider:
   m_ObjectHideFlags: 0
