@@ -44,12 +44,15 @@ public class AISystem : MonoBehaviour
 
     private bool attackPerformed;
 
+    private int searchPlayerLayerMask;
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
         usedPatrolPointsAmount = 5;
+        searchPlayerLayerMask = 1 << LayerMask.NameToLayer(PLAYER_LAYER);
     }
 
     private void Start()
@@ -98,11 +101,11 @@ public class AISystem : MonoBehaviour
 
     private void SearchPlayer()
     {
-        Physics.SphereCast(transform.position, searchPlayerRay, transform.forward, out RaycastHit raycastHit);
+        Ray ray = new Ray(transform.position, transform.forward);
 
-        if (raycastHit.collider != null)
+        if(Physics.SphereCast(ray, searchPlayerRay, out RaycastHit hit, Mathf.Infinity, searchPlayerLayerMask))
         {
-            player = raycastHit.collider.GetComponent<Player>();
+            player = hit.collider.GetComponent<Player>();
         }
     }
 

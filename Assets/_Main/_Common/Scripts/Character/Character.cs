@@ -65,6 +65,11 @@ public class Character : MonoBehaviour
         return animator;
     }
 
+    public void SetAnimator(Animator animator)
+    {
+        this.animator = animator;
+    }
+
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
