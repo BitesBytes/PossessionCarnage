@@ -103,7 +103,7 @@ public class AISystem : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, transform.forward);
 
-        if(Physics.SphereCast(ray, searchPlayerRay, out RaycastHit hit, Mathf.Infinity, searchPlayerLayerMask))
+        if(Physics.SphereCast(ray, searchPlayerRay, out RaycastHit hit, searchPlayerRay, searchPlayerLayerMask))
         {
             player = hit.collider.GetComponent<Player>();
         }
@@ -211,7 +211,7 @@ public class AISystem : MonoBehaviour
 
         transform.LookAt(navMeshAgent.nextPosition);
         transform.rotation = Quaternion.Lerp(transform.rotation, usedPatrolPoints[actualPatrolPointIndex].rotation, Time.deltaTime * 0.5f);
-        destinationReached = Vector3.Distance(gameObject.transform.position, usedPatrolPoints[actualPatrolPointIndex].position) <= 0.1f;
+        destinationReached = Vector3.Distance(new Vector3(gameObject.transform.position.x, 0f, gameObject.transform.position.z), new Vector3(usedPatrolPoints[actualPatrolPointIndex].position.x, 0f, usedPatrolPoints[actualPatrolPointIndex].position.z)) <= 0.25f;
 
         if (destinationReached)
         {

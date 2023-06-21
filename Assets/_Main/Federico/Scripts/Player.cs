@@ -168,7 +168,8 @@ public class Player : MonoBehaviour
 
         possessedBodyComponent = obj.GetComponent<Character>();
 
-        possessedBodyComponent.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+        GetComponent<CapsuleCollider>().enabled = false;
+        GetComponent<Rigidbody>().useGravity = false;
         animator.enabled = false;
         Destroy(possessedBodyComponent.gameObject.GetComponent<Rigidbody>());
         possessedBodyComponent.SetAnimator(animator);
@@ -200,6 +201,9 @@ public class Player : MonoBehaviour
 
     private void DePossess()
     {
+        GetComponent<CapsuleCollider>().enabled = true;
+        GetComponent<Rigidbody>().useGravity = true;
+
         Destroy(possessedGameObject);
 
         defaultBodyParent.gameObject.SetActive(true);
