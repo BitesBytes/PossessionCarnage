@@ -7,7 +7,7 @@ public class AISystem : MonoBehaviour
 {
     private const string PLAYER_LAYER = "Player";
 
-    [SerializeField] private List<Transform> randomPatrolPoints;
+    private List<Transform> randomPatrolPoints = new List<Transform>(); //Debug se tolgo il SerializeField il foreach allo start funziona
     [SerializeField] private List<Transform> notRandomPatrolPoints;
 
     private enum State
@@ -60,6 +60,14 @@ public class AISystem : MonoBehaviour
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
 
         //rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force); TODO
+
+        GameObject pT = GameObject.Find("PatrolPoints");
+        Transform[] points = pT.GetComponentsInChildren<Transform>();
+
+        foreach(Transform child in pT.transform)
+        {
+            randomPatrolPoints.Add(child);
+        }
     }
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
