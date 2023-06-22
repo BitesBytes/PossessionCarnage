@@ -61,10 +61,10 @@ public class AISystem : MonoBehaviour
 
         //rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force); TODO
 
-        GameObject pT = GameObject.Find("PatrolPoints");
-        Transform[] points = pT.GetComponentsInChildren<Transform>();
+        GameObject patrolNode = GameObject.Find("PatrolPoints");
+        Transform[] points = patrolNode.GetComponentsInChildren<Transform>();
 
-        foreach(Transform child in pT.transform)
+        foreach(Transform child in patrolNode.transform)
         {
             randomPatrolPoints.Add(child);
         }
