@@ -53,6 +53,10 @@ MonoBehaviour:
   - {fileID: 1339516272645302783}
   - {fileID: 2911016446745360063}
   - {fileID: 8441134020015408741}
+  spawnInterval: 15
+  enemiesPerWave: 3
+  enemiesPerWaveMultiplier: 2
+  easyMode: 1
 --- !u!1 &945451321581217572
 GameObject:
   m_ObjectHideFlags: 0
