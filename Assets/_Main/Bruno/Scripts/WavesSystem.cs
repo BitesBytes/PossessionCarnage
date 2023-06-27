@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class WavesSystem : MonoBehaviour
 {
+    [Header("Wave Prefabs")]
     [SerializeField] private List<GameObject> enemies;
     [SerializeField] private List<Transform> spawnPoints;
 
-    private float spawnInterval = 15f;
-    private float enemiesPerWave = 3;
-    private float enemiesPerWaveMultiplier = 2; // ordine crescente
+    [Header("Wave's Core")]
+    [SerializeField] private float spawnInterval = 15f;
+    [SerializeField ]private float enemiesPerWave = 3;
+    [SerializeField] private float enemiesPerWaveMultiplier = 2; // ordine crescente
     private float currentWave = 0f;
     private float timeBeetweenWaves = 15f;
     private float nextSpawnTime = 15f;
@@ -17,13 +19,15 @@ public class WavesSystem : MonoBehaviour
     private float timerSincePlay; // tempo quando premi play
     private float endGameTimer = 300; // 5 minuti
 
-    private bool easyMode;
+    [Header("Difficulty")]
+    [SerializeField] private bool easyMode;
 
 
 
     private void Start()
     {
-        Begin();
+        easyMode = true;
+        Begin(easyMode);
     }
 
     private void Update()
@@ -38,7 +42,7 @@ public class WavesSystem : MonoBehaviour
         if(timerSincePlay >= nextSpawnTime)
         {
             enemiesPerWave = enemiesPerWave + enemiesPerWaveMultiplier; // questo aumenta gli enemies per wave per una variabile multiplier che si puo settare come cazzo si vuole
-            Begin();                                                    // eliminando la riga spawneranno sempre 3 enemies a wave
+            Begin(easyMode);                                                    // eliminando la riga spawneranno sempre 3 enemies a wave
             nextSpawnTime = timerSincePlay + spawnInterval;
             Debug.Log("enemies per wave: " + enemiesPerWave);
         }
@@ -74,12 +78,15 @@ public class WavesSystem : MonoBehaviour
                 SpawnWave();
             }
 
+            Debug.Log("easy mode on");
+
             Debug.Log("current wave: " + currentWave);
         }
 
         if(!easy)
         {
             currentWave++;
+            timeBeetweenWaves = 8f;
             nextSpawnTime = timerSincePlay + timeBeetweenWaves;
             nextWaveTime = timerSincePlay + nextWaveTime;
 
@@ -93,8 +100,6 @@ public class WavesSystem : MonoBehaviour
 
             Debug.Log("current hardmode wave: " + currentWave);
         }
-
-        easyMode = easy;
     }
 
     private void SpawnWave()
