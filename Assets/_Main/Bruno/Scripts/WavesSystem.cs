@@ -48,21 +48,6 @@ public class WavesSystem : MonoBehaviour
         }
     }
 
-    private void Begin()
-    {
-        currentWave++;
-        nextSpawnTime = timerSincePlay + timeBeetweenWaves;
-        nextWaveTime = timerSincePlay + nextWaveTime;
-
-        for(int i = 0; i < enemiesPerWave; i++)
-        {
-            Debug.Log("spawning next wave");
-            SpawnWave();
-        }
-
-        Debug.Log("current wave: " + currentWave);
-
-    }
 
     private void Begin(bool easy) // bool che switcha tra modalità facile e difficile
     {
