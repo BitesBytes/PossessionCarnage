@@ -43,7 +43,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5599308655985153508}
-  - component: {fileID: 8866701542939507521}
+  - component: {fileID: 5493677001065074554}
   m_Layer: 0
   m_Name: pfPlayerModel
   m_TagString: Untagged
@@ -66,9 +66,9 @@ Transform:
   - {fileID: 4257348070101558227}
   - {fileID: 8649701946601507529}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &8866701542939507521
+--- !u!95 &5493677001065074554
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -77,11 +77,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111412025948968941}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b69174d668ba02d44b14a084b217670a, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
+  m_Avatar: {fileID: 9000000, guid: b5f71c859f9f9bf41badda8a4650082c, type: 3}
+  m_Controller: {fileID: 9100000, guid: bad5a6fd2644d4446b4cfe93e4e8b095, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

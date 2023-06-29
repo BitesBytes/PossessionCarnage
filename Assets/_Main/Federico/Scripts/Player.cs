@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
 
         possessedBodyComponent = obj.GetComponent<Character>();
 
-        GetComponent<CapsuleCollider>().enabled = false;
+        //GetComponent<CapsuleCollider>().enabled = false;                  //commented line cause we need this collider to make enemies find player
         GetComponent<Rigidbody>().useGravity = false;
         animator.enabled = false;
         Destroy(possessedBodyComponent.gameObject.GetComponent<Rigidbody>());
@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
 
     private void DePossess()
     {
-        GetComponent<CapsuleCollider>().enabled = true;
+        //GetComponent<CapsuleCollider>().enabled = true;           //commented line cause we need this collider to make enemies find player
         GetComponent<Rigidbody>().useGravity = true;
 
         Destroy(possessedGameObject);
