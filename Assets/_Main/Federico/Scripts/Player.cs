@@ -68,10 +68,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        AnimatorSystem.IsWalking(animator, PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
 
         if (isPossessing)
         {
+            AnimatorSystem.IsWalking(possessedBodyComponent.GetAnimator(), PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
             possessionEnergy -= Time.deltaTime * possEnergyDecrementSpeed;
 
             if (possessionEnergy <= 0.0f)
@@ -81,6 +81,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            AnimatorSystem.IsWalking(animator, PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
             possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
             healthSystem.DecreaseHealthOverTime();
         }
@@ -172,7 +173,7 @@ public class Player : MonoBehaviour
         GetComponent<Rigidbody>().useGravity = false;
         animator.enabled = false;
         Destroy(possessedBodyComponent.gameObject.GetComponent<Rigidbody>());
-        possessedBodyComponent.SetAnimator(animator);
+        //possessedBodyComponent.SetAnimator(animator);
 
         transform.position = obj.transform.position;
         transform.rotation = obj.transform.rotation;

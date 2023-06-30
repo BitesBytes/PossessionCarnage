@@ -200,6 +200,8 @@ public class AISystem : MonoBehaviour
                     currentState = State.ATTACK;
                     break;
                 case State.EXPLOSION:
+                    AnimatorSystem.IsWalking(character.GetAnimator(), false);
+                    //Destroy(character.GetAnimator().gameObject);
                     currentState = State.EXPLOSION;
                     break;
             }
@@ -295,7 +297,6 @@ public class AISystem : MonoBehaviour
     {
         navMeshAgent.isStopped = true;
         destinationReached = true;
-        AnimatorSystem.IsWalking(character.GetAnimator(), false);
         SwitchBehaviour(State.EXPLOSION);
     }
 
