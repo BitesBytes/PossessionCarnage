@@ -44,7 +44,7 @@ public class WavesSystem : MonoBehaviour
             enemiesPerWave = enemiesPerWave + enemiesPerWaveMultiplier; // questo aumenta gli enemies per wave per una variabile multiplier che si puo settare come cazzo si vuole
             Begin(easyMode);                                                    // eliminando la riga spawneranno sempre 3 enemies a wave
             nextSpawnTime = timerSincePlay + spawnInterval;
-            Debug.Log("enemies per wave: " + enemiesPerWave);
+
         }
     }
 
@@ -59,13 +59,10 @@ public class WavesSystem : MonoBehaviour
 
             for(int i = 0; i < enemiesPerWave; i++)
             {
-                Debug.Log("spawning next wave");
+
                 SpawnWave();
             }
 
-            Debug.Log("easy mode on");
-
-            Debug.Log("current wave: " + currentWave);
         }
 
         if(!easy)
@@ -75,15 +72,11 @@ public class WavesSystem : MonoBehaviour
             nextSpawnTime = timerSincePlay + timeBeetweenWaves;
             nextWaveTime = timerSincePlay + nextWaveTime;
 
-            Debug.Log("enemies per wave: " + enemiesPerWave);
-
             for(int i = 0; i < enemiesPerWave; i++)
             {
-                Debug.Log("spawning next wave in hard mode");
                 SpawnWave();
             }
 
-            Debug.Log("current hardmode wave: " + currentWave);
         }
     }
 

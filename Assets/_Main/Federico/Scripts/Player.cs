@@ -78,6 +78,8 @@ public class Player : MonoBehaviour
             {
                 DePossess();
             }
+
+            possessedBodyComponent.transform.position = this.transform.position;
         }
         else
         {
@@ -170,13 +172,17 @@ public class Player : MonoBehaviour
         possessedBodyComponent = obj.GetComponent<Character>();
 
         //GetComponent<CapsuleCollider>().enabled = false;                  //commented line cause we need this collider to make enemies find player
-        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<CapsuleCollider>().enabled = true;
         animator.enabled = false;
         Destroy(possessedBodyComponent.gameObject.GetComponent<Rigidbody>());
+        Destroy(possessedBodyComponent.gameObject.GetComponent<CapsuleCollider>());
         //possessedBodyComponent.SetAnimator(animator);
 
         transform.position = obj.transform.position;
         transform.rotation = obj.transform.rotation;
+
+
 
         obj.transform.SetParent(possessedParent);
         possessedGameObject = obj;
@@ -192,6 +198,8 @@ public class Player : MonoBehaviour
 
         healthSystem.enabled = false;
 
+        speed = 2f;
+
         isPossessing = true;
 
         //if (oldGO.transform.parent == possessedParent)
@@ -203,7 +211,8 @@ public class Player : MonoBehaviour
     private void DePossess()
     {
         //GetComponent<CapsuleCollider>().enabled = true;           //commented line cause we need this collider to make enemies find player
-        GetComponent<Rigidbody>().useGravity = true;
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<CapsuleCollider>().enabled = false;
 
         Destroy(possessedGameObject);
 
@@ -218,6 +227,8 @@ public class Player : MonoBehaviour
         PlayerInputSystem.OnSpecialAbilityPerformed -= PlayerInputSystem_OnSpecialAbilityPerformed;
 
         EventManager.OnPossessedCharacterChangedCall(null);
+
+        speed = 3f;
 
         healthSystem.enabled = true;
         animator.enabled = true;

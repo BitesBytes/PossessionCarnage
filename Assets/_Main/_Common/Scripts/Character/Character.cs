@@ -20,13 +20,14 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        
+
         healthSystem.Init(characterType.HealthAmountMax, characterType.HealthDecreaseTimerMax);
         attackSystem.Init(animator, characterType.CharacterAttackType, characterType.LightAttackCountdownMax, characterType.LightAttackDamange, characterType.HeavyAttackCountdownMax, characterType.HeavyAttackDamange, characterType.SpecialAttackCountdownMax, characterType.SpecialAttackDamange, characterType.LightAttackCountdownSpeed, characterType.HeavyAttackCountdownSpeed, characterType.SpecialAttackCountdownSpeed);
         aiSystem.Init(this);
 
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
     }
+
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
     {
