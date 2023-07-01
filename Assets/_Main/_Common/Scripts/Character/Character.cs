@@ -1,10 +1,13 @@
 using UnityEngine;
 using System;
+using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(HealthSystem), typeof(AttackSystem), typeof(AISystem))]
 public class Character : MonoBehaviour
 {
     [SerializeField] private CharacterTypeSO characterType;
+
+    public bool IsPossessed { get; set; }
 
     private HealthSystem healthSystem;
     private AttackSystem attackSystem;
@@ -21,7 +24,6 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-
         healthSystem.Init(characterType.HealthAmountMax, characterType.HealthDecreaseTimerMax);
         attackSystem.Init(animator, characterType.CharacterAttackType, characterType.LightAttackCountdownMax, characterType.LightAttackDamange, characterType.HeavyAttackCountdownMax, characterType.HeavyAttackDamange, characterType.SpecialAttackCountdownMax, characterType.SpecialAttackDamange, characterType.LightAttackCountdownSpeed, characterType.HeavyAttackCountdownSpeed, characterType.SpecialAttackCountdownSpeed);
         aiSystem.Init(this);
@@ -30,10 +32,16 @@ public class Character : MonoBehaviour
         healthSystem.OnDie += HealthSystem_OnDie;
     }
 
-
     private void HealthSystem_OnDie(object sender, EventArgs e)
     {
-        Destroy(this.gameObject);
+        if(!IsPossessed)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            healthSystem.PossessedDie();
+        }
     }
 
     private void EventManager_OnPossessedCharacterChanged(Character character)

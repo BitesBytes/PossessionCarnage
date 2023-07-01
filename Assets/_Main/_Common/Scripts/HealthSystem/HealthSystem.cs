@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
@@ -11,6 +12,7 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnHealthAmountMaxChanged;
     public event EventHandler OnSetTimerSpeedChanged;
     public event EventHandler OnDie;
+    public event EventHandler OnPossessedDie;
 
     private float timerSpeed;
     private float maxHealthAmount;
@@ -59,9 +61,19 @@ public class HealthSystem : MonoBehaviour
         return healthAmount / maxHealthAmount;
     }
 
+    public float GetCurrentHealth()
+    {
+        return healthAmount;
+    }
+
     public bool IsNotMaxHealth()
     {
         return healthAmount < maxHealthAmount;
+    }
+
+    public void PossessedDie()
+    {
+        OnPossessedDie?.Invoke(this, EventArgs.Empty);
     }
 
     public void Init(float amountMax, float timerSpeed)

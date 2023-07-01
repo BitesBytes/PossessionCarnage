@@ -16,9 +16,10 @@ public enum AttackType
     LAST
 }
 
-[RequireComponent(typeof(SphereCollider))]
 public class AttackSystem : MonoBehaviour
 {
+    [SerializeField] private HitBox hitBox;
+
     private CharacterAttackType characterAttackType;
     private AttackType attackType;
 
@@ -50,7 +51,7 @@ public class AttackSystem : MonoBehaviour
 
     private void Awake()
     {
-        hitSphereCollider = GetComponent<SphereCollider>();
+        hitSphereCollider = hitBox.GetComponent<SphereCollider>();
 
         hitSphereCollider.enabled = false;
         hitSphereCollider.isTrigger = true;

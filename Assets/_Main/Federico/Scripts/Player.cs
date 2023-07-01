@@ -4,7 +4,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const string CHARACTER_LAYER = "Character";
-    private const string HITBOX_LAYER = "HitBox";
 
     [SerializeField] private float slowmoTimeSpeed = 0.75f;
     [SerializeField] private float speed;
@@ -35,7 +34,6 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
 
     private int possessionLayerMask;
-    private int hitBoxMask;
 
     private void Awake()
     {
@@ -57,7 +55,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         possessionLayerMask = 1 << LayerMask.NameToLayer(CHARACTER_LAYER);
-        hitBoxMask = 1 << LayerMask.NameToLayer(HITBOX_LAYER);
     }
 
     private void Start()
@@ -89,17 +86,6 @@ public class Player : MonoBehaviour
             AnimatorSystem.IsWalking(animator, PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
             possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
             healthSystem.DecreaseHealthOverTime();
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
-        SphereCollider hitBoxSphere = other.gameObject.GetComponent<SphereCollider>();
-
-        if(hitBoxSphere != null && hitBoxSphere.includeLayers.value == hitBoxMask)
-        {
-            possessedBodyComponent.GetHealthSystem().ChangeHealthAmount(-other.gameObject.GetComponent<Character>().GetAttackSystem().GetActualDamage());
         }
     }
 
@@ -162,7 +148,6 @@ public class Player : MonoBehaviour
         movementDirection.Normalize();
 
         rb.MovePosition(rb.position + movementDirection * speed * Time.fixedDeltaTime);
-        //controller.Move(movementDirection * speed * Time.fixedDeltaTime);
 
         Vector2 mousePosition = PlayerInputSystem.GetMousePosition();
 
@@ -185,18 +170,14 @@ public class Player : MonoBehaviour
 
         possessedBodyComponent = obj.GetComponent<Character>();
 
-        //GetComponent<CapsuleCollider>().enabled = false;                  //commented line cause we need this collider to make enemies find player
         GetComponent<Rigidbody>().useGravity = true;
         GetComponent<CapsuleCollider>().enabled = true;
         animator.enabled = false;
         Destroy(possessedBodyComponent.gameObject.GetComponent<Rigidbody>());
         Destroy(possessedBodyComponent.gameObject.GetComponent<CapsuleCollider>());
-        //possessedBodyComponent.SetAnimator(animator);
 
         transform.position = obj.transform.position;
         transform.rotation = obj.transform.rotation;
-
-
 
         obj.transform.SetParent(possessedParent);
         possessedGameObject = obj;
@@ -209,24 +190,28 @@ public class Player : MonoBehaviour
         EventManager.OnPossessedCharacterChangedCall(possessedBodyComponent);
 
         possessedBodyComponent.GetAISystem().DisalbeAI();
+        possessedBodyComponent.IsPossessed = true;
+
+        possessedBodyComponent.GetHealthSystem().OnPossessedDie += PossessedBodyComponentHealthSystem_OnPossessedDie;
 
         healthSystem.enabled = false;
 
         speed = 2f;
 
         isPossessing = true;
+    }
 
-        //if (oldGO.transform.parent == possessedParent)
-        //{
-        //    Destroy(oldGO);
-        //}
+    private void PossessedBodyComponentHealthSystem_OnPossessedDie(object sender, System.EventArgs e)
+    {
+        DePossess();
     }
 
     private void DePossess()
     {
-        //GetComponent<CapsuleCollider>().enabled = true;           //commented line cause we need this collider to make enemies find player
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<CapsuleCollider>().enabled = false;
+
+        possessedBodyComponent.GetHealthSystem().OnPossessedDie -= PossessedBodyComponentHealthSystem_OnPossessedDie;
 
         Destroy(possessedGameObject);
 
@@ -263,7 +248,7 @@ public class Player : MonoBehaviour
         PlayerInputSystem.OnPossessionStarted -= PlayerInputSystem_OnPossessionStarted;
         PlayerInputSystem.OnPossessionPerformed -= PlayerInputSystem_OnPossessionPerformed;
         PlayerInputSystem.OnExitToMainMenuPerformed -= PlayerInputSystem_OnExitToMainMenuPerformed;
-        PlayerInputSystem.OnLightAttackPerformed -= PlayerInputSystem_OnLightAttackPerformed;       //MAYBE BUG: maybe we are unsubscribing from an event and we are not subscribed
+        PlayerInputSystem.OnLightAttackPerformed -= PlayerInputSystem_OnLightAttackPerformed;
         PlayerInputSystem.OnHeavyAttackPerformed -= PlayerInputSystem_OnHeavyAttackPerformed;
         PlayerInputSystem.OnSpecialAbilityPerformed -= PlayerInputSystem_OnSpecialAbilityPerformed;
     }
