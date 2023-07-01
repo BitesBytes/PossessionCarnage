@@ -292,7 +292,7 @@ Transform:
   - {fileID: 2973342539827093267}
   - {fileID: 1985362388273752672}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3605815953471734738
 Animator:
@@ -398,7 +398,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -421,15 +421,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ae51be6848dc8d48a239e1bf7538d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomPatrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   notRandomPatrolPoints: []
 --- !u!114 &2744591166529902996
 MonoBehaviour:

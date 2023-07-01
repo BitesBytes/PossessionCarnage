@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(HealthSystem), typeof(AttackSystem), typeof(AISystem))]
 public class Character : MonoBehaviour
@@ -26,8 +27,14 @@ public class Character : MonoBehaviour
         aiSystem.Init(this);
 
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
+        healthSystem.OnDie += HealthSystem_OnDie;
     }
 
+
+    private void HealthSystem_OnDie(object sender, EventArgs e)
+    {
+        Destroy(this.gameObject);
+    }
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
     {
@@ -74,5 +81,6 @@ public class Character : MonoBehaviour
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
+        healthSystem.OnDie -= HealthSystem_OnDie;
     }
 }

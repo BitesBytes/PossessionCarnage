@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private const string CHARACTER_LAYER = "Character";
+    private const string HITBOX_LAYER = "HitBox";
 
     [SerializeField] private float slowmoTimeSpeed = 0.75f;
     [SerializeField] private float speed;
@@ -34,6 +35,7 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
 
     private int possessionLayerMask;
+    private int hitBoxMask;
 
     private void Awake()
     {
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         possessionLayerMask = 1 << LayerMask.NameToLayer(CHARACTER_LAYER);
+        hitBoxMask = 1 << LayerMask.NameToLayer(HITBOX_LAYER);
     }
 
     private void Start()
@@ -86,6 +89,17 @@ public class Player : MonoBehaviour
             AnimatorSystem.IsWalking(animator, PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
             possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
             healthSystem.DecreaseHealthOverTime();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        SphereCollider hitBoxSphere = other.gameObject.GetComponent<SphereCollider>();
+
+        if(hitBoxSphere != null && hitBoxSphere.includeLayers.value == hitBoxMask)
+        {
+            possessedBodyComponent.GetHealthSystem().ChangeHealthAmount(-other.gameObject.GetComponent<Character>().GetAttackSystem().GetActualDamage());
         }
     }
 

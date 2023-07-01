@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class AISystem : MonoBehaviour
 {
     private const string PLAYER_LAYER = "Player";
+    private const string HITBOX_LAYER = "HitBox";
 
     private List<Transform> randomPatrolPoints = new List<Transform>(); //Debug se tolgo il SerializeField il foreach allo start funziona
     [SerializeField] private List<Transform> notRandomPatrolPoints;
@@ -45,6 +46,7 @@ public class AISystem : MonoBehaviour
     private bool attackPerformed;
 
     private int searchPlayerLayerMask;
+    private int hitBoxMask;
 
     private void Awake()
     {
@@ -53,6 +55,7 @@ public class AISystem : MonoBehaviour
 
         usedPatrolPointsAmount = 5;
         searchPlayerLayerMask = 1 << LayerMask.NameToLayer(PLAYER_LAYER);
+        hitBoxMask = 1 << LayerMask.NameToLayer(HITBOX_LAYER);
     }
 
     private void Start()
@@ -104,6 +107,26 @@ public class AISystem : MonoBehaviour
                     Exploding();
                     break;
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        SphereCollider hitBoxSphere = other.gameObject.GetComponent<SphereCollider>();
+
+        if(hitBoxSphere != null && hitBoxSphere.includeLayers.value == hitBoxMask)
+        {
+            Character otherCharacter = other.gameObject.GetComponent<Character>();
+            //Player otherPlayer = other.gameObject.GetComponent<Player>();
+
+            //Debug.Log(otherCharacter.gameObject.name + " ha colpito " + this.gameObject.name + "facendo " + -otherCharacter.GetAttackSystem().GetActualDamage());
+            Debug.Log(character.GetHealthSystem().GetCurrentHealthNormalized());
+
+            if(otherCharacter != null)
+            {
+                character.GetHealthSystem().ChangeHealthAmount(-otherCharacter.GetAttackSystem().GetActualDamage());
+            }
+
         }
     }
 

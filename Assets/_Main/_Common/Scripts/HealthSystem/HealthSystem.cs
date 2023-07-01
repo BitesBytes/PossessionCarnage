@@ -10,6 +10,7 @@ public class HealthSystem : MonoBehaviour
     }
     public event EventHandler OnHealthAmountMaxChanged;
     public event EventHandler OnSetTimerSpeedChanged;
+    public event EventHandler OnDie;
 
     private float timerSpeed;
     private float maxHealthAmount;
@@ -23,7 +24,7 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
-        //TODO
+        OnDie?.Invoke(this, EventArgs.Empty);
     }
 
     public void ChangeHealthAmount(float amount)
@@ -32,6 +33,11 @@ public class HealthSystem : MonoBehaviour
         healthAmount = Mathf.Clamp(healthAmount, 0f, maxHealthAmount);
 
         OnHealthAmountChanged?.Invoke(this, new OnHealthAmountChangedEventArgs { amount = amount });
+
+        if(healthAmount <= 0f)
+        {
+            Die();
+        }
     }
 
     public void SetTimerSpeed(float timerSpeed)

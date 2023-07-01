@@ -41,7 +41,7 @@ public class PlayerUI : MonoBehaviour
 
     private void ActualCharacterHealthSystem_OnHealthAmountChanged(object sender, HealthSystem.OnHealthAmountChangedEventArgs e)
     {
-        throw new System.NotImplementedException();
+        healthBar.fillAmount = actualCharacter.GetHealthSystem().GetCurrentHealthNormalized();
     }
 
     private void OnDestroy()
