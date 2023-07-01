@@ -1,6 +1,5 @@
-using UnityEngine;
 using System;
-using UnityEngine.TextCore.Text;
+using UnityEngine;
 
 [RequireComponent(typeof(HealthSystem), typeof(AttackSystem), typeof(AISystem))]
 public class Character : MonoBehaviour
@@ -34,7 +33,7 @@ public class Character : MonoBehaviour
 
     private void HealthSystem_OnDie(object sender, EventArgs e)
     {
-        if(!IsPossessed)
+        if (!IsPossessed)
         {
             Destroy(this.gameObject);
         }
@@ -46,7 +45,7 @@ public class Character : MonoBehaviour
 
     private void EventManager_OnPossessedCharacterChanged(Character character)
     {
-        if(character == null || character != this)
+        if (character == null || character != this)
         {
             aiSystem.enabled = true;
         }

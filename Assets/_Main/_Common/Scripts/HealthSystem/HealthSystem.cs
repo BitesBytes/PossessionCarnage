@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
@@ -36,7 +35,7 @@ public class HealthSystem : MonoBehaviour
 
         OnHealthAmountChanged?.Invoke(this, new OnHealthAmountChangedEventArgs { amount = amount });
 
-        if(healthAmount <= 0f)
+        if (healthAmount <= 0f)
         {
             Die();
         }

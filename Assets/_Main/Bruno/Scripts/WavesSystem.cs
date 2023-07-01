@@ -9,7 +9,7 @@ public class WavesSystem : MonoBehaviour
 
     [Header("Wave's Core")]
     [SerializeField] private float spawnInterval = 15f;
-    [SerializeField ]private float enemiesPerWave = 3;
+    [SerializeField] private float enemiesPerWave = 3;
     [SerializeField] private float enemiesPerWaveMultiplier = 2; // ordine crescente
     private float currentWave = 0f;
     private float timeBeetweenWaves = 15f;
@@ -17,12 +17,10 @@ public class WavesSystem : MonoBehaviour
     private float nextWaveTime = 15f;
 
     private float timerSincePlay; // tempo quando premi play
-    private float endGameTimer = 300; // 5 minuti
+    private float endGameTimer = 90; // 5 minuti
 
     [Header("Difficulty")]
     [SerializeField] private bool easyMode;
-
-
 
     private void Start()
     {
@@ -34,12 +32,13 @@ public class WavesSystem : MonoBehaviour
     {
         timerSincePlay = Time.time;
 
-        if(timerSincePlay >= endGameTimer) // se il tempo supera 5 minuti hai vinto
+        if (timerSincePlay >= endGameTimer) // se il tempo supera 5 minuti hai vinto
         {
-            Debug.Log("you survived");
+            GameManager.MatchWon = true;
+            SceneManagementSystem.LoadWonLooseScene();
         }
 
-        if(timerSincePlay >= nextSpawnTime)
+        if (timerSincePlay >= nextSpawnTime)
         {
             enemiesPerWave = enemiesPerWave + enemiesPerWaveMultiplier; // questo aumenta gli enemies per wave per una variabile multiplier che si puo settare come cazzo si vuole
             Begin(easyMode);                                                    // eliminando la riga spawneranno sempre 3 enemies a wave
@@ -51,13 +50,13 @@ public class WavesSystem : MonoBehaviour
 
     private void Begin(bool easy) // bool che switcha tra modalità facile e difficile
     {
-        if(easy)
+        if (easy)
         {
             currentWave++;
             nextSpawnTime = timerSincePlay + timeBeetweenWaves;
             nextWaveTime = timerSincePlay + nextWaveTime;
 
-            for(int i = 0; i < enemiesPerWave; i++)
+            for (int i = 0; i < enemiesPerWave; i++)
             {
 
                 SpawnWave();
@@ -65,14 +64,14 @@ public class WavesSystem : MonoBehaviour
 
         }
 
-        if(!easy)
+        if (!easy)
         {
             currentWave++;
             timeBeetweenWaves = 8f;
             nextSpawnTime = timerSincePlay + timeBeetweenWaves;
             nextWaveTime = timerSincePlay + nextWaveTime;
 
-            for(int i = 0; i < enemiesPerWave; i++)
+            for (int i = 0; i < enemiesPerWave; i++)
             {
                 SpawnWave();
             }

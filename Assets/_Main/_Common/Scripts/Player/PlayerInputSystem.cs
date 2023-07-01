@@ -1,5 +1,5 @@
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public delegate void onButtonPressed();
 public static class PlayerInputSystem
@@ -7,7 +7,6 @@ public static class PlayerInputSystem
     public static event onButtonPressed OnSpecialAbilityPerformed;
     public static event onButtonPressed OnLightAttackPerformed;
     public static event onButtonPressed OnHeavyAttackPerformed;
-    public static event onButtonPressed OnExitToMainMenuPerformed;
     public static event onButtonPressed OnPossessionPerformed;
     public static event onButtonPressed OnPossessionStarted;
 
@@ -21,14 +20,8 @@ public static class PlayerInputSystem
         playerInputAction.Player.SpecialAbility.performed += SpecialAbility_performed;
         playerInputAction.Player.LightAttack.performed += LightAttack_performed;
         playerInputAction.Player.HeavyAttack.performed += HeavyAttack_performed;
-        playerInputAction.Player.ExitToMainMenu.performed += ExitToMainMenu_performed;
         playerInputAction.Player.Possession.performed += Possession_performed;
         playerInputAction.Player.Possession.started += Possession_started;
-    }
-
-    private static void ExitToMainMenu_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
-    {
-        OnExitToMainMenuPerformed?.Invoke();
     }
 
     private static void HeavyAttack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

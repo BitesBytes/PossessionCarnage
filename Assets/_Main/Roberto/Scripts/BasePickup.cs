@@ -10,7 +10,7 @@ public abstract class BasePickup : MonoBehaviour
     [SerializeField] protected GameObject visualFX;
 
     protected PickupMovementEffect movementEffectBehaviour;
-    
+
     protected float healthAmount;
     protected float energyAmount;
     protected float timeForDestroying;

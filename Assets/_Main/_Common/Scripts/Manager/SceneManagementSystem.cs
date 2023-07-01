@@ -9,6 +9,7 @@ public static class SceneManagementSystem
     private const string ROBERTO_SCENE = "Assets/_Main/Roberto/Scenes/RobertoErcolino.unity";
     private const string MASSIMILIANO_SCENE = "Assets/_Main/Massimiliano/Scenes/MassimilianoScene.unity";
     private const string MAIN_MENU_SCENE = "Assets/_Main/_Common/Scenes/MainMenuScene.unity";
+    private const string WON_LOOSE_SCENE = "Assets/_Main/_Common/Scenes/WonLooseScene.unity";
 
     public static void PlayGame()
     {
@@ -43,5 +44,10 @@ public static class SceneManagementSystem
     public static void ExitToMainMenu()
     {
         SceneManager.LoadScene(MAIN_MENU_SCENE);
+    }
+
+    public static void LoadWonLooseScene()
+    {
+        SceneManager.LoadScene(WON_LOOSE_SCENE);
     }
 }

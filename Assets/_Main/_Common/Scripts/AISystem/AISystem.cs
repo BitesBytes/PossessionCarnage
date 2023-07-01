@@ -64,7 +64,7 @@ public class AISystem : MonoBehaviour
         GameObject patrolNode = GameObject.Find("PatrolPoints");
         Transform[] points = patrolNode.GetComponentsInChildren<Transform>();
 
-        foreach(Transform child in patrolNode.transform)
+        foreach (Transform child in patrolNode.transform)
         {
             randomPatrolPoints.Add(child);
         }
@@ -111,7 +111,7 @@ public class AISystem : MonoBehaviour
     {
         Ray ray = new Ray(transform.position, transform.forward);
 
-        if(Physics.SphereCast(ray, searchPlayerRay, out RaycastHit hit, searchPlayerRay, searchPlayerLayerMask))
+        if (Physics.SphereCast(ray, searchPlayerRay, out RaycastHit hit, searchPlayerRay, searchPlayerLayerMask))
         {
             player = hit.collider.GetComponent<Player>();
         }

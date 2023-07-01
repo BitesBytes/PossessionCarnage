@@ -13,7 +13,7 @@ public class HitBox : MonoBehaviour
         {
             otherCharacter.GetHealthSystem().ChangeHealthAmount(-character.GetAttackSystem().GetActualDamage());
         }
-        else if(player != null)
+        else if (player != null)
         {
             player.GetPossessedBodyComponent().GetHealthSystem().ChangeHealthAmount(-character.GetAttackSystem().GetActualDamage());
         }

@@ -64,15 +64,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ExitToMainMenu"",
-                    ""type"": ""Button"",
-                    ""id"": ""3fae7154-9c05-4883-ba21-d51719d6665d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Possession"",
                     ""type"": ""Value"",
                     ""id"": ""94a4d6fa-6db3-4e63-bf01-e24ec775f4c1"",
@@ -182,17 +173,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9013091e-b6c9-48c8-b300-76bc75dbb501"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ExitToMainMenu"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""9c7e8eef-37eb-4bfa-830d-41c06bdac312"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
@@ -224,7 +204,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_SpecialAbility = m_Player.FindAction("SpecialAbility", throwIfNotFound: true);
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
-        m_Player_ExitToMainMenu = m_Player.FindAction("ExitToMainMenu", throwIfNotFound: true);
         m_Player_Possession = m_Player.FindAction("Possession", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
     }
@@ -292,7 +271,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SpecialAbility;
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_HeavyAttack;
-    private readonly InputAction m_Player_ExitToMainMenu;
     private readonly InputAction m_Player_Possession;
     private readonly InputAction m_Player_MousePosition;
     public struct PlayerActions
@@ -303,7 +281,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @SpecialAbility => m_Wrapper.m_Player_SpecialAbility;
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
-        public InputAction @ExitToMainMenu => m_Wrapper.m_Player_ExitToMainMenu;
         public InputAction @Possession => m_Wrapper.m_Player_Possession;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -327,9 +304,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @HeavyAttack.started += instance.OnHeavyAttack;
             @HeavyAttack.performed += instance.OnHeavyAttack;
             @HeavyAttack.canceled += instance.OnHeavyAttack;
-            @ExitToMainMenu.started += instance.OnExitToMainMenu;
-            @ExitToMainMenu.performed += instance.OnExitToMainMenu;
-            @ExitToMainMenu.canceled += instance.OnExitToMainMenu;
             @Possession.started += instance.OnPossession;
             @Possession.performed += instance.OnPossession;
             @Possession.canceled += instance.OnPossession;
@@ -352,9 +326,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @HeavyAttack.started -= instance.OnHeavyAttack;
             @HeavyAttack.performed -= instance.OnHeavyAttack;
             @HeavyAttack.canceled -= instance.OnHeavyAttack;
-            @ExitToMainMenu.started -= instance.OnExitToMainMenu;
-            @ExitToMainMenu.performed -= instance.OnExitToMainMenu;
-            @ExitToMainMenu.canceled -= instance.OnExitToMainMenu;
             @Possession.started -= instance.OnPossession;
             @Possession.performed -= instance.OnPossession;
             @Possession.canceled -= instance.OnPossession;
@@ -384,7 +355,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnSpecialAbility(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
-        void OnExitToMainMenu(InputAction.CallbackContext context);
         void OnPossession(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
     }

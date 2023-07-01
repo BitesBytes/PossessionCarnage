@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ExitToMainMenu",
-                    "type": "Button",
-                    "id": "3fae7154-9c05-4883-ba21-d51719d6665d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Possession",
                     "type": "Value",
                     "id": "94a4d6fa-6db3-4e63-bf01-e24ec775f4c1",
@@ -155,17 +146,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "HeavyAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9013091e-b6c9-48c8-b300-76bc75dbb501",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ExitToMainMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

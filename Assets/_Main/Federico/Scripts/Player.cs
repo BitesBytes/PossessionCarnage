@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform defaultBodyParent;
     [SerializeField] private float possEnergyDecrementSpeed = 10.0f;
 
-    private CharacterController controller;
     private bool isPossessing;
 
     private float maxPossEnergy;
@@ -47,11 +46,10 @@ public class Player : MonoBehaviour
         possessedBodyComponent = defaultBodyComponent;
 
         healtAmountMax = 100f;
-        healthDecreaseTimerMax = 1.5f;
+        healthDecreaseTimerMax = 3f;
 
         healthSystem = GetComponent<HealthSystem>();
         animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
 
         possessionLayerMask = 1 << LayerMask.NameToLayer(CHARACTER_LAYER);
@@ -63,7 +61,17 @@ public class Player : MonoBehaviour
 
         PlayerInputSystem.OnPossessionStarted += PlayerInputSystem_OnPossessionStarted;
         PlayerInputSystem.OnPossessionPerformed += PlayerInputSystem_OnPossessionPerformed;
-        PlayerInputSystem.OnExitToMainMenuPerformed += PlayerInputSystem_OnExitToMainMenuPerformed;
+
+        healthSystem.OnDie += HealthSystem_OnDie;
+    }
+
+    private void HealthSystem_OnDie(object sender, System.EventArgs e)
+    {
+        if(healthSystem.enabled)
+        {
+            GameManager.MatchWon = false;
+            SceneManagementSystem.LoadWonLooseScene();
+        }
     }
 
     private void Update()
@@ -91,7 +99,7 @@ public class Player : MonoBehaviour
 
     private void PlayerInputSystem_OnPossessionPerformed()
     {
-        if(isPossessing)
+        if (isPossessing)
         {
             DePossess();
         }
@@ -116,11 +124,6 @@ public class Player : MonoBehaviour
     private void PlayerInputSystem_OnPossessionStarted()
     {
         Time.timeScale = slowmoTimeSpeed;
-    }
-
-    private void PlayerInputSystem_OnExitToMainMenuPerformed()
-    {
-        SceneManagementSystem.ExitToMainMenu();
     }
 
     private void PlayerInputSystem_OnHeavyAttackPerformed()
@@ -247,9 +250,10 @@ public class Player : MonoBehaviour
     {
         PlayerInputSystem.OnPossessionStarted -= PlayerInputSystem_OnPossessionStarted;
         PlayerInputSystem.OnPossessionPerformed -= PlayerInputSystem_OnPossessionPerformed;
-        PlayerInputSystem.OnExitToMainMenuPerformed -= PlayerInputSystem_OnExitToMainMenuPerformed;
         PlayerInputSystem.OnLightAttackPerformed -= PlayerInputSystem_OnLightAttackPerformed;
         PlayerInputSystem.OnHeavyAttackPerformed -= PlayerInputSystem_OnHeavyAttackPerformed;
         PlayerInputSystem.OnSpecialAbilityPerformed -= PlayerInputSystem_OnSpecialAbilityPerformed;
+
+        healthSystem.OnDie -= HealthSystem_OnDie;
     }
 }

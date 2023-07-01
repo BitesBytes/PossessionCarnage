@@ -9603,7 +9603,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4860254326897693247}
-  - component: {fileID: 5107247612462150848}
   - component: {fileID: 4027765109646012007}
   - component: {fileID: 8566174426355346447}
   - component: {fileID: 6871114024269483346}
@@ -9625,40 +9624,14 @@ Transform:
   m_GameObject: {fileID: 4784099334338229785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1625865191412558696}
   - {fileID: 7441738368647826599}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &5107247612462150848
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4784099334338229785}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &4027765109646012007
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -9676,7 +9649,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2
@@ -9695,7 +9668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowmoTimeSpeed: 0.75
-  speed: 2
+  speed: 3
   defaultBodyPrefab: {fileID: 111412025948968941, guid: 2c8e0f020779b1e4bbea7e0592f1b462,
     type: 3}
   rayMuz: {fileID: 1625865191412558696}
@@ -9703,6 +9676,7 @@ MonoBehaviour:
   possessedParent: {fileID: 9216154552485905080}
   defaultBodyParent: {fileID: 4243694306475341414}
   possEnergyDecrementSpeed: 0
+  wonLostUI: {fileID: 0}
 --- !u!114 &6871114024269483346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9724,7 +9698,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4784099334338229785}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: b6ef2f4d0154b2747860a3332fa05f97, type: 3}
+  m_Avatar: {fileID: 9000000, guid: b69174d668ba02d44b14a084b217670a, type: 3}
   m_Controller: {fileID: 9100000, guid: 2606521b06e10004c9f67b9e736a59ea, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -9758,7 +9732,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 0
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 96
