@@ -6,22 +6,20 @@ public class EnergyPickup : BasePickup
     {
         if (!isCollected)
         {
-            //TODO
-            //Player player = other.gameObject.GetComponent<Player>();
+            Player player = other.GetComponentInParent<Player>();
 
-            //if (player != null)
-            //{
-            //    if (player.GetHealthSystem().IsNotMaxHealth())
-            //    {
-            //        character.GetHealthSystem().ChangeHealthAmount(pickup.HealthAmount);
-            //        visual.SetActive(false);
-            //        visualFX.SetActive(true);
-            //
-            //        isCollected = true;
-            //
-            //        movementEffectBehaviour.enabled = false;
-            //    }
-            //}
+            Debug.Log("TEST");
+
+            if (player != null && !player.HasMaxEnergy())
+            {
+                player.GainEnergyAmount(pickup.EnergyAmount);
+                visual.SetActive(false);
+                visualFX.SetActive(true);
+
+                isCollected = true;
+
+                movementEffectBehaviour.enabled = false;
+            }
         }
     }
 }

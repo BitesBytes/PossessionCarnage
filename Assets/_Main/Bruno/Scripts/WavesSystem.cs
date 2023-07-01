@@ -17,7 +17,7 @@ public class WavesSystem : MonoBehaviour
     private float nextWaveTime = 15f;
 
     private float timerSincePlay; // tempo quando premi play
-    private float endGameTimer = 90; // 5 minuti
+    private float endGameTimer = 300; // 5 minuti
 
     [Header("Difficulty")]
     [SerializeField] private bool easyMode;

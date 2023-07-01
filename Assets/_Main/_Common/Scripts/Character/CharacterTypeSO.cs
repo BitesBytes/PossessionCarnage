@@ -34,4 +34,6 @@ public class CharacterTypeSO : ScriptableObject
     public float ImpactForce = -3.9f;
     public float IdleTimer = 1f;
 
+    [Header("ENERGY SYSTEM")]
+    public float EnergyCostAmount = 25f;
 }

@@ -9,14 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private GameObject defaultBodyPrefab;
     [SerializeField] private Transform rayMuz;
-    [SerializeField] private float possessionEnergy;
+    [SerializeField] private float energyAmountMax = 100f;
     [SerializeField] private Transform possessedParent;
     [SerializeField] private Transform defaultBodyParent;
-    [SerializeField] private float possEnergyDecrementSpeed = 10.0f;
 
     private bool isPossessing;
 
-    private float maxPossEnergy;
     private float maxPossessionDistance;
     private Character possessedBodyComponent;
     private Character defaultBodyComponent;
@@ -29,6 +27,8 @@ public class Player : MonoBehaviour
     private float healtAmountMax;
     private float healthDecreaseTimerMax;
 
+    private float energyAmount;
+
     private Animator animator;
     private Rigidbody rb;
 
@@ -36,17 +36,16 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        maxPossEnergy = 100.0f;
         maxPossessionDistance = 7.5f;
         rotationSens = 10.0f;
-
-        possessionEnergy = maxPossEnergy;
 
         possessedGameObject = Instantiate(defaultBodyPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation, defaultBodyParent);
         possessedBodyComponent = defaultBodyComponent;
 
         healtAmountMax = 100f;
-        healthDecreaseTimerMax = 3f;
+        healthDecreaseTimerMax = 2f;
+
+        energyAmount = energyAmountMax;
 
         healthSystem = GetComponent<HealthSystem>();
         animator = GetComponent<Animator>();
@@ -80,19 +79,11 @@ public class Player : MonoBehaviour
         if (isPossessing)
         {
             AnimatorSystem.IsWalking(possessedBodyComponent.GetAnimator(), PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
-            possessionEnergy -= Time.deltaTime * possEnergyDecrementSpeed;
-
-            if (possessionEnergy <= 0.0f)
-            {
-                DePossess();
-            }
-
             possessedBodyComponent.transform.position = this.transform.position;
         }
         else
         {
             AnimatorSystem.IsWalking(animator, PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
-            possessionEnergy = Mathf.Clamp(possessionEnergy + Time.deltaTime * 10.0f, 0, maxPossEnergy);    //regain energy DEBUG
             healthSystem.DecreaseHealthOverTime();
         }
     }
@@ -109,11 +100,11 @@ public class Player : MonoBehaviour
 
             if (Physics.Raycast(ray, out RaycastHit hit, maxPossessionDistance, possessionLayerMask))
             {
-                GameObject hitObject = hit.collider.gameObject;
+                Character hitObject = hit.collider.gameObject.GetComponent<Character>();
 
-                if (hitObject.GetComponent<Character>() != null)
+                if (hitObject != null && energyAmount >= hitObject.GetCharacterType().EnergyCostAmount)
                 {
-                    Possess(hitObject);
+                    Possess(hitObject.gameObject);
                 }
             }
         }
@@ -201,6 +192,9 @@ public class Player : MonoBehaviour
 
         speed = 2f;
 
+        energyAmount -= possessedBodyComponent.GetCharacterType().EnergyCostAmount;
+        energyAmount = Mathf.Clamp(energyAmount, 0f, energyAmountMax);
+
         isPossessing = true;
     }
 
@@ -211,7 +205,6 @@ public class Player : MonoBehaviour
 
     private void DePossess()
     {
-        GetComponent<Rigidbody>().useGravity = false;
         GetComponent<CapsuleCollider>().enabled = false;
 
         possessedBodyComponent.GetHealthSystem().OnPossessedDie -= PossessedBodyComponentHealthSystem_OnPossessedDie;
@@ -234,6 +227,17 @@ public class Player : MonoBehaviour
 
         healthSystem.enabled = true;
         animator.enabled = true;
+    }
+
+    public void GainEnergyAmount(float amount)
+    {
+        energyAmount += amount;
+        energyAmount = Mathf.Clamp(energyAmount, 0, energyAmountMax);
+    }
+
+    public bool HasMaxEnergy()
+    {
+        return energyAmount >= energyAmountMax;
     }
 
     public Character GetPossessedBodyComponent()
