@@ -4,7 +4,7 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] private MainMenuUI mainMenuUI;
     [SerializeField] private SettingsMenuUI settingsMenuUI;
-    [SerializeField] private LoadMenuUI loadMenuUI;
+    [SerializeField] private CreditsMenuUI loadMenuUI;
 
     private void Start()
     {

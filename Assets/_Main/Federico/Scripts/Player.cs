@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(HealthSystem), typeof(Animator))]
 public class Player : MonoBehaviour
 {
     private const string CHARACTER_LAYER = "Character";
+
+    public event EventHandler OnEnergyAmountChanged;
 
     [SerializeField] private float slowmoTimeSpeed = 0.75f;
     [SerializeField] private float speed;
@@ -66,7 +69,7 @@ public class Player : MonoBehaviour
 
     private void HealthSystem_OnDie(object sender, System.EventArgs e)
     {
-        if(healthSystem.enabled)
+        if (healthSystem.enabled)
         {
             GameManager.MatchWon = false;
             SceneManagementSystem.LoadWonLooseScene();
@@ -75,7 +78,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
         if (isPossessing)
         {
             AnimatorSystem.IsWalking(possessedBodyComponent.GetAnimator(), PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
@@ -194,6 +196,7 @@ public class Player : MonoBehaviour
 
         energyAmount -= possessedBodyComponent.GetCharacterType().EnergyCostAmount;
         energyAmount = Mathf.Clamp(energyAmount, 0f, energyAmountMax);
+        OnEnergyAmountChanged?.Invoke(this, EventArgs.Empty);
 
         isPossessing = true;
     }
@@ -233,11 +236,22 @@ public class Player : MonoBehaviour
     {
         energyAmount += amount;
         energyAmount = Mathf.Clamp(energyAmount, 0, energyAmountMax);
+        OnEnergyAmountChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public bool HasMaxEnergy()
     {
         return energyAmount >= energyAmountMax;
+    }
+
+    public float GetEnergyAmountNormalized()
+    {
+        return energyAmount / energyAmountMax;
+    }
+
+    public bool GetIsPossessing()
+    {
+        return isPossessing;
     }
 
     public Character GetPossessedBodyComponent()

@@ -8,9 +8,7 @@ public class EnergyPickup : BasePickup
         {
             Player player = other.GetComponentInParent<Player>();
 
-            Debug.Log("TEST");
-
-            if (player != null && !player.HasMaxEnergy())
+            if (player != null && !player.HasMaxEnergy() && !player.GetIsPossessing())
             {
                 player.GainEnergyAmount(pickup.EnergyAmount);
                 visual.SetActive(false);

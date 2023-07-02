@@ -1,8 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WavesSystem : MonoBehaviour
 {
+    public event EventHandler<OnWaveChangedEventArgs> OnWaveChanged;
+    public class OnWaveChangedEventArgs : EventArgs
+    {
+        public string currentWave;
+    }
+    public event EventHandler<OnTimeChangedEventArgs> OnTimeChanged;
+    public class OnTimeChangedEventArgs : EventArgs
+    {
+        public string timeToWin;
+    }
+
     [Header("Wave Prefabs")]
     [SerializeField] private List<GameObject> enemies;
     [SerializeField] private List<Transform> spawnPoints;
@@ -11,16 +23,17 @@ public class WavesSystem : MonoBehaviour
     [SerializeField] private float spawnInterval = 15f;
     [SerializeField] private float enemiesPerWave = 3;
     [SerializeField] private float enemiesPerWaveMultiplier = 2; // ordine crescente
-    private float currentWave = 0f;
+
+    [Header("Difficulty")]
+    [SerializeField] private bool easyMode;
+
+    private int currentWave = 0;
     private float timeBeetweenWaves = 15f;
     private float nextSpawnTime = 15f;
     private float nextWaveTime = 15f;
 
     private float timerSincePlay; // tempo quando premi play
     private float endGameTimer = 300; // 5 minuti
-
-    [Header("Difficulty")]
-    [SerializeField] private bool easyMode;
 
     private void Start()
     {
@@ -30,7 +43,9 @@ public class WavesSystem : MonoBehaviour
 
     private void Update()
     {
-        timerSincePlay = Time.time;
+        timerSincePlay += Time.deltaTime;
+
+        OnTimeChanged?.Invoke(this, new OnTimeChangedEventArgs { timeToWin = (endGameTimer - timerSincePlay).ToString("00.00")});
 
         if (timerSincePlay >= endGameTimer) // se il tempo supera 5 minuti hai vinto
         {
@@ -43,10 +58,8 @@ public class WavesSystem : MonoBehaviour
             enemiesPerWave = enemiesPerWave + enemiesPerWaveMultiplier; // questo aumenta gli enemies per wave per una variabile multiplier che si puo settare come cazzo si vuole
             Begin(easyMode);                                                    // eliminando la riga spawneranno sempre 3 enemies a wave
             nextSpawnTime = timerSincePlay + spawnInterval;
-
         }
     }
-
 
     private void Begin(bool easy) // bool che switcha tra modalità facile e difficile
     {
@@ -75,8 +88,9 @@ public class WavesSystem : MonoBehaviour
             {
                 SpawnWave();
             }
-
         }
+
+        OnWaveChanged?.Invoke(this, new OnWaveChangedEventArgs { currentWave = currentWave.ToString() });
     }
 
     private void SpawnWave()
@@ -87,12 +101,12 @@ public class WavesSystem : MonoBehaviour
 
     private GameObject GetRandomAI()
     {
-        int idx = Random.Range(0, enemies.Count);
+        int idx = UnityEngine.Random.Range(0, enemies.Count);
         return enemies[idx];
     }
 
     private int GetRandomIdx()
     {
-        return Random.Range(0, spawnPoints.Count);
+        return UnityEngine.Random.Range(0, spawnPoints.Count);
     }
 }
