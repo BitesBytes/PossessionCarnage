@@ -35,5 +35,7 @@ public class WonLostUI : MonoBehaviour
             infoText.text = LOST_TEXT;
             infoText.color = Color.red;
         }
+
+        Cursor.visible = true;
     }
 }

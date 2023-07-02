@@ -32,5 +32,6 @@ MonoBehaviour:
   AttackRange: 2
   DistanceToKeepFromPlayer: 0
   StunTimerMax: 0.5
-  ImpactForce: -3.9
+  ImpactForce: 1
   IdleTimer: 1
+  EnergyCostAmount: 25

@@ -33,6 +33,11 @@ public class MainMenuUI : MonoBehaviour
         });
     }
 
+    private void Start()
+    {
+        Cursor.visible = true;
+    }
+
     public void Show()
     {
         this.gameObject.SetActive(true);

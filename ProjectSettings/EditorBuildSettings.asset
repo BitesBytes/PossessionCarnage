@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/_Main/_Common/Scenes/WonLooseScene.unity
     guid: 2444cf0b23e128c4bb95a5f938af46d2
   - enabled: 0
-    path: Assets/_Main/_Common/Scenes/MainSceneTest.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
     path: Assets/_Main/Bruno/Scenes/BrunoScene.unity
     guid: 6b1f83d6ee796c84fb5d136fea9247e9
   - enabled: 0

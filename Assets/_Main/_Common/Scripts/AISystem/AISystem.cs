@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,8 +8,12 @@ public class AISystem : MonoBehaviour
 {
     private const string PLAYER_LAYER = "Player";
 
-    private List<Transform> randomPatrolPoints = new List<Transform>(); //Debug se tolgo il SerializeField il foreach allo start funziona
+    public event EventHandler OnExplosionEnter;
+    public event EventHandler OnExplosionExit;
+
     [SerializeField] private List<Transform> notRandomPatrolPoints;
+
+    private List<Transform> randomPatrolPoints = new List<Transform>(); //Debug se tolgo il SerializeField il foreach allo start funziona
 
     private enum State
     {
@@ -58,8 +63,6 @@ public class AISystem : MonoBehaviour
     private void Start()
     {
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
-
-        //rigidBody.AddForce(transform.forward * impactForce * Time.deltaTime, ForceMode.Force); TODO
 
         GameObject patrolNode = GameObject.Find("PatrolPoints");
         Transform[] points = patrolNode.GetComponentsInChildren<Transform>();
@@ -137,9 +140,9 @@ public class AISystem : MonoBehaviour
 
     private void HealthSystem_OnHealthAmountChanged(object sender, HealthSystem.OnHealthAmountChangedEventArgs e)
     {
-        if (e.amount < 0f)
+        if (e.amount < 0f && rigidBody != null)
         {
-
+            SwitchBehaviour(State.EXPLOSION);
         }
     }
 
@@ -200,8 +203,12 @@ public class AISystem : MonoBehaviour
                     currentState = State.ATTACK;
                     break;
                 case State.EXPLOSION:
+                    destinationReached = true;
+                    navMeshAgent.isStopped = true;
+                    rigidBody.AddForce(-transform.forward * impactForce, ForceMode.Impulse);
                     AnimatorSystem.IsWalking(character.GetAnimator(), false);
-                    //Destroy(character.GetAnimator().gameObject);
+                    idleTimer = character.GetCharacterType().IdleTimer;
+                    OnExplosionEnter?.Invoke(this, EventArgs.Empty);
                     currentState = State.EXPLOSION;
                     break;
             }
@@ -250,11 +257,6 @@ public class AISystem : MonoBehaviour
 
             destinationReached = distanceFromPlayer <= attackRange;
 
-            //if (distanceToKeepFromPlayer != 0f && distanceFromPlayer <= distanceToKeepFromPlayer)
-            //{
-            //    SwitchBehaviour(State.GO_AWAY);
-            //}
-
             if (destinationReached)
             {
                 SwitchBehaviour(State.ATTACK);
@@ -289,21 +291,26 @@ public class AISystem : MonoBehaviour
 
     private void Exploding()
     {
-        enabled = false;
-        //TODO
+        idleTimer -= Time.deltaTime;
+
+        if(idleTimer <= 0f)
+        {
+            OnExplosionExit?.Invoke(this, EventArgs.Empty);
+            SwitchBehaviour(State.PATROL);
+        }
     }
 
     public void DisalbeAI()
     {
         navMeshAgent.isStopped = true;
         destinationReached = true;
-        SwitchBehaviour(State.EXPLOSION);
+        enabled = false;
     }
 
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
-        character.GetHealthSystem().OnHealthAmountChanged -= HealthSystem_OnHealthAmountChanged; //MAYBE BUG
+        character.GetHealthSystem().OnHealthAmountChanged -= HealthSystem_OnHealthAmountChanged;
     }
 
 }

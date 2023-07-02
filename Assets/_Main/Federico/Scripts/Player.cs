@@ -65,6 +65,9 @@ public class Player : MonoBehaviour
         PlayerInputSystem.OnPossessionPerformed += PlayerInputSystem_OnPossessionPerformed;
 
         healthSystem.OnDie += HealthSystem_OnDie;
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void HealthSystem_OnDie(object sender, System.EventArgs e)
@@ -78,6 +81,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManagementSystem.ExitToMainMenu();
+        }
+
         if (isPossessing)
         {
             AnimatorSystem.IsWalking(possessedBodyComponent.GetAnimator(), PlayerInputSystem.GetDirectionNormalized() != Vector2.zero);
@@ -197,6 +205,8 @@ public class Player : MonoBehaviour
         energyAmount -= possessedBodyComponent.GetCharacterType().EnergyCostAmount;
         energyAmount = Mathf.Clamp(energyAmount, 0f, energyAmountMax);
         OnEnergyAmountChanged?.Invoke(this, EventArgs.Empty);
+
+        possessedBodyComponent.ChangeToDefaultMaterial();
 
         isPossessing = true;
     }

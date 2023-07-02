@@ -1,10 +1,16 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(HealthSystem), typeof(AttackSystem), typeof(AISystem))]
 public class Character : MonoBehaviour
 {
     [SerializeField] private CharacterTypeSO characterType;
+    [SerializeField] private Image groundCircleImage;
+
+    [SerializeField] private Renderer myRenderer;
+    [SerializeField] private Material redMaterial;
+    [SerializeField] private Material defaultMaterial;
 
     public bool IsPossessed { get; set; }
 
@@ -19,6 +25,10 @@ public class Character : MonoBehaviour
         attackSystem = GetComponent<AttackSystem>();
         aiSystem = GetComponent<AISystem>();
         animator = GetComponent<Animator>();
+
+        groundCircleImage.gameObject.SetActive(false);
+
+        myRenderer.material = defaultMaterial;
     }
 
     private void Start()
@@ -29,6 +39,19 @@ public class Character : MonoBehaviour
 
         EventManager.OnPossessedCharacterChanged += EventManager_OnPossessedCharacterChanged;
         healthSystem.OnDie += HealthSystem_OnDie;
+
+        aiSystem.OnExplosionEnter += AiSystem_OnExplosionEnter;
+        aiSystem.OnExplosionExit += AiSystem_OnExplosionExit;
+    }
+
+    private void AiSystem_OnExplosionExit(object sender, EventArgs e)
+    {
+        myRenderer.material = defaultMaterial;
+    }
+
+    private void AiSystem_OnExplosionEnter(object sender, EventArgs e)
+    {
+        myRenderer.material = redMaterial;
     }
 
     private void HealthSystem_OnDie(object sender, EventArgs e)
@@ -52,6 +75,7 @@ public class Character : MonoBehaviour
         else
         {
             aiSystem.enabled = false;
+            groundCircleImage.gameObject.SetActive(true);
         }
     }
 
@@ -85,9 +109,16 @@ public class Character : MonoBehaviour
         this.animator = animator;
     }
 
+    public void ChangeToDefaultMaterial()
+    {
+        myRenderer.material = defaultMaterial;
+    }
+
     private void OnDestroy()
     {
         EventManager.OnPossessedCharacterChanged -= EventManager_OnPossessedCharacterChanged;
         healthSystem.OnDie -= HealthSystem_OnDie;
+        aiSystem.OnExplosionEnter -= AiSystem_OnExplosionEnter;
+        aiSystem.OnExplosionExit -= AiSystem_OnExplosionExit;
     }
 }
