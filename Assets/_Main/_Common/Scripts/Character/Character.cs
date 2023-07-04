@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
     [SerializeField] private Material redMaterial;
     [SerializeField] private Material defaultMaterial;
 
+    [SerializeField] private Player player;
+
     public bool IsPossessed { get; set; }
 
     private HealthSystem healthSystem;
@@ -58,6 +60,7 @@ public class Character : MonoBehaviour
     {
         if (!IsPossessed)
         {
+            player.GainEnergyAmount(25f);
             Destroy(this.gameObject);
         }
         else

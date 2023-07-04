@@ -496,6 +496,7 @@ MonoBehaviour:
   myRenderer: {fileID: 8216796406696027784}
   redMaterial: {fileID: 2100000, guid: 64d578fc219548f449ab6610b48a163e, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 42b64fdb315e3054ea757d8d1c4bcfa7, type: 2}
+  player: {fileID: 8566174426355346447, guid: b36f035630247fb47a50d3e9c57f4cd7, type: 3}
 --- !u!136 &6512929895807071321
 CapsuleCollider:
   m_ObjectHideFlags: 0

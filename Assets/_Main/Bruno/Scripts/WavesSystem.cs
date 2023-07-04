@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class WavesSystem : MonoBehaviour
 {
@@ -96,7 +97,7 @@ public class WavesSystem : MonoBehaviour
     private void SpawnWave()
     {
         GameObject ai = GetRandomAI();
-        ai = Instantiate(ai, spawnPoints[GetRandomIdx()].position, spawnPoints[GetRandomIdx()].rotation);
+        Character character = Instantiate(ai, spawnPoints[GetRandomIdx()].position, spawnPoints[GetRandomIdx()].rotation).GetComponent<Character>();
     }
 
     private GameObject GetRandomAI()
