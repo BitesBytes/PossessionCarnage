@@ -10,6 +10,11 @@ public class MainMenuUI : MonoBehaviour
 
     [SerializeField] private MenuManager menuManager;
 
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip musicClip;
+
+    [SerializeField] private SettingsMenuUI settingsMenuUI;
+
     private void Awake()
     {
         playButton.onClick.AddListener(() =>
@@ -36,6 +41,17 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         Cursor.visible = true;
+
+        SoundManager.Init();
+
+        SoundManager.PlayMusic(musicSource, musicClip, SoundManager.MusicVolume);
+
+        settingsMenuUI.OnMusicChanged += SettingsMenuUI_OnMusicChanged;
+    }
+
+    private void SettingsMenuUI_OnMusicChanged(object sender, System.EventArgs e)
+    {
+        SoundManager.ChangeMusicVolume(musicSource);
     }
 
     public void Show()
@@ -46,5 +62,10 @@ public class MainMenuUI : MonoBehaviour
     public void Hide()
     {
         this.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        settingsMenuUI.OnMusicChanged -= SettingsMenuUI_OnMusicChanged;
     }
 }

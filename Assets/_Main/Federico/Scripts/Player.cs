@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform possessedParent;
     [SerializeField] private Transform defaultBodyParent;
 
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip musicClip;
+
     private bool isPossessing;
 
     private float maxPossessionDistance;
@@ -68,6 +71,8 @@ public class Player : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+
+        SoundManager.PlayMusic(musicSource, musicClip, SoundManager.MusicVolume);
     }
 
     private void HealthSystem_OnDie(object sender, System.EventArgs e)
